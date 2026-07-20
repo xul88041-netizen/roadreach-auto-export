@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://xul88041-netizen.github.io/roadreach-auto-export/sitemap.xml
