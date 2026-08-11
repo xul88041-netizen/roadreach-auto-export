@@ -27,6 +27,12 @@ jobs:
         uses: actions/configure-pages@v5
         with:
           enablement: true
+      - name: Write public API runtime configuration
+        env:
+          PUBLIC_API_URL: ${{ vars.PUBLIC_API_URL }}
+        run: node scripts/write-runtime-config.mjs
+      - name: Verify public showroom
+        run: node scripts/verify.mjs
       - name: Upload website
         uses: actions/upload-pages-artifact@v3
         with:
