@@ -10,6 +10,7 @@ const badge = (value) => `<span class="badge ${String(value).toLowerCase()}">${e
 let currentView = "dashboard";
 let currentVehicleImages = [];
 let currentUser = null;
+let invitePasswordRequired = new URLSearchParams(window.location.hash.slice(1)).get("type") === "invite";
 
 function message(node, text, error = false) { node.textContent = text; node.classList.toggle("error", error); }
 function pageHead(title, subtitle, action = "") { return `<div class="page-head"><div><h1>${esc(title)}</h1><p>${esc(subtitle)}</p></div>${action}</div>`; }
@@ -36,6 +37,29 @@ async function enterApp(session) {
   document.querySelector("#adminApp").hidden = false;
   await renderView(currentView);
 }
+
+function showInvitePasswordSetup(session) {
+  if (!session?.user) return;
+  document.querySelector("#loginForm").hidden = true;
+  document.querySelector("#invitePasswordForm").hidden = false;
+  message(document.querySelector("#invitePasswordMessage"), `Set a password for ${session.user.email}.`);
+}
+
+document.querySelector("#invitePasswordForm").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const output = document.querySelector("#invitePasswordMessage");
+  const form = new FormData(event.currentTarget);
+  const password = String(form.get("password") || "");
+  if (password !== String(form.get("confirmPassword") || "")) { message(output, "Passwords do not match.", true); return; }
+  if (!db) { message(output, "Supabase is not configured in config.js.", true); return; }
+  message(output, "Setting password…");
+  const { error } = await db.auth.updateUser({ password });
+  if (error) { message(output, error.message, true); return; }
+  invitePasswordRequired = false;
+  history.replaceState({}, document.title, window.location.pathname);
+  const { data } = await db.auth.getSession();
+  await enterApp(data.session);
+});
 
 document.querySelector("#loginForm").addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -123,7 +147,7 @@ async function renderEmailSync() {
 }
 
 function renderSettings() {
-  page.innerHTML = pageHead("Settings", "Runtime and security status") + `<div class="panel sync-card"><ul class="settings-list"><li><b>Signed in:</b> ${esc(currentUser?.email)}</li><li><b>Authorization:</b> Supabase Auth + database administrator allowlist</li><li><b>Public data:</b> public_vehicle_catalog safe view only</li><li><b>Vehicle images:</b> public read; authenticated administrator upload/update/delete</li><li><b>Email notifications:</b> not configured by default; inquiries still save correctly</li><li><b>Secrets:</b> Supabase service role and Gmail OAuth credentials are Edge Function secrets only</li></ul></div>`;
+  page.innerHTML = pageHead("Settings", "Runtime and security status") + `<div class="panel sync-card"><ul class="settings-list"><li><b>Signed in:</b> ${esc(currentUser?.email)}</li><li><b>Authorization:</b> Supabase Auth + database administrator allowlist</li><li><b>Public data:</b> public_vehicle_catalog safe view only</li><li><b>Vehicle images:</b> public read; authenticated administrator upload/update/delete</li><li><b>Email notifications:</b> not configured by default; inquiries still save correctly</li><li><b>Secrets:</b> Dedicated Supabase and Gmail credentials are Edge Function secrets only</li></ul></div>`;
 }
 
 page.addEventListener("click", async (event) => {
@@ -190,5 +214,10 @@ document.querySelector("#recordForm").addEventListener("submit",async(event)=>{e
 
 async function runGmailSync(mode){const output=document.querySelector("#syncMessage");message(output,`Running ${mode} sync… This may take several minutes.`);const{data,error}=await db.functions.invoke("gmail-sync",{body:{mode,max_threads:mode==="historical"?200:50}});if(error||data?.error){message(output,data?.error||error.message,true);return;}message(output,`Scanned ${data.scanned}; imported ${data.importedThreads} threads / ${data.importedMessages} messages; excluded ${data.excluded}; errors ${data.errors}.`);setTimeout(()=>void renderEmailSync(),1200);}
 
-if (db) { const { data } = await db.auth.getSession(); if (data.session) await enterApp(data.session); }
+if (db) {
+  const resumeSession = async (session) => { if (!session) return; if (invitePasswordRequired) showInvitePasswordSetup(session); else await enterApp(session); };
+  const { data } = await db.auth.getSession();
+  await resumeSession(data.session);
+  db.auth.onAuthStateChange((_event, session) => { void resumeSession(session); });
+}
 else message(document.querySelector("#loginMessage"), "Supabase runtime configuration is missing. See docs/DEPLOYMENT.md.", true);

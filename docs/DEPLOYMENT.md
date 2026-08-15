@@ -22,10 +22,10 @@ On Windows, if the npm wrapper cannot resolve its CLI binary, install the offici
 
 ### Create the one administrator
 
-1. In **Authentication → Users**, create `xuli58836@gmail.com` with a strong unique password.
-2. Confirm the email if required.
-3. In **Authentication settings**, disable public user sign-ups. Admin users should be created only from the dashboard.
-4. Do not create or commit a default password. The migration allowlists this email but does not create an Auth password.
+1. Configure the hosted project's Auth URL Configuration with Site URL `http://127.0.0.1:4173/admin/` and Redirect URL `http://127.0.0.1:4173/**` for local acceptance testing. The checked-in `supabase/config.toml` preserves the project's existing email and MFA settings while declaring these URLs.
+2. Send an Auth invitation to `xuli58836@gmail.com` with `redirectTo: "http://127.0.0.1:4173/admin/"`.
+3. The invitation callback opens the local Admin page, receives the Auth session, and presents the password form. The administrator sets the password directly with Supabase Auth; never create, transmit, or commit a default password.
+4. Confirm the email if Supabase requests it. The migration allowlists this email but does not create an Auth password.
 
 ### Configure and deploy Edge Functions
 
