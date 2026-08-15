@@ -10,7 +10,8 @@ const badge = (value) => `<span class="badge ${String(value).toLowerCase()}">${e
 let currentView = "dashboard";
 let currentVehicleImages = [];
 let currentUser = null;
-let invitePasswordRequired = new URLSearchParams(window.location.hash.slice(1)).get("type") === "invite";
+const authCallbackType = new URLSearchParams(window.location.hash.slice(1)).get("type");
+let invitePasswordRequired = authCallbackType === "invite" || authCallbackType === "recovery";
 
 function message(node, text, error = false) { node.textContent = text; node.classList.toggle("error", error); }
 function pageHead(title, subtitle, action = "") { return `<div class="page-head"><div><h1>${esc(title)}</h1><p>${esc(subtitle)}</p></div>${action}</div>`; }
