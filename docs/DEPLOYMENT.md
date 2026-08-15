@@ -30,12 +30,12 @@ On Windows, if the npm wrapper cannot resolve its CLI binary, install the offici
 ### Configure and deploy Edge Functions
 
 ```powershell
-npx supabase secrets set RATE_LIMIT_SALT="GENERATE_A_LONG_RANDOM_VALUE" ALLOWED_ORIGINS="https://xul88041-netizen.github.io,http://localhost:4173,http://127.0.0.1:4173"
+npx supabase secrets set RATE_LIMIT_SALT="GENERATE_A_LONG_RANDOM_VALUE" ROADREACH_SERVICE_KEY="sb_secret_..." ALLOWED_ORIGINS="https://xul88041-netizen.github.io,http://localhost:4173,http://127.0.0.1:4173"
 npx supabase functions deploy submit-inquiry
 npx supabase functions deploy gmail-sync
 ```
 
-The hosted runtime provides Supabase URL/keys to functions. Gmail secrets are separate; follow [GMAIL_SETUP.md](GMAIL_SETUP.md).
+The hosted runtime provides the Supabase URL. Store the elevated `ROADREACH_SERVICE_KEY` only as a Function Secret; it is never a browser, GitHub Variable, source-control, or Gmail value. Gmail secrets are separate; follow [GMAIL_SETUP.md](GMAIL_SETUP.md).
 
 ### Local runtime configuration
 

@@ -3,7 +3,8 @@ import { corsHeaders, json } from "../_shared/cors.ts";
 
 const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
 const anonKey = Deno.env.get("SUPABASE_ANON_KEY")!;
-const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+// Stored only as a Function Secret; never expose a privileged key to a client.
+const serviceRoleKey = Deno.env.get("ROADREACH_SERVICE_KEY")!;
 const gmailClientId = Deno.env.get("GMAIL_CLIENT_ID") || "";
 const gmailClientSecret = Deno.env.get("GMAIL_CLIENT_SECRET") || "";
 const gmailRefreshToken = Deno.env.get("GMAIL_REFRESH_TOKEN") || "";

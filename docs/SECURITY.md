@@ -33,7 +33,7 @@ Admin access requires both:
 
 The initial allowlist contains only `xuli58836@gmail.com`. RLS policies on all operational tables use `is_admin()`. A signed-in Supabase user who is not allowlisted receives no admin table access.
 
-The public frontend never receives `service_role`/secret keys. The service role is used only by Edge Functions for controlled server-side transactions and external integration.
+The public frontend never receives an elevated key. Edge Functions use only the `ROADREACH_SERVICE_KEY` Supabase Function Secret for controlled server-side transactions and external integration. References to PostgreSQL's `service_role` in the migration are database-role grants, not browser credentials.
 
 ## RLS policy summary
 

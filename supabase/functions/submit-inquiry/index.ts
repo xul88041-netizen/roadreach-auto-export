@@ -2,7 +2,10 @@ import { createClient } from "npm:@supabase/supabase-js@2";
 import { corsHeaders, json } from "../_shared/cors.ts";
 
 const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+// Store the elevated key as a Function Secret. Do not fall back to the legacy
+// JWT service_role key: the application should keep working after that legacy
+// key is disabled.
+const serviceRoleKey = Deno.env.get("ROADREACH_SERVICE_KEY")!;
 const rateLimitSalt = Deno.env.get("RATE_LIMIT_SALT") || "configure-this-secret-before-production";
 const db = createClient(supabaseUrl, serviceRoleKey, { auth: { persistSession: false } });
 
