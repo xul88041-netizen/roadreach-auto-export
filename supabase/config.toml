@@ -1,0 +1,7 @@
+project_id = "roadreach-auto-export"
+
+[functions.submit-inquiry]
+verify_jwt = false
+
+[functions.gmail-sync]
+verify_jwt = true

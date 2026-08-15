@@ -1,13 +1,18 @@
-# roadreach-auto-export
+# RoadReach Auto Export
 
-RoadReach Auto Export is the public, independently deployable showroom. Vehicle data is loaded from the standard RoadReach HTTPS/JSON API instead of being stored in this repository.
+Independent public B2B vehicle showroom plus a mobile-capable admin/CRM MVP.
 
-## Deployment configuration
+- Public frontend: GitHub Pages
+- Database, Auth and Storage: Supabase Free Tier
+- Admin: `/admin/`
+- Gmail import: server-side Gmail API OAuth with `gmail.readonly`
 
-Set the GitHub Actions repository variable `PUBLIC_API_URL` to the RoadReach public API origin, for example:
+Start with [the deployment guide](docs/DEPLOYMENT.md), [security boundary](docs/SECURITY.md), and [implementation report](docs/IMPLEMENTATION_REPORT.md).
+
+Run local source and unit checks:
 
 ```text
-https://roadreach.pages.dev
+npm run check
 ```
 
-The deployment workflow writes `config.js` from that variable. The showroom then uses the standard vehicle-list and inquiry endpoints under `/api/public/`. No API keys or internal RoadReach data belong in this repository.
+No secret/service-role key, administrator password, Gmail OAuth credential, full public VIN, internal RMB cost or customer export belongs in this repository.
