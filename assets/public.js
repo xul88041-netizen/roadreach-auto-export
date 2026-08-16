@@ -35,6 +35,15 @@ function bindVehicleButtons() {
   document.querySelectorAll("[data-vehicle-id]").forEach((button) => button.addEventListener("click", () => openVehicle(button.dataset.vehicleId)));
 }
 
+function bindVehicleImageFallbacks(scope = document) {
+  scope.querySelectorAll(".vehicle-image img,.modal-gallery img").forEach((image) => image.addEventListener("error", () => {
+    if (image.dataset.fallbackApplied) return;
+    image.dataset.fallbackApplied = "true";
+    image.alt = "";
+    image.src = fallbackImage;
+  }, { once: true }));
+}
+
 function populateFilters() {
   const form = document.querySelector("#inventoryFilters");
   for (const field of ["brand", "model", "year", "fuel_type", "body_type"]) {
@@ -71,6 +80,7 @@ function renderInventory() {
   document.querySelector("#recentlySold").hidden = !sold.length;
   document.querySelector("#soldGrid").innerHTML = sold.map(card).join("");
   bindVehicleButtons();
+  bindVehicleImageFallbacks();
 }
 
 function openVehicle(id) {
@@ -80,6 +90,7 @@ function openVehicle(id) {
   const notes = language === "ru" && vehicle.vehicle_notes_ru ? vehicle.vehicle_notes_ru : vehicle.vehicle_notes_en;
   const details = [[t("year","Year"),vehicle.year],[t("fuel","Fuel type"),vehicle.fuel_type],[t("steering","Steering"),vehicle.steering],[t("body","Body type"),vehicle.body_type],[language === "ru"?"Пробег":"Mileage",vehicle.mileage == null ? "—" : `${Number(vehicle.mileage).toLocaleString("en-US")} km`],[language === "ru"?"Цвет":"Exterior",vehicle.exterior_color],["Stock ID",vehicle.stock_id],["VIN",vehicle.sourcing_status === "IN_STOCK" ? vehicle.masked_vin : null]].filter(([,value]) => value);
   document.querySelector("#modalContent").innerHTML = `<div class="modal-gallery">${images.map((image, index) => `<img src="${escapeHtml(safeUrl(image.url))}" alt="${escapeHtml(`${vehicle.brand} ${vehicle.model} photo ${index + 1}`)}">`).join("")}</div><div class="modal-info"><p class="vehicle-type">${escapeHtml(vehicle.body_type)}<span class="stock-id">${escapeHtml(vehicle.stock_id)}</span><span class="featured-flag">${escapeHtml(statusLabel(vehicle))}</span></p><h2>${escapeHtml(`${vehicle.brand} ${vehicle.model}`)}</h2>${notes ? `<p>${escapeHtml(notes)}</p>` : ""}<div class="modal-specs">${details.map(([label,value]) => `<div><small>${escapeHtml(label)}</small><b>${escapeHtml(value)}</b></div>`).join("")}</div>${vehicle.condition ? `<div class="condition-box"><b>${language === "ru" ? "Состояние" : "Condition statement"}</b><br>${escapeHtml(vehicle.condition)}</div>` : ""}<p class="price-note">${escapeHtml(t("priceDisclaimer", "Final quotation may vary depending on vehicle condition/configuration, quantity, purchase timing and destination requirements."))}</p><div class="modal-actions"><strong>${escapeHtml(formatPrice(vehicle))}</strong><button class="button" type="button" id="modalInquiryButton">${vehicle.publication_status === "SOLD" ? (language === "ru" ? "Найти похожий →" : "Find Similar Vehicle →") : (language === "ru" ? "Запросить цену →" : "Ask for Quote →")}</button></div></div>`;
+  bindVehicleImageFallbacks(document.querySelector("#modalContent"));
   document.querySelector("#modalInquiryButton").addEventListener("click", () => startInquiry(vehicle));
   document.querySelector("#vehicleModal").classList.add("open");
   document.body.style.overflow = "hidden";

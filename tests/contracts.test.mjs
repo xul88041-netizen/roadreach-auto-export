@@ -27,6 +27,13 @@ test("public catalog SQL omits private vehicle and CRM fields", async () => {
   for (const field of ["full_vin","internal_vehicle_cost_rmb","total_other_cost_rmb","target_profit_rmb","suggested_fob_price_usd","expected_profit_rmb","expected_margin"]) assert.doesNotMatch(view,new RegExp(`\\b${field}\\b`,"u"));
 });
 
+test("public vehicle images fall back without exposing broken-image alt text", async () => {
+  const source = await read("assets/public.js");
+  assert.match(source, /function bindVehicleImageFallbacks/u);
+  assert.match(source, /image\.src = fallbackImage/u);
+  assert.match(source, /image\.alt = ""/u);
+});
+
 test("all private application tables enable RLS", async () => {
   const sql = await read("supabase/migrations/202608160001_admin_v1.sql");
   for (const table of ["admin_allowlist","vehicles","vehicle_images","customers","inquiries","followups","quotes","deals","customer_email_messages","gmail_sync_state","inquiry_rate_limits"]) assert.match(sql,new RegExp(`alter table public\\.${table} enable row level security`,"u"));
