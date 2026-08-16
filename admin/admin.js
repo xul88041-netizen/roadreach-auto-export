@@ -66,6 +66,8 @@ async function enterApp(session, output = document.querySelector("#loginMessage"
   currentUser = session.user;
   console.info("Auth phase: DASHBOARD");
   message(output, "Administrator verified. Loading dashboard...");
+  document.querySelector("#loginForm input[name=password]").value = "";
+  message(output, "");
   document.querySelector("#loginScreen").hidden = true;
   document.querySelector("#adminApp").hidden = false;
   try {

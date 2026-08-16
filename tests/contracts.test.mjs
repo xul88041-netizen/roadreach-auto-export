@@ -44,6 +44,7 @@ test("responsive contracts cover requested mobile widths", async () => {
   assert.match(publicCss,/@media\(max-width:620px\)/u);
   assert.match(adminCss,/@media\(max-width:700px\)/u);
   assert.match(adminCss,/\.editor-dialog\{width:100%;max-width:none;max-height:100vh;height:100vh/u);
+  assert.match(adminCss,/\[hidden\]\{display:none !important\}/u);
 });
 
 test("deployment keeps automatic Pages pushes limited to main", async () => {
