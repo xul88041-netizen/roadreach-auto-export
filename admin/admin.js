@@ -26,17 +26,30 @@ async function query(tableName, columns = "*", options = {}) {
 }
 
 async function verifyAdmin(session) {
-  if (!session?.user?.email) return false;
+  if (!session?.user?.email) return { ok: false, reason: "no-session" };
   const { data, error } = await db.rpc("is_admin");
-  return !error && data === true;
+  if (error) return { ok: false, reason: "rpc-error", error };
+  return data === true ? { ok: true } : { ok: false, reason: "not-allowlisted" };
 }
 
-async function enterApp(session) {
-  if (!(await verifyAdmin(session))) { await db.auth.signOut(); message(document.querySelector("#loginMessage"), "This account is not on the administrator allowlist.", true); return; }
+async function enterApp(session, output = document.querySelector("#loginMessage")) {
+  if (!session?.user) { message(output, "Your sign-in session is unavailable. Please sign in again.", true); return false; }
+  const verification = await verifyAdmin(session);
+  if (!verification.ok) {
+    if (verification.reason === "rpc-error") {
+      console.error("Administrator authorization check failed", verification.error);
+      message(output, "Signed in, but administrator authorization could not be verified. Please try again later.", true);
+      return false;
+    }
+    await db.auth.signOut();
+    message(output, "Signed in, but this account is not on the administrator allowlist.", true);
+    return false;
+  }
   currentUser = session.user;
   document.querySelector("#loginScreen").hidden = true;
   document.querySelector("#adminApp").hidden = false;
-  await renderView(currentView);
+  try { await renderView(currentView); return true; }
+  catch (error) { console.error("Admin dashboard load failed", error); message(output, "Signed in, but the dashboard could not be loaded.", true); return false; }
 }
 
 function showInvitePasswordSetup(session) {
@@ -52,6 +65,7 @@ document.querySelector("#invitePasswordForm").addEventListener("submit", async (
   const form = new FormData(event.currentTarget);
   const password = String(form.get("password") || "");
   if (password !== String(form.get("confirmPassword") || "")) { message(output, "Passwords do not match.", true); return; }
+  if (password.length < 12) { message(output, "Use at least 12 characters for the new password.", true); return; }
   if (!db) { message(output, "Supabase is not configured in config.js.", true); return; }
   message(output, "Setting password…");
   const { error } = await db.auth.updateUser({ password });
@@ -59,7 +73,7 @@ document.querySelector("#invitePasswordForm").addEventListener("submit", async (
   invitePasswordRequired = false;
   history.replaceState({}, document.title, window.location.pathname);
   const { data } = await db.auth.getSession();
-  await enterApp(data.session);
+  await enterApp(data.session, output);
 });
 
 document.querySelector("#loginForm").addEventListener("submit", async (event) => {
@@ -67,9 +81,32 @@ document.querySelector("#loginForm").addEventListener("submit", async (event) =>
   const output = document.querySelector("#loginMessage"); message(output, "Signing in…");
   if (!db) { message(output, "Supabase is not configured in config.js.", true); return; }
   const form = new FormData(event.currentTarget);
-  const { data, error } = await db.auth.signInWithPassword({ email: form.get("email"), password: form.get("password") });
-  if (error) { message(output, error.message, true); return; }
-  await enterApp(data.session);
+  try {
+    const { data, error } = await db.auth.signInWithPassword({ email: form.get("email"), password: form.get("password") });
+    if (error) { message(output, "Email or password is incorrect.", true); return; }
+    await enterApp(data.session, output);
+  } catch (error) { console.error("Administrator sign-in failed", error); message(output, "Unable to sign in. Check the runtime configuration and try again.", true); }
+});
+
+function showForgotPassword(show) {
+  document.querySelector("#loginForm").hidden = show;
+  document.querySelector("#forgotPasswordForm").hidden = !show;
+  if (show) document.querySelector("#forgotPasswordForm input[name=email]").focus();
+}
+document.querySelector("#showForgotPassword").addEventListener("click", () => showForgotPassword(true));
+document.querySelector("#cancelForgotPassword").addEventListener("click", () => showForgotPassword(false));
+document.querySelector("#forgotPasswordForm").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const output = document.querySelector("#forgotPasswordMessage");
+  if (!db) { message(output, "Supabase is not configured in config.js.", true); return; }
+  const email = String(new FormData(event.currentTarget).get("email") || "");
+  const recoveryUrl = new URL("reset-password.html", window.location.href).href;
+  message(output, "Sending password setup email…");
+  try {
+    const { error } = await db.auth.resetPasswordForEmail(email, { redirectTo: recoveryUrl });
+    if (error) { message(output, error.message, true); return; }
+    message(output, "Check your email for a password setup link.");
+  } catch (error) { console.error("Password reset request failed", error); message(output, "Unable to send the password setup email. Try again later.", true); }
 });
 
 async function signOut() { if (db) await db.auth.signOut(); location.reload(); }
@@ -216,9 +253,16 @@ document.querySelector("#recordForm").addEventListener("submit",async(event)=>{e
 async function runGmailSync(mode){const output=document.querySelector("#syncMessage");message(output,`Running ${mode} sync… This may take several minutes.`);const{data,error}=await db.functions.invoke("gmail-sync",{body:{mode,max_threads:mode==="historical"?200:50}});if(error||data?.error){message(output,data?.error||error.message,true);return;}message(output,`Scanned ${data.scanned}; imported ${data.importedThreads} threads / ${data.importedMessages} messages; excluded ${data.excluded}; errors ${data.errors}.`);setTimeout(()=>void renderEmailSync(),1200);}
 
 if (db) {
-  const resumeSession = async (session) => { if (!session) return; if (invitePasswordRequired) showInvitePasswordSetup(session); else await enterApp(session); };
-  const { data } = await db.auth.getSession();
-  await resumeSession(data.session);
-  db.auth.onAuthStateChange((_event, session) => { void resumeSession(session); });
+  const resumeSession = async (session) => {
+    if (!session) return;
+    if (invitePasswordRequired) showInvitePasswordSetup(session);
+    else await enterApp(session);
+  };
+  try {
+    const { data, error } = await db.auth.getSession();
+    if (error) { console.error("Administrator session lookup failed", error); message(document.querySelector("#loginMessage"), "Unable to restore the sign-in session. Please sign in again.", true); }
+    else await resumeSession(data.session);
+  } catch (error) { console.error("Administrator session bootstrap failed", error); message(document.querySelector("#loginMessage"), "Unable to initialize administrator sign-in.", true); }
+  db.auth.onAuthStateChange((_event, session) => { void resumeSession(session).catch((error) => { console.error("Administrator session change failed", error); message(document.querySelector("#loginMessage"), "Unable to continue the sign-in session.", true); }); });
 }
 else message(document.querySelector("#loginMessage"), "Supabase runtime configuration is missing. See docs/DEPLOYMENT.md.", true);

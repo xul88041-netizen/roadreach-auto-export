@@ -53,3 +53,26 @@ test("deployment keeps automatic Pages pushes limited to main", async () => {
   assert.match(workflow,/path: _site/u);
   assert.doesNotMatch(workflow,/path: \./u);
 });
+
+test("administrator password recovery preserves local and GitHub Pages paths", async () => {
+  const [adminHtml, adminJs, resetHtml, resetJs, config] = await Promise.all([
+    read("admin/index.html"), read("admin/admin.js"), read("admin/reset-password.html"), read("admin/reset-password.js"), read("supabase/config.toml"),
+  ]);
+  assert.match(adminHtml, /Forgot password\?/u);
+  assert.match(adminJs, /resetPasswordForEmail\(email, \{ redirectTo: recoveryUrl \}\)/u);
+  assert.match(adminJs, /new URL\("reset-password\.html", window\.location\.href\)/u);
+  assert.match(adminJs, /reason: "rpc-error"/u);
+  assert.match(adminJs, /not on the administrator allowlist/u);
+  assert.match(resetHtml, /New password/u);
+  assert.match(resetJs, /PASSWORD_RECOVERY/u);
+  assert.match(resetJs, /auth\.getSession\(\)/u);
+  assert.match(resetJs, /auth\.updateUser\(\{ password \}\)/u);
+  assert.match(resetJs, /Passwords do not match/u);
+  assert.match(resetJs, /location\.replace\("\.\/"\)/u);
+  for (const url of [
+    "https://xul88041-netizen.github.io/roadreach-auto-export/admin/reset-password.html",
+    "http://127.0.0.1:4173/admin/reset-password.html",
+    "http://localhost:4173/admin/reset-password.html",
+  ]) assert.match(config, new RegExp(url.replaceAll(".", "\\."), "u"));
+  assert.doesNotMatch([adminJs, resetJs].join("\n"), /https:\/\/xul88041-netizen\.github\.io\/admin\//u);
+});

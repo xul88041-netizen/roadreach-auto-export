@@ -1,8 +1,12 @@
 project_id = "roadreach-auto-export"
 
 [auth]
-site_url = "http://127.0.0.1:4173/admin/"
-additional_redirect_urls = ["http://127.0.0.1:4173/**"]
+site_url = "https://xul88041-netizen.github.io/roadreach-auto-export/"
+additional_redirect_urls = [
+  "https://xul88041-netizen.github.io/roadreach-auto-export/admin/reset-password.html",
+  "http://127.0.0.1:4173/admin/reset-password.html",
+  "http://localhost:4173/admin/reset-password.html",
+]
 
 [auth.mfa.totp]
 enroll_enabled = true

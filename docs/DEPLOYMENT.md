@@ -22,9 +22,9 @@ On Windows, if the npm wrapper cannot resolve its CLI binary, install the offici
 
 ### Create the one administrator
 
-1. Configure the hosted project's Auth URL Configuration with Site URL `http://127.0.0.1:4173/admin/` and Redirect URL `http://127.0.0.1:4173/**` for local acceptance testing. The checked-in `supabase/config.toml` preserves the project's existing email and MFA settings while declaring these URLs.
-2. Send an Auth invitation to `xuli58836@gmail.com` with `redirectTo: "http://127.0.0.1:4173/admin/"`.
-3. The invitation callback opens the local Admin page, receives the Auth session, and presents the password form. The administrator sets the password directly with Supabase Auth; never create, transmit, or commit a default password.
+1. Configure the hosted project's Auth URL Configuration with Site URL `https://xul88041-netizen.github.io/roadreach-auto-export/`. Its Redirect URLs must include `https://xul88041-netizen.github.io/roadreach-auto-export/admin/reset-password.html`, `http://127.0.0.1:4173/admin/reset-password.html`, and `http://localhost:4173/admin/reset-password.html`. The checked-in `supabase/config.toml` preserves the project's existing email and MFA settings while declaring these URLs.
+2. Send an Auth invitation to `xuli58836@gmail.com` with an explicit local testing `redirectTo: "http://127.0.0.1:4173/admin/"`, or send a password-recovery email through the Admin page. Recovery always uses the current site's `admin/reset-password.html` URL.
+3. The invitation callback opens the local Admin page, receives the Auth session, and presents the password form. The password-recovery callback opens the dedicated recovery page. The administrator sets the password directly with Supabase Auth; never create, transmit, or commit a default password.
 4. Confirm the email if Supabase requests it. The migration allowlists this email but does not create an Auth password.
 
 ### Configure and deploy Edge Functions

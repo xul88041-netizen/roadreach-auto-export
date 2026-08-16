@@ -2,8 +2,9 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 
 const read = (path) => readFile(new URL(`../${path}`, import.meta.url), "utf8");
-const [publicHtml, publicJs, adminHtml, adminJs, workflow, configWriter, migration, security, gmail] = await Promise.all([
+const [publicHtml, publicJs, adminHtml, adminJs, resetHtml, resetJs, workflow, configWriter, migration, security, gmail] = await Promise.all([
   read("index.html"), read("assets/public.js"), read("admin/index.html"), read("admin/admin.js"),
+  read("admin/reset-password.html"), read("admin/reset-password.js"),
   read(".github/workflows/pages.yml"), read("scripts/write-runtime-config.mjs"),
   read("supabase/migrations/202608160001_admin_v1.sql"), read("docs/SECURITY.md"), read("docs/GMAIL_SETUP.md"),
 ]);
@@ -19,6 +20,11 @@ assert.match(adminHtml, /Dashboard[\s\S]*Vehicles[\s\S]*Inquiries[\s\S]*Customer
 assert.match(adminJs, /signInWithPassword/u);
 assert.match(adminJs, /rpc\("is_admin"/u);
 assert.match(adminJs, /vehicle-images/u);
+assert.match(adminHtml, /Forgot password\?/u);
+assert.match(adminJs, /resetPasswordForEmail/u);
+assert.match(resetHtml, /resetPasswordForm/u);
+assert.match(resetJs, /PASSWORD_RECOVERY/u);
+assert.match(resetJs, /auth\.updateUser\(\{ password \}\)/u);
 assert.match(workflow, /vars\.SUPABASE_URL/u);
 assert.match(workflow, /vars\.SUPABASE_PUBLISHABLE_KEY/u);
 assert.doesNotMatch(workflow, /vars\.PUBLIC_API_URL/u);
