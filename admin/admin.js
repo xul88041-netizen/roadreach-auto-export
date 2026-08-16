@@ -68,12 +68,15 @@ document.querySelector("#invitePasswordForm").addEventListener("submit", async (
   if (password.length < 12) { message(output, "Use at least 12 characters for the new password.", true); return; }
   if (!db) { message(output, "Supabase is not configured in config.js.", true); return; }
   message(output, "Setting password…");
-  const { error } = await db.auth.updateUser({ password });
-  if (error) { message(output, error.message, true); return; }
-  invitePasswordRequired = false;
-  history.replaceState({}, document.title, window.location.pathname);
-  const { data } = await db.auth.getSession();
-  await enterApp(data.session, output);
+  try {
+    const { error } = await db.auth.updateUser({ password });
+    if (error) { message(output, error.message, true); return; }
+    message(output, "Password updated successfully. Entering dashboard…");
+    invitePasswordRequired = false;
+    history.replaceState({}, document.title, window.location.pathname);
+    const { data } = await db.auth.getSession();
+    await enterApp(data.session, output);
+  } catch (error) { console.error("Invitation password setup failed", error); message(output, "Unable to set the password. Please try again.", true); }
 });
 
 document.querySelector("#loginForm").addEventListener("submit", async (event) => {
