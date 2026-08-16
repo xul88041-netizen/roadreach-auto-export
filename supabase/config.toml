@@ -1,0 +1,28 @@
+project_id = "roadreach-auto-export"
+
+[auth]
+site_url = "https://xul88041-netizen.github.io/roadreach-auto-export/"
+additional_redirect_urls = [
+  "https://xul88041-netizen.github.io/roadreach-auto-export/admin/reset-password.html",
+  "http://127.0.0.1:4173/admin/reset-password.html",
+  "http://localhost:4173/admin/reset-password.html",
+]
+
+[auth.mfa.totp]
+enroll_enabled = true
+verify_enabled = true
+
+[auth.email]
+enable_signup = true
+double_confirm_changes = true
+enable_confirmations = true
+secure_password_change = false
+max_frequency = "1m0s"
+otp_length = 8
+otp_expiry = 3600
+
+[functions.submit-inquiry]
+verify_jwt = false
+
+[functions.gmail-sync]
+verify_jwt = true

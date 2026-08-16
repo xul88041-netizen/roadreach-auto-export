@@ -1,17 +1,21 @@
 import { writeFile } from "node:fs/promises";
 
-const publicApiBaseUrl = String(process.env.PUBLIC_API_URL || "").trim().replace(/\/+$/u, "");
-if (!publicApiBaseUrl) {
-  throw new Error("GitHub repository variable PUBLIC_API_URL is required for deployment.");
+const supabaseUrl = String(process.env.SUPABASE_URL || "").trim().replace(/\/+$/u, "");
+const supabasePublishableKey = String(process.env.SUPABASE_PUBLISHABLE_KEY || "").trim();
+if (!supabaseUrl || !supabasePublishableKey) {
+  throw new Error("SUPABASE_URL and SUPABASE_PUBLISHABLE_KEY repository variables are required for deployment.");
 }
 
-const url = new URL(publicApiBaseUrl);
+const url = new URL(supabaseUrl);
 if (url.protocol !== "https:") {
-  throw new Error("PUBLIC_API_URL must use HTTPS.");
+  throw new Error("SUPABASE_URL must use HTTPS.");
+}
+if (!/^sb_(publishable|anon)_/u.test(supabasePublishableKey) && !/^eyJ/u.test(supabasePublishableKey)) {
+  throw new Error("SUPABASE_PUBLISHABLE_KEY does not look like a browser-safe Supabase key.");
 }
 
 await writeFile(
   new URL("../config.js", import.meta.url),
-  `window.ROADREACH_CONFIG = Object.freeze(${JSON.stringify({ publicApiBaseUrl: url.toString().replace(/\/+$/u, "") }, null, 2)});\n`,
+  `window.ROADREACH_CONFIG = Object.freeze(${JSON.stringify({ supabaseUrl: url.toString().replace(/\/+$/u, ""), supabasePublishableKey }, null, 2)});\n`,
   "utf8",
 );

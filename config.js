@@ -1,3 +1,4 @@
 window.ROADREACH_CONFIG = Object.freeze({
-  publicApiBaseUrl: "",
+  supabaseUrl: "",
+  supabasePublishableKey: "",
 });

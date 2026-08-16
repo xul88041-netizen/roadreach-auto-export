@@ -27,16 +27,22 @@ jobs:
         uses: actions/configure-pages@v5
         with:
           enablement: true
-      - name: Write public API runtime configuration
+      - name: Write Supabase runtime configuration
         env:
-          PUBLIC_API_URL: ${{ vars.PUBLIC_API_URL }}
+          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          SUPABASE_PUBLISHABLE_KEY: ${{ vars.SUPABASE_PUBLISHABLE_KEY }}
         run: node scripts/write-runtime-config.mjs
       - name: Verify public showroom
         run: node scripts/verify.mjs
+      - name: Stage public website only
+        run: |
+          mkdir -p _site
+          cp index.html config.js robots.txt sitemap.xml google*.html _site/
+          cp -r admin assets images _site/
       - name: Upload website
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: _site
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
