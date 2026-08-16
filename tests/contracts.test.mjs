@@ -91,3 +91,9 @@ test("administrator password recovery preserves local and GitHub Pages paths", a
   ]) assert.match(config, new RegExp(url.replaceAll(".", "\\."), "u"));
   assert.doesNotMatch([adminJs, resetJs].join("\n"), /https:\/\/xul88041-netizen\.github\.io\/admin\//u);
 });
+
+test("admin enum select values remain stable when browser labels are translated", async () => {
+  const [adminHtml, adminJs] = await Promise.all([read("admin/index.html"), read("admin/admin.js")]);
+  assert.match(adminHtml, /<select name="steering"><option value="LHD">LHD<\/option><option value="RHD">RHD<\/option><\/select>/u);
+  assert.match(adminJs, /<option value="\$\{esc\(v\)\}" \$\{value===v\?"selected":""\}>\$\{esc\(v\)\}<\/option>/u);
+});
