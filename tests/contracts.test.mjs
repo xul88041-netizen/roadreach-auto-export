@@ -63,6 +63,13 @@ test("administrator password recovery preserves local and GitHub Pages paths", a
   assert.match(adminJs, /new URL\("reset-password\.html", window\.location\.href\)/u);
   assert.match(adminJs, /reason: "rpc-error"/u);
   assert.match(adminJs, /not on the administrator allowlist/u);
+  assert.match(adminJs, /Connecting to Supabase Auth/u);
+  assert.match(adminJs, /Credentials accepted\. Verifying administrator/u);
+  assert.match(adminJs, /Administrator verified\. Loading dashboard/u);
+  assert.match(adminJs, /AUTH_SIGNIN_TIMEOUT/u);
+  assert.match(adminJs, /ADMIN_VERIFY_TIMEOUT/u);
+  assert.match(adminJs, /event === "PASSWORD_RECOVERY"/u);
+  assert.doesNotMatch(adminJs, /onAuthStateChange\([\s\S]{0,600}resumeSession/u);
   assert.match(resetHtml, /New password/u);
   assert.match(resetJs, /PASSWORD_RECOVERY/u);
   assert.match(resetJs, /auth\.getSession\(\)/u);

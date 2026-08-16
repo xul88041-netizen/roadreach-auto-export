@@ -10,10 +10,18 @@ const badge = (value) => `<span class="badge ${String(value).toLowerCase()}">${e
 let currentView = "dashboard";
 let currentVehicleImages = [];
 let currentUser = null;
+let loginInFlight = false;
+const AUTH_TIMEOUT_MS = 15_000;
 const authCallbackType = new URLSearchParams(window.location.hash.slice(1)).get("type");
 let invitePasswordRequired = authCallbackType === "invite" || authCallbackType === "recovery";
 
 function message(node, text, error = false) { node.textContent = text; node.classList.toggle("error", error); }
+function withTimeout(promise, timeoutCode) {
+  let timeoutId;
+  const timeout = new Promise((_, reject) => { timeoutId = window.setTimeout(() => reject(Object.assign(new Error(timeoutCode), { code: timeoutCode })), AUTH_TIMEOUT_MS); });
+  return Promise.race([promise, timeout]).finally(() => window.clearTimeout(timeoutId));
+}
+function setLoginBusy(busy) { loginInFlight = busy; document.querySelector("#loginForm button[type=submit]").disabled = busy; }
 function pageHead(title, subtitle, action = "") { return `<div class="page-head"><div><h1>${esc(title)}</h1><p>${esc(subtitle)}</p></div>${action}</div>`; }
 function table(headers, rows) { return `<div class="panel"><div class="table-wrap"><table><thead><tr>${headers.map((h) => `<th>${esc(h)}</th>`).join("")}</tr></thead><tbody>${rows || `<tr><td colspan="${headers.length}" class="empty">No records yet.</td></tr>`}</tbody></table></div></div>`; }
 async function query(tableName, columns = "*", options = {}) {
@@ -27,15 +35,25 @@ async function query(tableName, columns = "*", options = {}) {
 
 async function verifyAdmin(session) {
   if (!session?.user?.email) return { ok: false, reason: "no-session" };
-  const { data, error } = await db.rpc("is_admin");
+  console.info("Auth phase: VERIFY_ADMIN");
+  let result;
+  try { result = await withTimeout(db.rpc("is_admin"), "ADMIN_VERIFY_TIMEOUT"); }
+  catch (error) { return error.code === "ADMIN_VERIFY_TIMEOUT" ? { ok: false, reason: "timeout" } : { ok: false, reason: "rpc-error", error }; }
+  const { data, error } = result;
   if (error) return { ok: false, reason: "rpc-error", error };
   return data === true ? { ok: true } : { ok: false, reason: "not-allowlisted" };
 }
 
 async function enterApp(session, output = document.querySelector("#loginMessage")) {
   if (!session?.user) { message(output, "Your sign-in session is unavailable. Please sign in again.", true); return false; }
+  message(output, "Credentials accepted. Verifying administrator...");
   const verification = await verifyAdmin(session);
   if (!verification.ok) {
+    if (verification.reason === "timeout") {
+      console.error("ADMIN_VERIFY_TIMEOUT");
+      message(output, "Signed in successfully, but administrator verification timed out.", true);
+      return false;
+    }
     if (verification.reason === "rpc-error") {
       console.error("Administrator authorization check failed", verification.error);
       message(output, "Signed in, but administrator authorization could not be verified. Please try again later.", true);
@@ -46,10 +64,19 @@ async function enterApp(session, output = document.querySelector("#loginMessage"
     return false;
   }
   currentUser = session.user;
+  console.info("Auth phase: DASHBOARD");
+  message(output, "Administrator verified. Loading dashboard...");
   document.querySelector("#loginScreen").hidden = true;
   document.querySelector("#adminApp").hidden = false;
-  try { await renderView(currentView); return true; }
-  catch (error) { console.error("Admin dashboard load failed", error); message(output, "Signed in, but the dashboard could not be loaded.", true); return false; }
+  try {
+    const loaded = await withTimeout(renderView(currentView, { afterAdminLogin: true }), "DASHBOARD_LOAD_TIMEOUT");
+    return loaded;
+  }
+  catch (error) {
+    console.error(error.code === "DASHBOARD_LOAD_TIMEOUT" ? "DASHBOARD_LOAD_TIMEOUT" : "Admin dashboard load failed", error);
+    page.innerHTML = '<div class="panel empty">Administrator login succeeded, but dashboard data could not be loaded.</div>';
+    return false;
+  }
 }
 
 function showInvitePasswordSetup(session) {
@@ -81,14 +108,21 @@ document.querySelector("#invitePasswordForm").addEventListener("submit", async (
 
 document.querySelector("#loginForm").addEventListener("submit", async (event) => {
   event.preventDefault();
-  const output = document.querySelector("#loginMessage"); message(output, "Signing in…");
+  if (loginInFlight) return;
+  const output = document.querySelector("#loginMessage"); message(output, "Connecting to Supabase Auth...");
   if (!db) { message(output, "Supabase is not configured in config.js.", true); return; }
   const form = new FormData(event.currentTarget);
+  setLoginBusy(true);
   try {
-    const { data, error } = await db.auth.signInWithPassword({ email: form.get("email"), password: form.get("password") });
+    console.info("Auth phase: SIGN_IN");
+    const { data, error } = await withTimeout(db.auth.signInWithPassword({ email: form.get("email"), password: form.get("password") }), "AUTH_SIGNIN_TIMEOUT");
     if (error) { message(output, "Email or password is incorrect.", true); return; }
-    await enterApp(data.session, output);
-  } catch (error) { console.error("Administrator sign-in failed", error); message(output, "Unable to sign in. Check the runtime configuration and try again.", true); }
+    const entered = await enterApp(data.session, output);
+    if (entered) return;
+  } catch (error) {
+    if (error.code === "AUTH_SIGNIN_TIMEOUT") { console.error("AUTH_SIGNIN_TIMEOUT"); message(output, "Unable to reach Supabase Auth. The request timed out.", true); }
+    else { console.error("Administrator sign-in failed", error); message(output, "Unable to sign in. Check the runtime configuration and try again.", true); }
+  } finally { if (!document.querySelector("#adminApp").hidden) return; setLoginBusy(false); }
 });
 
 function showForgotPassword(show) {
@@ -122,7 +156,7 @@ document.querySelector("#adminNav").addEventListener("click", (event) => {
   document.querySelector(".sidebar").classList.remove("open"); currentView = button.dataset.view; void renderView(currentView);
 });
 
-async function renderView(view) {
+async function renderView(view, { afterAdminLogin = false } = {}) {
   page.innerHTML = '<div class="loading">Loading…</div>';
   try {
     if (view === "dashboard") await renderDashboard();
@@ -134,7 +168,12 @@ async function renderView(view) {
     else if (view === "deals") await renderDeals();
     else if (view === "email") await renderEmailSync();
     else renderSettings();
-  } catch (error) { page.innerHTML = `<div class="panel empty">Unable to load this area: ${esc(error.message)}</div>`; }
+    return true;
+  } catch (error) {
+    console.error("Dashboard data load failed", error);
+    page.innerHTML = `<div class="panel empty">${afterAdminLogin ? "Administrator login succeeded, but dashboard data could not be loaded." : `Unable to load this area: ${esc(error.message)}`}</div>`;
+    return false;
+  }
 }
 
 async function renderDashboard() {
@@ -266,6 +305,18 @@ if (db) {
     if (error) { console.error("Administrator session lookup failed", error); message(document.querySelector("#loginMessage"), "Unable to restore the sign-in session. Please sign in again.", true); }
     else await resumeSession(data.session);
   } catch (error) { console.error("Administrator session bootstrap failed", error); message(document.querySelector("#loginMessage"), "Unable to initialize administrator sign-in.", true); }
-  db.auth.onAuthStateChange((_event, session) => { void resumeSession(session).catch((error) => { console.error("Administrator session change failed", error); message(document.querySelector("#loginMessage"), "Unable to continue the sign-in session.", true); }); });
+  db.auth.onAuthStateChange((event, session) => {
+    console.info(`Auth event: ${event}`);
+    if (event === "PASSWORD_RECOVERY" && session) {
+      invitePasswordRequired = true;
+      window.setTimeout(() => showInvitePasswordSetup(session), 0);
+    }
+    else if (event === "SIGNED_OUT") {
+      currentUser = null;
+      document.querySelector("#loginScreen").hidden = false;
+      document.querySelector("#adminApp").hidden = true;
+      setLoginBusy(false);
+    }
+  });
 }
 else message(document.querySelector("#loginMessage"), "Supabase runtime configuration is missing. See docs/DEPLOYMENT.md.", true);
