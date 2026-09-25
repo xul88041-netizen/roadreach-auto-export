@@ -10,35 +10,245 @@
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"RoadReach Auto Export","url":"https://xul88041-netizen.github.io/roadreach-auto-export/","email":"mailto:xuli58836@gmail.com","telephone":"+447845251241","description":"Used vehicle sourcing and export support from China for international buyers."}</script>
 </head>
 <body>
-  <div class="topbar"><span data-i18n="topbar">China used vehicle export sourcing</span><a href="mailto:xuli58836@gmail.com">xuli58836@gmail.com</a></div>
+  <div class="topbar">
+    <div class="shell topbar-inner">
+      <span data-i18n="topbar">China used vehicle export sourcing</span>
+      <div class="topbar-right">
+        <a href="mailto:xuli58836@gmail.com">xuli58836@gmail.com</a>
+        <span class="sep">|</span>
+        <a href="https://wa.me/447845251241" target="_blank" rel="noopener noreferrer">WhatsApp: +44 7845 251241</a>
+      </div>
+    </div>
+  </div>
   <header class="nav shell">
     <a class="brand" href="#top" aria-label="RoadReach Auto home"><span class="brand-mark">RR</span><span>ROADREACH <small>AUTO EXPORT</small></span></a>
-    <nav aria-label="Main navigation"><a href="#inventory" data-i18n="navVehicles">Vehicles</a><a href="#process" data-i18n="navProcess">How it works</a><a href="#about" data-i18n="navAbout">Why us</a></nav>
-    <div class="nav-actions"><button class="language-toggle" id="languageToggle" type="button" aria-label="Switch language">EN / <b>RU</b></button><a class="button button-small" href="#inquiry" data-i18n="getQuote">Get a quote</a></div>
+    <nav aria-label="Main navigation">
+      <a href="#inventory" data-i18n="navVehicles">Vehicles</a>
+      <a href="#process" data-i18n="navProcess">How it works</a>
+      <a href="#about" data-i18n="navAbout">Why us</a>
+    </nav>
+    <div class="nav-actions">
+      <!-- 既有快速英俄双语切换，又有全球全语言下拉选择 -->
+      <button class="language-toggle" id="languageToggle" type="button" aria-label="Switch language">EN / <b>RU</b></button>
+      <div class="lang-selector-wrap">
+        <label for="languageSelect" class="sr-only">Language</label>
+        <select class="language-dropdown" id="languageSelect" aria-label="Select Language">
+          <option value="en">🇬🇧 English</option>
+          <option value="ru">🇷🇺 Русский</option>
+          <option value="ar">🇸🇦 العربية</option>
+          <option value="es">🇪🇸 Español</option>
+          <option value="fr">🇫🇷 Français</option>
+          <option value="zh">🇨🇳 简体中文</option>
+        </select>
+      </div>
+      <a class="button button-small" href="#inquiry" data-i18n="getQuote">Get a quote</a>
+    </div>
   </header>
   <main>
     <section class="hero" id="top"><div class="hero-grid shell">
-      <div><p class="eyebrow"><span></span><span data-i18n="heroEyebrow">VERIFIED SOURCING · GLOBAL SHIPPING</span></p><h1 data-i18n-html="heroTitle">Reliable used cars.<br><em>Ready for export.</em></h1><p class="hero-lead" data-i18n="heroLead">Get inspected vehicles, clear export documents and a shipping quote to your destination port — from one responsive team in China.</p><div class="hero-actions"><a class="button" href="#inventory"><span data-i18n="browseVehicles">Browse vehicles</span><span>→</span></a><a class="text-link wa" data-message="Hello RoadReach Auto, I need help sourcing a used vehicle for export." href="#" data-i18n="whatsapp">Chat on WhatsApp ↗</a></div><div class="trust-row"><span><b>01</b><span data-i18n="inspection">Inspection report</span></span><span><b>02</b><span data-i18n="documents">Export documents</span></span><span><b>03</b><span data-i18n="delivery">Port delivery</span></span></div></div>
-      <aside class="quote-card"><p class="quote-label" data-i18n="quickQuote">QUICK QUOTE</p><h2 data-i18n="tellNeed">Tell us what you need.</h2><p data-i18n="matchingIntro">Receive matching options and an estimated FOB/CIF price.</p><form class="quote-form" data-compact="true"><label><span data-i18n="name">Your name</span><input required name="name" autocomplete="name"></label><label><span data-i18n="country">Country</span><input required name="country" autocomplete="country-name"></label><label><span data-i18n="emailPhone">Email or WhatsApp</span><input required name="contact"></label><label><span data-i18n="preferredModel">Preferred model</span><input required name="preferred_model"></label><div class="form-split"><label><span data-i18n="budget">Budget (USD)</span><input name="target_budget" inputmode="decimal"></label><label><span data-i18n="quantity">Quantity</span><input type="number" min="1" max="1000" name="quantity" value="1"></label></div><label class="honeypot" aria-hidden="true">Website<input tabindex="-1" autocomplete="off" name="website"></label><button class="button full" type="submit"><span data-i18n="sendRequest">Send quote request</span><span>→</span></button><span class="form-status" role="status"></span></form><small data-i18n="replyNote">No payment required. Typical reply within one business day.</small></aside>
+      <div>
+        <p class="eyebrow"><span></span><span data-i18n="heroEyebrow">VERIFIED SOURCING · GLOBAL SHIPPING</span></p>
+        <h1 data-i18n-html="heroTitle">Reliable used cars.<br><em>Ready for export.</em></h1>
+        <p class="hero-lead" data-i18n="heroLead">Get inspected vehicles, clear export documents and a shipping quote to your destination port — from one responsive team in China.</p>
+        <div class="hero-actions">
+          <a class="button" href="#inventory"><span data-i18n="browseVehicles">Browse vehicles</span><span>→</span></a>
+          <a class="text-link wa" data-message="Hello RoadReach Auto, I need help sourcing a used vehicle for export." href="#" data-i18n="whatsapp">Chat on WhatsApp ↗</a>
+        </div>
+        <div class="trust-row">
+          <span><b>01</b><span data-i18n="inspection">Inspection report</span></span>
+          <span><b>02</b><span data-i18n="documents">Export documents</span></span>
+          <span><b>03</b><span data-i18n="delivery">Port delivery</span></span>
+        </div>
+      </div>
+      <aside class="quote-card">
+        <p class="quote-label" data-i18n="quickQuote">QUICK QUOTE</p>
+        <h2 data-i18n="tellNeed">Tell us what you need.</h2>
+        <p data-i18n="matchingIntro">Receive matching options and an estimated FOB/CIF price.</p>
+        <form class="quote-form" data-compact="true">
+          <label><span data-i18n="name">Your name</span><input required name="name" autocomplete="name"></label>
+          <label><span data-i18n="country">Country</span><input required name="country" autocomplete="country-name"></label>
+          <label><span data-i18n="emailPhone">Email or WhatsApp</span><input required name="contact"></label>
+          <label><span data-i18n="preferredModel">Preferred model</span><input required name="preferred_model"></label>
+          <div class="form-split">
+            <label><span data-i18n="budget">Budget (USD)</span><input name="target_budget" inputmode="decimal"></label>
+            <label><span data-i18n="quantity">Quantity</span><input type="number" min="1" max="1000" name="quantity" value="1"></label>
+          </div>
+          <label class="honeypot" aria-hidden="true">Website<input tabindex="-1" autocomplete="off" name="website"></label>
+          <button class="button full" type="submit"><span data-i18n="sendRequest">Send quote request</span><span>→</span></button>
+          <span class="form-status" role="status"></span>
+        </form>
+        <small data-i18n="replyNote">No payment required. Typical reply within one business day.</small>
+      </aside>
     </div></section>
-    <section class="markets"><div class="markets-inner shell"><p data-i18n="exportMarkets">EXPORT MARKETS</p><span>AFRICA</span><i>◆</i><span>MIDDLE EAST</span><i>◆</i><span>LATIN AMERICA</span><i>◆</i><span>CENTRAL ASIA</span><i>◆</i><span>RUSSIA</span></div></section>
-    <section class="section shell" id="inventory"><div class="section-head"><div><p class="eyebrow dark"><span></span><span data-i18n="showroom">B2B VEHICLE SHOWROOM</span></p><h2 data-i18n="availableVehicles">Available export vehicles</h2></div><p data-i18n="inventoryIntro">Published vehicles and clearly labelled sourcing options. Availability and reference pricing remain subject to final verification.</p></div>
-      <form class="inventory-filters" id="inventoryFilters">
-        <label><span data-i18n="brand">Brand</span><select name="brand"><option value="" data-i18n="all">All</option></select></label><label><span data-i18n="model">Model</span><select name="model"><option value="" data-i18n="all">All</option></select></label><label><span data-i18n="year">Year</span><select name="year"><option value="" data-i18n="all">All</option></select></label><label><span data-i18n="fuel">Fuel type</span><select name="fuel_type"><option value="" data-i18n="all">All</option></select></label><label><span data-i18n="steering">Steering</span><select name="steering"><option value="" data-i18n="all">All</option><option value="LHD">LHD</option><option value="RHD">RHD</option></select></label><label><span data-i18n="body">Body type</span><select name="body_type"><option value="" data-i18n="all">All</option></select></label><label><span data-i18n="stockStatus">Stock status</span><select name="sourcing_status"><option value="" data-i18n="all">All</option><option value="IN_STOCK" data-i18n="inStock">In Stock</option><option value="AVAILABLE_TO_SOURCE" data-i18n="sourceStatus">Available to Source</option></select></label><label><span data-i18n="priceRange">Price range</span><select name="price"><option value="" data-i18n="all">All</option><option value="0-10000">Under $10,000</option><option value="10000-15000">$10k–$15k</option><option value="15000-20000">$15k–$20k</option><option value="20000-30000">$20k–$30k</option><option value="30000-999999">$30k+</option><option value="custom" data-i18n="customRange">Custom Range</option></select></label>
-        <div class="custom-price" id="customPrice" hidden><label><span>Min USD</span><input name="min_price" type="number" min="0"></label><label><span>Max USD</span><input name="max_price" type="number" min="0"></label></div><button class="filter-reset" type="reset" data-i18n="reset">Reset</button>
-      </form>
-      <div class="featured-block" id="featuredBlock" hidden><h3 data-i18n="featured">Featured vehicles</h3><div class="vehicle-grid" id="featuredGrid"></div></div><div class="vehicle-grid" id="vehicleGrid"><div class="stock-message" data-i18n="loading">Loading current inventory…</div></div><div class="stock-note"><span data-i18n="cantFind">Can't find your model?</span> <span data-i18n="sourceBrands">We source Toyota, Honda, Nissan, BYD, Haval, Geely, Changan and more.</span> <a href="#inquiry" data-i18n="sendRequirement">Send your requirement →</a></div>
+
+    <section class="markets">
+      <div class="markets-inner shell">
+        <p data-i18n="exportMarkets">EXPORT MARKETS</p>
+        <span>AFRICA</span><i>◆</i>
+        <span>MIDDLE EAST</span><i>◆</i>
+        <span>LATIN AMERICA</span><i>◆</i>
+        <span>CENTRAL ASIA</span><i>◆</i>
+        <span>RUSSIA</span>
+      </div>
     </section>
-    <section class="sold-section section" id="recentlySold" hidden><div class="shell"><div class="section-head"><div><p class="eyebrow"><span></span><span data-i18n="trackRecord">RECENT TRACK RECORD</span></p><h2 data-i18n="recentSold">Recently Sold</h2></div><p data-i18n="soldIntro">Sold examples remain visible for up to 90 days and are not part of available inventory.</p></div><div class="vehicle-grid" id="soldGrid"></div></div></section>
-    <section class="process section" id="process"><div class="shell"><div class="section-head light"><div><p class="eyebrow"><span></span><span data-i18n="simpleProcess">SIMPLE EXPORT PROCESS</span></p><h2 data-i18n="portTitle">From request to your port</h2></div></div><div class="steps"><article><b>01</b><h3 data-i18n="step1Title">Send your request</h3><p data-i18n="step1Body">Share the model, budget, quantity and destination port.</p></article><article><b>02</b><h3 data-i18n="step2Title">Verify & choose</h3><p data-i18n="step2Body">Review photos, specifications, condition and the complete quote.</p></article><article><b>03</b><h3 data-i18n="step3Title">Documents & payment</h3><p data-i18n="step3Body">Confirm the proforma invoice and export paperwork before shipment.</p></article><article><b>04</b><h3 data-i18n="step4Title">Ship & track</h3><p data-i18n="step4Body">Receive loading evidence and shipping documents for clearance.</p></article></div></div></section>
-    <section class="section shell about" id="about"><div class="about-photo"><img src="assets/rr-0001-exterior.svg" alt="Used vehicle prepared for export"><div><b data-i18n="transparent">Transparent sourcing</b><span data-i18n="evidence">Evidence before decision</span></div></div><div class="about-copy"><p class="eyebrow dark"><span></span><span data-i18n="buyers">BUILT FOR INTERNATIONAL BUYERS</span></p><h2 data-i18n="clarity">Clarity before every commitment.</h2><p data-i18n="aboutBody">International vehicle buying depends on accurate condition details, complete costs and reliable documents. Our process is designed around those three essentials.</p></div></section>
-    <section class="inquiry" id="inquiry"><div class="shell inquiry-grid"><div><p class="eyebrow"><span></span><span data-i18n="startRequest">START YOUR REQUEST</span></p><h2 data-i18n="inquiryTitle">Get matching vehicles and a shipping estimate.</h2><p data-i18n="inquiryBody">Tell us what you need. We'll reply with available options and the information needed to compare them.</p><div class="contact-lines"><a class="wa" data-message="Hello RoadReach Auto, I would like an export quotation." href="#">WhatsApp: +44 7845 251241 ↗</a><a href="mailto:xuli58836@gmail.com">Email: xuli58836@gmail.com</a></div></div>
-      <form class="inquiry-form quote-form" id="inquiryForm"><input type="hidden" name="vehicle_id"><input type="hidden" name="stock_id"><div class="form-split"><label><span data-i18n="name">Your name</span><input required name="name" autocomplete="name"></label><label><span data-i18n="company">Company</span><input name="company" autocomplete="organization"></label></div><div class="form-split"><label><span data-i18n="country">Country</span><input required name="country" autocomplete="country-name"></label><label><span data-i18n="city">City</span><input name="city" autocomplete="address-level2"></label></div><div class="form-split"><label><span data-i18n="customerType">Customer type</span><select name="customer_type"><option value="DEALER" data-i18n="dealer">Dealer</option><option value="IMPORTER" data-i18n="importer">Importer</option><option value="FLEET" data-i18n="fleet">Fleet</option><option value="PERSONAL_BUYER" data-i18n="personal">Personal buyer</option><option value="OTHER" data-i18n="other">Other</option></select></label><label><span data-i18n="destination">Destination port</span><input name="destination_port"></label></div><div class="form-split"><label>Email<input type="email" name="email" autocomplete="email"></label><label><span data-i18n="phone">WhatsApp / phone</span><input name="whatsapp_or_phone" autocomplete="tel"></label></div><div class="form-split"><label><span data-i18n="preferredModel">Preferred model</span><input required name="preferred_model"></label><label><span data-i18n="budget">Budget (USD)</span><input name="target_budget" type="number" min="0"></label></div><div class="form-split"><label><span data-i18n="quantity">Quantity</span><input type="number" min="1" max="1000" name="quantity" value="1"></label><label><span data-i18n="timing">Purchase timing</span><input name="purchase_timing"></label></div><label><span data-i18n="requirements">Other requirements</span><textarea name="message" rows="3"></textarea></label><label class="check-label"><input type="checkbox" name="request_full_vin"><span data-i18n="requestVin">Request Full VIN (reviewed privately; never sent automatically)</span></label><label class="honeypot" aria-hidden="true">Website<input tabindex="-1" autocomplete="off" name="website"></label><button class="button full" type="submit"><span data-i18n="sendInquiry">Send inquiry</span><span>→</span></button><span class="form-status" role="status"></span></form>
-    </div></section>
+
+    <section class="section shell" id="inventory">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow dark"><span></span><span data-i18n="showroom">B2B VEHICLE SHOWROOM</span></p>
+          <h2 data-i18n="availableVehicles">Available export vehicles</h2>
+        </div>
+        <p data-i18n="inventoryIntro">Published vehicles and clearly labelled sourcing options. Availability and reference pricing remain subject to final verification.</p>
+      </div>
+
+      <form class="inventory-filters" id="inventoryFilters">
+        <label><span data-i18n="brand">Brand</span><select name="brand"><option value="" data-i18n="all">All</option></select></label>
+        <label><span data-i18n="model">Model</span><select name="model"><option value="" data-i18n="all">All</option></select></label>
+        <label><span data-i18n="year">Year</span><select name="year"><option value="" data-i18n="all">All</option></select></label>
+        <label><span data-i18n="fuel">Fuel type</span><select name="fuel_type"><option value="" data-i18n="all">All</option></select></label>
+        <label><span data-i18n="steering">Steering</span><select name="steering"><option value="" data-i18n="all">All</option><option value="LHD">LHD</option><option value="RHD">RHD</option></select></label>
+        <label><span data-i18n="body">Body type</span><select name="body_type"><option value="" data-i18n="all">All</option></select></label>
+        <label><span data-i18n="stockStatus">Stock status</span><select name="sourcing_status"><option value="" data-i18n="all">All</option><option value="IN_STOCK" data-i18n="inStock">In Stock</option><option value="AVAILABLE_TO_SOURCE" data-i18n="sourceStatus">Available to Source</option></select></label>
+        <label><span data-i18n="priceRange">Price range</span><select name="price"><option value="" data-i18n="all">All</option><option value="0-10000">Under $10,000</option><option value="10000-15000">$10k–$15k</option><option value="15000-20000">$15k–$20k</option><option value="20000-30000">$20k–$30k</option><option value="30000-999999">$30k+</option><option value="custom" data-i18n="customRange">Custom Range</option></select></label>
+        <div class="custom-price" id="customPrice" hidden>
+          <label><span>Min USD</span><input name="min_price" type="number" min="0"></label>
+          <label><span>Max USD</span><input name="max_price" type="number" min="0"></label>
+        </div>
+        <button class="filter-reset" type="reset" data-i18n="reset">Reset</button>
+      </form>
+
+      <div class="featured-block" id="featuredBlock" hidden>
+        <h3 data-i18n="featured">Featured vehicles</h3>
+        <div class="vehicle-grid" id="featuredGrid"></div>
+      </div>
+      <div class="vehicle-grid" id="vehicleGrid"><div class="stock-message" data-i18n="loading">Loading current inventory…</div></div>
+      <div class="stock-note">
+        <span data-i18n="cantFind">Can't find your model?</span> 
+        <span data-i18n="sourceBrands">We source Lynk & Co, Haval, Toyota, Honda, BYD, Geely, Changan, Chery and more.</span> 
+        <a href="#inquiry" data-i18n="sendRequirement">Send your requirement →</a>
+      </div>
+    </section>
+
+    <section class="sold-section section" id="recentlySold" hidden>
+      <div class="shell">
+        <div class="section-head">
+          <div><p class="eyebrow"><span></span><span data-i18n="trackRecord">RECENT TRACK RECORD</span></p><h2 data-i18n="recentSold">Recently Sold</h2></div>
+          <p data-i18n="soldIntro">Sold examples remain visible for up to 90 days and are not part of available inventory.</p>
+        </div>
+        <div class="vehicle-grid" id="soldGrid"></div>
+      </div>
+    </section>
+
+    <section class="process section" id="process">
+      <div class="shell">
+        <div class="section-head light">
+          <div><p class="eyebrow"><span></span><span data-i18n="simpleProcess">SIMPLE EXPORT PROCESS</span></p><h2 data-i18n="portTitle">From request to your port</h2></div>
+        </div>
+        <div class="steps">
+          <article><b>01</b><h3 data-i18n="step1Title">Send your request</h3><p data-i18n="step1Body">Share the model, budget, quantity and destination port.</p></article>
+          <article><b>02</b><h3 data-i18n="step2Title">Verify & choose</h3><p data-i18n="step2Body">Review photos, specifications, condition and the complete quote.</p></article>
+          <article><b>03</b><h3 data-i18n="step3Title">Documents & payment</h3><p data-i18n="step3Body">Confirm the proforma invoice and export paperwork before shipment.</p></article>
+          <article><b>04</b><h3 data-i18n="step4Title">Ship & track</h3><p data-i18n="step4Body">Receive loading evidence and shipping documents for clearance.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section shell about" id="about">
+      <div class="about-photo">
+        <img src="assets/rr-0002-cover.webp" alt="Used vehicle prepared for export">
+        <div><b data-i18n="transparent">Transparent sourcing</b><span data-i18n="evidence">Evidence before decision</span></div>
+      </div>
+      <div class="about-copy">
+        <p class="eyebrow dark"><span></span><span data-i18n="buyers">BUILT FOR INTERNATIONAL BUYERS</span></p>
+        <h2 data-i18n="clarity">Clarity before every commitment.</h2>
+        <p data-i18n="aboutBody">International vehicle buying depends on accurate condition details, complete costs and reliable documents. Our process is designed around those three essentials.</p>
+      </div>
+    </section>
+
+    <section class="inquiry" id="inquiry">
+      <div class="shell inquiry-grid">
+        <div>
+          <p class="eyebrow"><span></span><span data-i18n="startRequest">START YOUR REQUEST</span></p>
+          <h2 data-i18n="inquiryTitle">Get matching vehicles and a shipping estimate.</h2>
+          <p data-i18n="inquiryBody">Tell us what you need. We'll reply with available options and the information needed to compare them.</p>
+          <div class="contact-lines">
+            <a class="wa" data-message="Hello RoadReach Auto, I would like an export quotation." href="#">WhatsApp: +44 7845 251241 ↗</a>
+            <a href="mailto:xuli58836@gmail.com">Email: xuli58836@gmail.com</a>
+          </div>
+        </div>
+        <form class="inquiry-form quote-form" id="inquiryForm">
+          <input type="hidden" name="vehicle_id">
+          <input type="hidden" name="stock_id">
+          <div class="form-split">
+            <label><span data-i18n="name">Your name</span><input required name="name" autocomplete="name"></label>
+            <label><span data-i18n="company">Company</span><input name="company" autocomplete="organization"></label>
+          </div>
+          <div class="form-split">
+            <label><span data-i18n="country">Country</span><input required name="country" autocomplete="country-name"></label>
+            <label><span data-i18n="city">City</span><input name="city" autocomplete="address-level2"></label>
+          </div>
+          <div class="form-split">
+            <label><span data-i18n="customerType">Customer type</span>
+              <select name="customer_type">
+                <option value="DEALER" data-i18n="dealer">Dealer</option>
+                <option value="IMPORTER" data-i18n="importer">Importer</option>
+                <option value="FLEET" data-i18n="fleet">Fleet</option>
+                <option value="PERSONAL_BUYER" data-i18n="personal">Personal buyer</option>
+                <option value="OTHER" data-i18n="other">Other</option>
+              </select>
+            </label>
+            <label><span data-i18n="destination">Destination port</span><input name="destination_port"></label>
+          </div>
+          <div class="form-split">
+            <label>Email<input type="email" name="email" autocomplete="email"></label>
+            <label><span data-i18n="phone">WhatsApp / phone</span><input name="whatsapp_or_phone" autocomplete="tel"></label>
+          </div>
+          <div class="form-split">
+            <label><span data-i18n="preferredModel">Preferred model</span><input required name="preferred_model"></label>
+            <label><span data-i18n="budget">Budget (USD)</span><input name="target_budget" type="number" min="0"></label>
+          </div>
+          <div class="form-split">
+            <label><span data-i18n="quantity">Quantity</span><input type="number" min="1" max="1000" name="quantity" value="1"></label>
+            <label><span data-i18n="timing">Purchase timing</span><input name="purchase_timing"></label>
+          </div>
+          <label><span data-i18n="requirements">Other requirements</span><textarea name="message" rows="3"></textarea></label>
+          <label class="check-label"><input type="checkbox" name="request_full_vin"><span data-i18n="requestVin">Request Full VIN (reviewed privately; never sent automatically)</span></label>
+          <label class="honeypot" aria-hidden="true">Website<input tabindex="-1" autocomplete="off" name="website"></label>
+          <button class="button full" type="submit"><span data-i18n="sendInquiry">Send inquiry</span><span>→</span></button>
+          <span class="form-status" role="status"></span>
+        </form>
+      </div>
+    </section>
   </main>
-  <div class="vehicle-modal" id="vehicleModal" role="dialog" aria-modal="true" aria-label="Vehicle details"><div class="modal-card"><button class="modal-close" id="modalClose" aria-label="Close">×</button><div id="modalContent"></div></div></div>
-  <footer><div class="shell footer-main"><a class="brand invert" href="#top"><span class="brand-mark">RR</span><span>ROADREACH <small>AUTO EXPORT</small></span></a><p data-i18n="footerBody">Practical vehicle sourcing and export support from China to international buyers.</p><div><a href="#inventory" data-i18n="navVehicles">Vehicles</a><a href="#process" data-i18n="navProcess">Process</a><a href="#about" data-i18n="navAbout">Why us</a><a href="#inquiry" data-i18n="contact">Contact</a></div></div><div class="shell footer-bottom"><span>© 2026 RoadReach Auto Export.</span><span data-i18n="priceDisclaimer">Final quotation may vary depending on vehicle condition/configuration, quantity, purchase timing and destination requirements.</span></div></footer>
+
+  <div class="vehicle-modal" id="vehicleModal" role="dialog" aria-modal="true" aria-label="Vehicle details">
+    <div class="modal-card">
+      <button class="modal-close" id="modalClose" aria-label="Close">×</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="shell footer-main">
+      <a class="brand invert" href="#top"><span class="brand-mark">RR</span><span>ROADREACH <small>AUTO EXPORT</small></span></a>
+      <p data-i18n="footerBody">Practical vehicle sourcing and export support from China to international buyers.</p>
+      <div>
+        <a href="#inventory" data-i18n="navVehicles">Vehicles</a>
+        <a href="#process" data-i18n="navProcess">Process</a>
+        <a href="#about" data-i18n="navAbout">Why us</a>
+        <a href="#inquiry" data-i18n="contact">Contact</a>
+      </div>
+    </div>
+    <div class="shell footer-bottom">
+      <span>© 2026 RoadReach Auto Export.</span>
+      <span data-i18n="priceDisclaimer">Final quotation may vary depending on vehicle condition/configuration, quantity, purchase timing and destination requirements.</span>
+    </div>
+  </footer>
+
   <a class="whatsapp-float wa" data-message="Hello RoadReach Auto, I would like an export quotation." href="#" aria-label="Chat on WhatsApp">WA <span data-i18n="chatNow">Chat now</span></a>
-  <script src="config.js"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script type="module" src="assets/public.js"></script>
+
+  <script src="config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script type="module" src="assets/public.js"></script>
 </body>
 </html>
