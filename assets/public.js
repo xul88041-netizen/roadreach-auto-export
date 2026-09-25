@@ -387,47 +387,6 @@ function closeModal() {
 
 // 核心常驻车源库 (确保领克 02 始终稳居首位展示，绝不丢失)
 const permanentVehicles = [
-    {
-    "id": "land-rover-rr-0003",
-    "stock_id": "RR-0003",
-    "brand": "Land Rover",
-    "model": "Range Rover Velar",
-    "year": 2021,
-    "body_type": "SUV",
-    "fuel_type": "Gasoline",
-    "steering": "LHD",
-    "mileage": 38000,
-    "exterior_color": "White",
-    "interior_color": "Black",
-    "condition": "Export certified. Multi-point inspection completed, clean title, ready for port delivery.",
-    "sourcing_status": "IN_STOCK",
-    "publication_status": "PUBLISHED",
-    "public_reference_fob_price_usd": null,
-    "vehicle_notes_en": "Verified 2021 Land Rover Range Rover Velar in pristine condition. Left-hand drive (LHD), premium specification, export inspected and ready for worldwide shipment.",
-    "vehicle_notes_ru": "Проверенный автомобиль 2021 Land Rover Range Rover Velar в отличном состоянии. Левый руль (LHD), максимальная комплектация, готов к экспорту из Китая.",
-    "masked_vin": "SALVRRR0003****2021",
-    "featured": true,
-    "published_at": "2026-09-25T04:43:21Z",
-    "images": [
-      {
-        "url": "assets/vehicles/rr-0003/rr-0003-1.webp",
-        "alt": "RR-0003 Exterior View 1"
-      },
-      {
-        "url": "assets/vehicles/rr-0003/rr-0003-2.webp",
-        "alt": "RR-0003 Exterior View 2"
-      },
-      {
-        "url": "assets/vehicles/rr-0003/rr-0003-3.webp",
-        "alt": "RR-0003 Interior View 3"
-      },
-      {
-        "url": "assets/vehicles/rr-0003/rr-0003-4.webp",
-        "alt": "RR-0003 Interior View 4"
-      }
-    ]
-  },
-
 
   {
     id: "lynkco-02-2019",

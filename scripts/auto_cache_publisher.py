@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-RoadReach Auto Export - 金鱼塘零人工全自动车源同步发布器 (优化版)
+RoadReach Auto Export - 金鱼塘 9 张大图全自动车源同步发布器
 ------------------------------------------------------
 功能特点：
-1. 实时监听微信小程序缓存，无需手动下载任何图片
-2. 只要打开车辆页面（哪怕只看了前几张），自动缓冲并捕获全部高清大图
+1. 严格质量标准：必须集齐 9 张完整高清大图（外观各角度+内饰+中控）才发布！
+2. 实时进度反馈：在微信里看车时，控制台实时显示当前抓取进度（例如：4/9、7/9、9/9）
 3. 自动加盖 RoadReach 官方出口品牌徽章，自动去除国内价格/水印
 4. 价格严格设为 Null (前台显示 Reference FOB Price on request 询价获取报价)
 5. 自动推送到 GitHub 线上官网，实时展示
@@ -30,6 +30,7 @@ if sys.stdout and hasattr(sys.stdout, "reconfigure"):
 
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 CACHE_DIR = r"C:\Users\Administrator\AppData\Roaming\Tencent\xwechat\radium\users\96292eda45d7033ae3997418e248f5b5\applet\local\wx7e72fb9523b9fe27\temp"
+REQUIRED_PHOTO_COUNT = 9
 
 sys.path.append(os.path.join(REPO_ROOT, "scripts", "crawler"))
 try:
@@ -40,7 +41,7 @@ except ImportError:
     translate_text = None
 
 def get_clipboard_text():
-    """读取 Windows 剪贴板文本 (支持 PowerShell 稳定读取)"""
+    """读取 Windows 剪贴板文本"""
     try:
         res = subprocess.run(
             ["powershell", "-NoProfile", "-Command", "Get-Clipboard"],
@@ -78,12 +79,10 @@ def parse_vehicle_text(text: str):
     if not text:
         return info
 
-    # 提取年份
     year_m = re.search(r"(\b20[12]\d)\s*年", text) or re.search(r"(\b20[12]\d)\s*款", text)
     if year_m:
         info["year"] = int(year_m.group(1))
 
-    # 提取里程
     km_m = re.search(r"(\d+(?:\.\d+)?)\s*万公里", text)
     if km_m:
         info["mileage"] = int(float(km_m.group(1)) * 10000)
@@ -92,7 +91,6 @@ def parse_vehicle_text(text: str):
         if km_direct:
             info["mileage"] = int(km_direct.group(1))
 
-    # 提取车型名称
     name_m = re.search(r"【车辆名称】\s*([^\n\r]+)", text) or re.search(r"车辆名称[：:]\s*([^\n\r]+)", text)
     if name_m:
         full_title = name_m.group(1).strip()
@@ -147,10 +145,13 @@ def generate_stock_id(existing_vehicles):
     return f"RR-{max_num + 1:04d}"
 
 def publish_vehicle_from_cache(images, car_info=None, auto_push=True, target_stock_id=None):
-    """将提取到的图片与车型信息打包发布到网站"""
-    if not images:
-        print("[!] 没有找到可用的车辆图片")
+    """将集齐的 9 张图片与车型信息打包发布到网站"""
+    if len(images) < REQUIRED_PHOTO_COUNT:
+        print(f"[!] 尚未集齐 9 张图 (当前 {len(images)}/{REQUIRED_PHOTO_COUNT})，取消发布。")
         return False
+
+    # 取前 9 张
+    images = images[:REQUIRED_PHOTO_COUNT]
 
     public_js_path = os.path.join(REPO_ROOT, "assets", "public.js")
     with open(public_js_path, "r", encoding="utf-8") as f:
@@ -167,16 +168,16 @@ def publish_vehicle_from_cache(images, car_info=None, auto_push=True, target_sto
             pass
 
     stock_id = target_stock_id or generate_stock_id(existing_vehicles)
-    print(f"\n[+] 正在为新车源分配编号: {stock_id}")
+    print(f"\n[+] 正在为新车源分配出口编号: {stock_id}")
 
     # 准备目标保存目录
     stock_dir_rel = f"assets/vehicles/{stock_id.lower()}"
     stock_dir_abs = os.path.join(REPO_ROOT, "assets", "vehicles", stock_id.lower())
     os.makedirs(stock_dir_abs, exist_ok=True)
 
-    # 处理并保存图片
+    # 处理并保存全部 9 张图片
     processed_images_list = []
-    print(f"[*] 正在清洗优化并加盖 RoadReach 品牌徽章 (共 {len(images)} 张图片)...")
+    print(f"[*] 正在清洗优化并加盖 RoadReach 国际品牌徽章 (全套 {len(images)} 张大图)...")
     for idx, img_path in enumerate(images, start=1):
         filename = f"{stock_id.lower()}-{idx}.webp"
         target_path = os.path.join(stock_dir_abs, filename)
@@ -193,14 +194,14 @@ def publish_vehicle_from_cache(images, car_info=None, auto_push=True, target_sto
             f.write(final_bytes)
 
         rel_url = f"{stock_dir_rel}/{filename}"
-        label = "Exterior View" if idx <= 2 else "Interior View"
+        label = "Exterior View" if idx <= 6 else "Interior & Cockpit View"
         processed_images_list.append({"url": rel_url, "alt": f"{stock_id} {label} {idx}"})
 
     car_info = car_info or {}
-    brand = car_info.get("brand") or "Land Rover"
-    model = car_info.get("model") or "Range Rover Velar"
-    year = car_info.get("year") or 2021
-    mileage = car_info.get("mileage") or 38000
+    brand = car_info.get("brand") or "Selected"
+    model = car_info.get("model") or "Export Vehicle"
+    year = car_info.get("year") or datetime.now().year - 3
+    mileage = car_info.get("mileage") or 45000
 
     new_car_obj = {
         "id": f"{brand.lower().replace(' ', '-')}-{stock_id.lower()}",
@@ -208,45 +209,34 @@ def publish_vehicle_from_cache(images, car_info=None, auto_push=True, target_sto
         "brand": brand,
         "model": model,
         "year": year,
-        "body_type": "SUV",
+        "body_type": "SUV" if any(k in model.lower() for k in ["suv", "01", "02", "05", "cs", "pro", "velar", "rover"]) else "Sedan",
         "fuel_type": "Gasoline",
         "steering": "LHD",
         "mileage": mileage,
-        "exterior_color": "White",
+        "exterior_color": "Standard",
         "interior_color": "Black",
         "condition": "Export certified. Multi-point inspection completed, clean title, ready for port delivery.",
         "sourcing_status": "IN_STOCK",
         "publication_status": "PUBLISHED",
-        "public_reference_fob_price_usd": None, # 严格不公开价格，引导海外客户询价
-        "vehicle_notes_en": f"Verified {year} {brand} {model} in pristine condition. Left-hand drive (LHD), premium specification, export inspected and ready for worldwide shipment.",
-        "vehicle_notes_ru": f"Проверенный автомобиль {year} {brand} {model} в отличном состоянии. Левый руль (LHD), максимальная комплектация, готов к экспорту из Китая.",
-        "masked_vin": f"SALVR{stock_id.replace('-', '')}****{year}",
+        "public_reference_fob_price_usd": None, # 严格不公开价格，海外客户询价索取
+        "vehicle_notes_en": f"Verified {year} {brand} {model} in pristine condition. Left-hand drive (LHD), export inspected and ready for worldwide shipment.",
+        "vehicle_notes_ru": f"Проверенный автомобиль {year} {brand} {model} в отличном техническом состоянии. Левый руль (LHD), готов к экспорту из Китая.",
+        "masked_vin": f"LSV{stock_id.replace('-', '')}****{year}",
         "featured": True,
         "published_at": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
         "images": processed_images_list
     }
 
-    # 如果已有同编号车辆（例如之前的占位 RR-0003），替换它；否则插入最前面
     new_car_js = "  " + json.dumps(new_car_obj, ensure_ascii=False, indent=2).replace("\n", "\n  ")
-    if f'"stock_id": "{stock_id}"' in public_js_content or f'stock_id: "{stock_id}"' in public_js_content:
-        # 替换已有车辆
-        pattern = re.compile(r'\{\s*"id":\s*"[^"]*",\s*"stock_id":\s*"' + re.escape(stock_id) + r'".*?\n  \},?', re.DOTALL)
-        if pattern.search(public_js_content):
-            updated_js = pattern.sub(new_car_js + ",\n", public_js_content)
-        else:
-            # 兼容单引号
-            pattern2 = re.compile(r'\{\s*id:\s*"[^"]*",\s*stock_id:\s*"' + re.escape(stock_id) + r'".*?\n  \},?', re.DOTALL)
-            updated_js = pattern2.sub(new_car_js + ",\n", public_js_content)
-    else:
-        insert_pos = public_js_content.find("const permanentVehicles = [")
-        bracket_pos = public_js_content.find("[", insert_pos)
-        updated_js = public_js_content[:bracket_pos+1] + "\n" + new_car_js + ",\n" + public_js_content[bracket_pos+1:]
+    insert_pos = public_js_content.find("const permanentVehicles = [")
+    bracket_pos = public_js_content.find("[", insert_pos)
+    updated_js = public_js_content[:bracket_pos+1] + "\n" + new_car_js + ",\n" + public_js_content[bracket_pos+1:]
 
     with open(public_js_path, "w", encoding="utf-8") as f:
         f.write(updated_js)
-    print(f"[OK] 成功将车辆 {stock_id} ({brand} {model}) 录入官网目录！")
+    print(f"[OK] 成功将车辆 {stock_id} ({brand} {model}) 及 9 张大图相册录入官网！")
 
-    # 运行校验测试 (防止 GBK 编码崩溃)
+    # 运行校验测试
     print("[*] 正在执行全站自动化安全与架构测试...")
     test_res = subprocess.run(
         ["npm", "run", "check"],
@@ -266,7 +256,7 @@ def publish_vehicle_from_cache(images, car_info=None, auto_push=True, target_sto
     if auto_push:
         print("[*] 正在同步提交并推送到 GitHub 线上官网...")
         subprocess.run(["git", "add", "."], cwd=REPO_ROOT, shell=True)
-        commit_msg = f"feat: publish vehicle {stock_id} ({brand} {model}) with zero price display"
+        commit_msg = f"feat: auto-publish vehicle {stock_id} ({brand} {model}) with complete 9-photo gallery"
         subprocess.run(["git", "commit", "-m", commit_msg], cwd=REPO_ROOT, shell=True)
         push_res = subprocess.run(
             ["git", "push", "origin", "main"],
@@ -278,83 +268,61 @@ def publish_vehicle_from_cache(images, car_info=None, auto_push=True, target_sto
             shell=True
         )
         if push_res.returncode == 0:
-            print("\n" + "=" * 60)
-            print(f" [SUCCESS] 线上官网已自动更新！新车源 {stock_id} ({brand} {model}) 已上线！")
+            print("\n" + "=" * 62)
+            print(f" [SUCCESS] 线上官网已自动更新！新车源 {stock_id} ({brand} {model}) 9 图已上线！")
             print(" 官网地址: https://xul88041-netizen.github.io/roadreach-auto-export/")
-            print("=" * 60 + "\n")
+            print("=" * 62 + "\n")
         else:
             print("[!] Git Push 遇到问题:", push_res.stderr)
 
     return True
 
-def run_latest_once():
-    """抓取当前缓存中最新的一辆车并发布"""
-    print("[*] 正在扫描微信金鱼塘Plus最新车源图片...")
-    images = get_latest_cached_image_cluster()
-    if not images:
-        print("[!] 暂未在缓存中检测到图片，请先在电脑微信里打开一辆车！")
-        return
-
-    print(f"[OK] 成功捕获到 {len(images)} 张高清车辆大图！")
-    cb_text = get_clipboard_text()
-    if cb_text:
-        print(f"[*] 检测到剪贴板车辆文案: {cb_text[:60]}...")
-        car_info = parse_vehicle_text(cb_text)
-    else:
-        car_info = {"brand": "Land Rover", "model": "Range Rover Velar"}
-
-    publish_vehicle_from_cache(images, car_info)
-
 def run_watcher():
-    """后台实时监控模式：只要你在微信看车，系统就自动捕获发布"""
-    print("=" * 65)
-    print("  RoadReach Auto Export - 金鱼塘车源零人工自动发布监听器")
-    print(f"  监听微信目录: ...\\wx7e72fb9523b9fe27\\temp")
-    print("  状态: [正在监听中] 只要你在微信点开任何一辆车，系统立即抓取发布！")
+    """后台实时监控模式：严格集齐 9 张图才发布"""
+    print("=" * 66)
+    print("  RoadReach Auto Export - 金鱼塘 9 张大图严选自动发布监听器")
+    print("  监听微信目录: ...\\wx7e72fb9523b9fe27\\temp")
+    print("  发布规则: 【必须集齐 9 张完整高清大图】系统才会自动清洗并发布！")
+    print("  使用方法: 在微信里打开车辆详情，下滑或点击图片翻完 9 张照片即可！")
     print("  按 Ctrl + C 可退出监听")
-    print("=" * 65)
+    print("=" * 66)
 
     last_processed_hash = ""
-    last_reported_count = 0
+    last_reported_count = -1
 
     while True:
         try:
             images = get_latest_cached_image_cluster()
-            if images and len(images) >= 1:
-                # 检查第一张图的哈希
-                try:
-                    with open(images[0], "rb") as fp:
-                        cur_hash = hashlib.md5(fp.read()).hexdigest()
-                except Exception:
-                    time.sleep(1)
-                    continue
+            count = len(images)
+
+            if count > 0:
+                with open(images[0], "rb") as fp:
+                    cur_hash = hashlib.md5(fp.read()).hexdigest()
 
                 if cur_hash != last_processed_hash:
-                    # 发现新的一批车！等待 2 秒缓冲以收集所有并发下载的图片
-                    cur_count = len(images)
-                    print(f"\n[+] 检测到微信载入新车源！已捕捉 {cur_count} 张高清图，正在等待完整下载...")
-                    time.sleep(2.5)
-
-                    # 再次获取以防刚才还在写入
-                    images = get_latest_cached_image_cluster()
-                    print(f"[+] 最终确认共抓取 {len(images)} 张超高清大图！立即清洗优化并发布...")
-
-                    cb_text = get_clipboard_text()
-                    car_info = parse_vehicle_text(cb_text) if cb_text else None
-                    success = publish_vehicle_from_cache(images, car_info)
-                    if success:
-                        last_processed_hash = cur_hash
-                        print("[*] 继续保持监听中，请继续在微信浏览下一辆车...")
+                    if count != last_reported_count:
+                        last_reported_count = count
+                        if count < REQUIRED_PHOTO_COUNT:
+                            print(f"[⏳ 抓取中] 当前已捕获 {count}/{REQUIRED_PHOTO_COUNT} 张高清大图 (请在微信中往下滑动或点开相册查看剩余大图...)")
+                        else:
+                            print(f"\n[🎉 集齐完成] 已成功集齐全部 {count} 张高清无水印大图！")
+                            # 稍等 1 秒以确保所有图片写入完毕
+                            time.sleep(1)
+                            images = get_latest_cached_image_cluster()
+                            cb_text = get_clipboard_text()
+                            car_info = parse_vehicle_text(cb_text) if cb_text else None
+                            success = publish_vehicle_from_cache(images, car_info)
+                            if success:
+                                last_processed_hash = cur_hash
+                                last_reported_count = -1
+                                print("[*] 继续保持监听中，请在微信中浏览下一辆车...")
 
             time.sleep(2)
         except KeyboardInterrupt:
             print("\n已安全停止监听。")
             break
-        except Exception as e:
+        except Exception:
             time.sleep(2)
 
 if __name__ == "__main__":
-    if "--watch" in sys.argv:
-        run_watcher()
-    else:
-        run_latest_once()
+    run_watcher()
