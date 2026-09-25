@@ -409,7 +409,15 @@ const permanentVehicles = [
     featured: true,
     published_at: "2026-09-25T12:00:00Z",
     images: [
-      { url: "assets/rr-0002-cover.webp", alt: "Lynk & Co 02 1.5T Front View" }
+      { url: "assets/vehicles/rr-0002/rr-0002-1.webp", alt: "Lynk & Co 02 Front Angle" },
+      { url: "assets/vehicles/rr-0002/rr-0002-2.webp", alt: "Lynk & Co 02 Side Angle" },
+      { url: "assets/vehicles/rr-0002/rr-0002-3.webp", alt: "Lynk & Co 02 Front View" },
+      { url: "assets/vehicles/rr-0002/rr-0002-4.webp", alt: "Lynk & Co 02 Rear Angle" },
+      { url: "assets/vehicles/rr-0002/rr-0002-5.webp", alt: "Lynk & Co 02 Rear Side" },
+      { url: "assets/vehicles/rr-0002/rr-0002-6.webp", alt: "Lynk & Co 02 Rear View" },
+      { url: "assets/vehicles/rr-0002/rr-0002-7.webp", alt: "Lynk & Co 02 Cockpit & Steering" },
+      { url: "assets/vehicles/rr-0002/rr-0002-8.webp", alt: "Lynk & Co 02 Center Console & Interior" },
+      { url: "assets/vehicles/rr-0002/rr-0002-9.webp", alt: "Lynk & Co 02 Rear Seats" }
     ]
   },
   {
