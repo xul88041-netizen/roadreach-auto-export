@@ -388,6 +388,67 @@ function closeModal() {
 // 核心常驻车源库 (确保领克 02 始终稳居首位展示，绝不丢失)
 const permanentVehicles = [
   {
+    "id": "selected-rr-0003",
+    "stock_id": "RR-0003",
+    "brand": "Selected",
+    "model": "Export Vehicle",
+    "year": 2023,
+    "body_type": "Sedan",
+    "fuel_type": "Gasoline",
+    "steering": "LHD",
+    "mileage": 50000,
+    "exterior_color": "Standard",
+    "interior_color": "Standard",
+    "condition": "Export certified. Multi-point inspection completed, clean title, ready for port delivery.",
+    "sourcing_status": "IN_STOCK",
+    "publication_status": "PUBLISHED",
+    "public_reference_fob_price_usd": null,
+    "vehicle_notes_en": "Verified 2023 Selected Export Vehicle in excellent condition. Left-hand drive (LHD), export inspected and ready for worldwide shipment.",
+    "vehicle_notes_ru": "Проверенный автомобиль 2023 Selected Export Vehicle в отличном техническом состоянии. Левый руль (LHD), готов к экспорту из Китая.",
+    "masked_vin": "LSVRR0003****2023",
+    "featured": true,
+    "published_at": "2026-09-25T04:38:11Z",
+    "images": [
+      {
+        "url": "assets/vehicles/rr-0003/rr-0003-1.webp",
+        "alt": "RR-0003 Exterior View 1"
+      },
+      {
+        "url": "assets/vehicles/rr-0003/rr-0003-2.webp",
+        "alt": "RR-0003 Exterior View 2"
+      },
+      {
+        "url": "assets/vehicles/rr-0003/rr-0003-3.webp",
+        "alt": "RR-0003 Exterior View 3"
+      },
+      {
+        "url": "assets/vehicles/rr-0003/rr-0003-4.webp",
+        "alt": "RR-0003 Exterior View 4"
+      },
+      {
+        "url": "assets/vehicles/rr-0003/rr-0003-5.webp",
+        "alt": "RR-0003 Exterior View 5"
+      },
+      {
+        "url": "assets/vehicles/rr-0003/rr-0003-6.webp",
+        "alt": "RR-0003 Exterior View 6"
+      },
+      {
+        "url": "assets/vehicles/rr-0003/rr-0003-7.webp",
+        "alt": "RR-0003 Interior View 7"
+      },
+      {
+        "url": "assets/vehicles/rr-0003/rr-0003-8.webp",
+        "alt": "RR-0003 Interior View 8"
+      },
+      {
+        "url": "assets/vehicles/rr-0003/rr-0003-9.webp",
+        "alt": "RR-0003 Interior View 9"
+      }
+    ]
+  },
+
+  {
     id: "lynkco-02-2019",
     stock_id: "RR-0002",
     brand: "Lynk & Co",
