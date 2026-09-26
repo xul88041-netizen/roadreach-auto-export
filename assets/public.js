@@ -44,7 +44,8 @@ const i18nDict = {
     fobOnRequest: "Reference FOB Price on request", askForQuote: "Ask for Quote →", findSimilar: "Find Similar Vehicle →",
     mileageLabel: "Mileage", colorLabel: "Exterior", conditionLabel: "Condition statement",
     statVehiclesLabel: "Vehicles Listed", statMarketsLabel: "Export Markets", statReplyLabel: "Reply Time", statPhotosLabel: "Photos per Car",
-    footerNavHeading: "Navigation", footerPortsHeading: "Key Destination Ports", footerBody: "Practical vehicle sourcing and export support from China to international buyers."
+    footerNavHeading: "Navigation", footerPortsHeading: "Key Destination Ports", footerBody: "Practical vehicle sourcing and export support from China to international buyers.",
+    inventoryUnavailable: "Current inventory is temporarily unavailable. Please contact us on WhatsApp for matching vehicles."
   },
   ru: {
     photosLabel: "фото", instantQuote: "Расчёт в WhatsApp", instantWhatsApp: "⚡ Быстрый расчёт в WhatsApp",
@@ -82,7 +83,8 @@ const i18nDict = {
     fobOnRequest: "Цена FOB по запросу", askForQuote: "Запросить цену →", findSimilar: "Найти похожий →",
     mileageLabel: "Пробег", colorLabel: "Цвет", conditionLabel: "Состояние",
     statVehiclesLabel: "Автомобилей в каталоге", statMarketsLabel: "Рынков экспорта", statReplyLabel: "Время ответа", statPhotosLabel: "Фото на авто",
-    footerNavHeading: "Навигация", footerPortsHeading: "Основные порты назначения", footerBody: "Практичный поиск и экспорт подержанных автомобилей из Китая."
+    footerNavHeading: "Навигация", footerPortsHeading: "Основные порты назначения", footerBody: "Практичный поиск и экспорт подержанных автомобилей из Китая.",
+    inventoryUnavailable: "Каталог временно недоступен. Пожалуйста, напишите нам в WhatsApp для подбора автомобилей."
   },
   ar: {
     photosLabel: "صور", instantQuote: "تسعير عبر واتساب", instantWhatsApp: "⚡ عرض سعر فوري عبر واتساب",
@@ -120,7 +122,8 @@ const i18nDict = {
     fobOnRequest: "السعر عند الطلب (FOB on request)", askForQuote: "طلب السعر والمواصفات →", findSimilar: "طلب سيارة مماثلة →",
     mileageLabel: "الممشى", colorLabel: "اللون الخارجي", conditionLabel: "حالة الفحص",
     statVehiclesLabel: "سيارات معروضة", statMarketsLabel: "أسواق التصدير", statReplyLabel: "وقت الرد", statPhotosLabel: "صورة لكل سيارة",
-    footerNavHeading: "روابط سريعة", footerPortsHeading: "الموانئ الرئيسية", footerBody: "مصدر موثوق للسيارات المستعملة من الصين مع دعم تصدير كامل."
+    footerNavHeading: "روابط سريعة", footerPortsHeading: "الموانئ الرئيسية", footerBody: "مصدر موثوق للسيارات المستعملة من الصين مع دعم تصدير كامل.",
+    inventoryUnavailable: "قائمة السيارات غير متاحة مؤقتاً. يرجى التواصل معنا عبر واتساب لمعرفة الخيارات المتاحة."
   },
   es: {
     photosLabel: "Fotos", instantQuote: "Cotización WhatsApp", instantWhatsApp: "⚡ Cotización rápida por WhatsApp",
@@ -158,7 +161,8 @@ const i18nDict = {
     fobOnRequest: "Precio FOB a consultar", askForQuote: "Solicitar cotización →", findSimilar: "Buscar similar →",
     mileageLabel: "Kilometraje", colorLabel: "Color", conditionLabel: "Estado verificado",
     statVehiclesLabel: "Vehículos Listados", statMarketsLabel: "Mercados de Exportación", statReplyLabel: "Tiempo de Respuesta", statPhotosLabel: "Fotos por Vehículo",
-    footerNavHeading: "Navegación", footerPortsHeading: "Puertos de Destino", footerBody: "Aprovisionamiento práctico de vehículos desde China para compradores internacionales."
+    footerNavHeading: "Navegación", footerPortsHeading: "Puertos de Destino", footerBody: "Aprovisionamiento práctico de vehículos desde China para compradores internacionales.",
+    inventoryUnavailable: "El catálogo de vehículos no está disponible temporalmente. Contáctenos por WhatsApp para conocer las opciones disponibles."
   },
   fr: {
     photosLabel: "Photos", instantQuote: "Devis WhatsApp", instantWhatsApp: "⚡ Devis rapide sur WhatsApp",
@@ -196,7 +200,8 @@ const i18nDict = {
     fobOnRequest: "Prix FOB sur demande", askForQuote: "Demander un devis →", findSimilar: "Trouver similaire →",
     mileageLabel: "Kilométrage", colorLabel: "Couleur", conditionLabel: "Rapport d'état",
     statVehiclesLabel: "Véhicules Listés", statMarketsLabel: "Marchés d'Exportation", statReplyLabel: "Délai de Réponse", statPhotosLabel: "Photos par Véhicule",
-    footerNavHeading: "Navigation", footerPortsHeading: "Ports de Destination Clés", footerBody: "Approvisionnement pratique en véhicules depuis la Chine pour acheteurs internationaux."
+    footerNavHeading: "Navigation", footerPortsHeading: "Ports de Destination Clés", footerBody: "Approvisionnement pratique en véhicules depuis la Chine pour acheteurs internationaux.",
+    inventoryUnavailable: "L'inventaire est temporairement indisponible. Veuillez nous contacter sur WhatsApp pour connaître les véhicules disponibles."
   },
   zh: {
     photosLabel: "张实拍", instantQuote: "WhatsApp 询价", instantWhatsApp: "⚡ WhatsApp 闪电询价",
@@ -234,7 +239,8 @@ const i18nDict = {
     fobOnRequest: "价格按需索取 (FOB on request)", askForQuote: "咨询底价与配置 →", findSimilar: "寻找同款车源 →",
     mileageLabel: "表显里程", colorLabel: "外观颜色", conditionLabel: "检测车况评级",
     statVehiclesLabel: "在售车源数量", statMarketsLabel: "出口目的市场", statReplyLabel: "响应时效", statPhotosLabel: "每车实拍张数",
-    footerNavHeading: "导航菜单", footerPortsHeading: "主要目的港口", footerBody: "专业中国二手车出口供应链服务，覆盖全球主要口岸。"
+    footerNavHeading: "导航菜单", footerPortsHeading: "主要目的港口", footerBody: "专业中国二手车出口供应链服务，覆盖全球主要口岸。",
+    inventoryUnavailable: "当前在售车源加载暂不可用。请直接通过 WhatsApp 联系我们获取最新匹配车源。"
   }
 };
 
@@ -486,18 +492,22 @@ function openVehicle(id) {
   document.body.style.overflow = "hidden";
 }
 
+const isValidUuid = (value) => typeof value === "string" && /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
+
 function startInquiry(vehicle) {
   closeModal();
   const form = document.querySelector("#inquiryForm");
   if (!form) return;
-  form.elements.vehicle_id.value = vehicle.publication_status === "SOLD" ? "" : vehicle.id;
-  form.elements.stock_id.value = vehicle.stock_id;
-  form.elements.preferred_model.value = `${vehicle.brand} ${vehicle.model}`;
-  form.elements.message.value = vehicle.publication_status === "SOLD" ? `Please find a similar vehicle to sold stock ${vehicle.stock_id}.` : `Please send the FOB/CIF quotation and full details for stock ${vehicle.stock_id}.`;
+  form.elements.vehicle_id.value = (vehicle.publication_status === "SOLD" || !isValidUuid(vehicle.id)) ? "" : vehicle.id;
+  form.elements.stock_id.value = vehicle.stock_id || "";
+  form.elements.preferred_model.value = `${vehicle.brand || ""} ${vehicle.model || ""}`.trim();
+  form.elements.message.value = vehicle.publication_status === "SOLD"
+    ? `Please find a similar vehicle to sold stock ${vehicle.stock_id || ""}.`
+    : `Please send the FOB/CIF quotation and full details for stock ${vehicle.stock_id || ""}.`;
   
   const waBtn = document.querySelector("#inquiryWaBtn");
   if (waBtn) {
-    const waText = `Hello RoadReach Auto! I am interested in Stock ${vehicle.stock_id} (${vehicle.brand} ${vehicle.model} ${vehicle.year}). Please share the full CIF quotation.`;
+    const waText = `Hello RoadReach Auto! I am interested in Stock ${vehicle.stock_id || ""} (${vehicle.brand || ""} ${vehicle.model || ""} ${vehicle.year || ""}). Please share the full CIF quotation.`;
     waBtn.href = `https://wa.me/${whatsAppNumber}?text=${encodeURIComponent(waText)}`;
   }
 
@@ -509,116 +519,36 @@ function closeModal() {
   document.body.style.overflow = "";
 }
 
-// 核心常驻车源库 (确保领克 02 始终稳居首位展示，绝不丢失)
-const permanentVehicles = [
-
-  {
-    id: "lynkco-02-2019",
-    stock_id: "RR-0002",
-    brand: "Lynk & Co",
-    model: "02 1.5T DCT Pro",
-    year: 2019,
-    body_type: "SUV",
-    fuel_type: "Gasoline",
-    steering: "LHD",
-    mileage: 48000,
-    exterior_color: "Grey",
-    interior_color: "Black",
-    condition: "Verified condition. One panel repainted, zero accident history, certified by ChaDoctor. Ready for export.",
-    sourcing_status: "IN_STOCK",
-    publication_status: "PUBLISHED",
-    public_reference_fob_price_usd: null, // 不写价格，自动显示为 Reference FOB Price on request
-    vehicle_notes_en: "Inspected 2019 Lynk & Co 02 1.5T in pristine condition. Left-hand drive (LHD), ready for international export. One panel repainted, zero accident history, verified by independent inspection.",
-    vehicle_notes_ru: "Проверенный автомобиль 2019 Lynk & Co 02 1.5T в отличном техническом состоянии. Левый руль (LHD), готов к экспорту из Китая. Без ДТП, независимый сертификат качества.",
-    masked_vin: "LB3714A8****3219",
-    featured: true,
-    published_at: "2026-09-25T12:00:00Z",
-    images: [
-      { url: "assets/vehicles/rr-0002/rr-0002-1.webp", alt: "Lynk & Co 02 Front Angle" },
-      { url: "assets/vehicles/rr-0002/rr-0002-2.webp", alt: "Lynk & Co 02 Side Angle" },
-      { url: "assets/vehicles/rr-0002/rr-0002-3.webp", alt: "Lynk & Co 02 Front View" },
-      { url: "assets/vehicles/rr-0002/rr-0002-4.webp", alt: "Lynk & Co 02 Rear Angle" },
-      { url: "assets/vehicles/rr-0002/rr-0002-5.webp", alt: "Lynk & Co 02 Rear Side" },
-      { url: "assets/vehicles/rr-0002/rr-0002-6.webp", alt: "Lynk & Co 02 Rear View" },
-      { url: "assets/vehicles/rr-0002/rr-0002-7.webp", alt: "Lynk & Co 02 Cockpit & Steering" },
-      { url: "assets/vehicles/rr-0002/rr-0002-8.webp", alt: "Lynk & Co 02 Center Console & Interior" },
-      { url: "assets/vehicles/rr-0002/rr-0002-9.webp", alt: "Lynk & Co 02 Rear Seats" }
-    ]
-  },
-  {
-    id: "wildlander-2024",
-    stock_id: "RR-TY-WL-001",
-    brand: "Toyota",
-    model: "Wildlander Hybrid 2.5L Plus 2WD Luxury",
-    year: 2024,
-    body_type: "SUV",
-    fuel_type: "HEV",
-    steering: "LHD",
-    mileage: 26800,
-    exterior_color: "Black",
-    interior_color: "Black",
-    condition: "Original paint, zero accidents, certified pre-owned condition.",
-    sourcing_status: "IN_STOCK",
-    publication_status: "PUBLISHED",
-    public_reference_fob_price_usd: null,
-    vehicle_notes_en: "2024 Toyota Wildlander Hybrid in showroom condition. Low mileage, highly reliable hybrid powertrain, ready for immediate export.",
-    vehicle_notes_ru: "2024 Toyota Wildlander Hybrid в идеальном состоянии. Малый пробег, надежный гибридный двигатель, готов к отправке.",
-    masked_vin: "LVGB1234****6789",
-    featured: true,
-    published_at: "2026-09-24T12:00:00Z",
-    images: [
-      { url: "assets/rr-0001-cover.svg", alt: "Toyota Wildlander Exterior" }
-    ]
-  },
-  {
-    id: "accord-2016",
-    stock_id: "RR-ACCORD-2016-0901",
-    brand: "Honda",
-    model: "Accord 2.0 CVT Elite",
-    year: 2016,
-    body_type: "Sedan",
-    fuel_type: "Gasoline",
-    steering: "LHD",
-    mileage: 110000,
-    exterior_color: "Black",
-    interior_color: "Black",
-    condition: "Clean sedan with complete maintenance history, fuel efficient and robust.",
-    sourcing_status: "IN_STOCK",
-    publication_status: "PUBLISHED",
-    public_reference_fob_price_usd: null,
-    vehicle_notes_en: "2016 Honda Accord 2.0 CVT Elite. Reliable executive sedan with smooth transmission and great fuel economy.",
-    vehicle_notes_ru: "2016 Honda Accord 2.0 CVT Elite. Надежный представительский седан с отличной экономичностью.",
-    masked_vin: "LHGCR265****5521",
-    featured: false,
-    published_at: "2026-09-23T12:00:00Z",
-    images: [
-      { url: "assets/rr-0001-exterior.svg", alt: "Honda Accord Exterior" }
-    ]
-  }
-];
-
 async function loadInventory() {
-  let remoteList = [];
-  if (client) {
-    try {
-      const { data, error } = await client.from("public_vehicle_catalog").select("*").order("featured", { ascending: false }).order("published_at", { ascending: false });
-      if (!error && Array.isArray(data)) {
-        remoteList = data;
-      }
-    } catch (e) {
-      console.warn("Supabase query failed, falling back to permanent catalogue", e);
+  const grid = document.querySelector("#vehicleGrid");
+  if (!client) {
+    console.warn("Supabase client is not configured; inventory is unavailable.");
+    vehicles = [];
+    if (grid) {
+      grid.innerHTML = `<div class="stock-message">${escapeHtml(t("inventoryUnavailable", "Current inventory is temporarily unavailable. Please contact us on WhatsApp for matching vehicles."))}</div>`;
+    }
+    populateFilters();
+    renderInventory();
+    return;
+  }
+
+  try {
+    const { data, error } = await client
+      .from("public_vehicle_catalog")
+      .select("*")
+      .order("featured", { ascending: false })
+      .order("published_at", { ascending: false });
+
+    if (error) throw error;
+    vehicles = Array.isArray(data) ? data : [];
+  } catch (e) {
+    console.error("Failed to load inventory from Supabase:", e);
+    vehicles = [];
+    if (grid) {
+      grid.innerHTML = `<div class="stock-message">${escapeHtml(t("inventoryUnavailable", "Current inventory is temporarily unavailable. Please contact us on WhatsApp for matching vehicles."))}</div>`;
     }
   }
 
-  // 智能合并：优先使用 remoteList，若 remoteList 中尚未录入 RR-0002 (领克 02)，自动置顶追加
-  const list = [...remoteList];
-  for (const car of permanentVehicles) {
-    if (!list.some(v => v.stock_id === car.stock_id)) {
-      list.unshift(car);
-    }
-  }
-
-  vehicles = list;
   populateFilters();
   renderInventory();
 }

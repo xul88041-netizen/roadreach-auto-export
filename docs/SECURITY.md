@@ -22,7 +22,7 @@ Anonymous users cannot select the full `vehicles` record. The safe view intentio
 - expected profit and margin
 - all inquiry, customer, email, follow-up, quote and deal data
 
-The inquiry Edge Function applies field allowlisting, length limits, email validation, a honeypot and a hashed 5-per-15-minute fingerprint limit. It then calls a service-role-only database transaction. Raw IP addresses are not stored.
+The inquiry Edge Function applies field allowlisting, length limits, email validation, a honeypot and an atomic database-backed `check_inquiry_rate_limit` RPC (5 requests per 15-minute sliding window). The fingerprint is salted with the `RATE_LIMIT_SALT` Function Secret; raw IP addresses and user agents are never stored in plaintext.
 
 ## Administrator data boundary
 

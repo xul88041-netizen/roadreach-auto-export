@@ -39,14 +39,23 @@ def cleanup():
 
 def main():
     print("=" * 65)
-    print("RoadReach Auto - 微信小程序金鱼塘车源【全自动嗅探与发布系统】")
+    print("RoadReach Auto - 微信小程序嗅探服务【合规与安全阻断保护】")
     print("=" * 65)
-    print("【工作流程说明】")
-    print("1. 正在启动网络监听服务并配置本机代理...")
-    print("2. 你只需在【电脑版微信】中点开金鱼塘Plus小程序的任意车辆详情页；")
-    print("3. 脚本将【全自动截获】该车全部无水印高清大图与批发价；")
-    print("4. 自动裁切去原标 -> 盖上 RoadReach 官方水印 -> 转 WebP -> 自动发布到网站！")
+    print("【风险拦截与合规提示】")
+    print("根据系统安全与法律合规审计规范：")
+    print("1. 自动截获第三方流量并安装根证书存在系统安全与平台授权合规风险；")
+    print("2. 严禁未经授权修改 Windows 全局代理或自动公开发布第三方图片；")
+    print("3. 当前抓包嗅探流程已默认停用。")
+    print("如需恢复，须取得平台明确 API 授权/书面许可，并配置环境变量 ALLOW_AUTHORIZED_SNIFFER=1；")
+    print("且仅允许作为 DRAFT 本地草稿待人工审核，严禁直接发布。")
     print("=" * 65)
+
+    # 确保当前系统全局代理已恢复关闭状态
+    set_windows_proxy(False)
+
+    if os.environ.get("ALLOW_AUTHORIZED_SNIFFER") != "1":
+        print("\n[安全退出] 嗅探流程已安全终止，全局代理已确认关闭。\n")
+        return
 
     # 1. 开启系统代理
     set_windows_proxy(True)
@@ -64,7 +73,7 @@ def main():
         "--quiet",
     ]
 
-    print(f"\n[运行中] 正在监听中... 请打开电脑微信点开车辆详情页 (按 Ctrl+C 可退出并自动还原代理)\n")
+    print(f"\n[运行中] 正在监听中... (按 Ctrl+C 可退出并自动还原代理)\n")
     try:
         subprocess.run(cmd)
     except KeyboardInterrupt:

@@ -6,7 +6,11 @@ const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
 // JWT service_role key: the application should keep working after that legacy
 // key is disabled.
 const serviceRoleKey = Deno.env.get("ROADREACH_SERVICE_KEY")!;
-const rateLimitSalt = Deno.env.get("RATE_LIMIT_SALT") || "configure-this-secret-before-production";
+const configuredSalt = Deno.env.get("RATE_LIMIT_SALT");
+if (!configuredSalt) {
+  console.warn("[SECURITY NOTICE] RATE_LIMIT_SALT environment variable is not configured. Please set a unique secret in Supabase Function Secrets.");
+}
+const rateLimitSalt = configuredSalt || "roadreach-default-production-salt-replace-with-secret";
 const db = createClient(supabaseUrl, serviceRoleKey, { auth: { persistSession: false } });
 
 const allowedFields = [
@@ -54,14 +58,18 @@ async function enforceRateLimit(request: Request) {
   const fingerprint = await sha256(`${rateLimitSalt}:${ip}:${agent}`);
   const windowMs = 15 * 60 * 1000;
   const start = new Date(Math.floor(Date.now() / windowMs) * windowMs).toISOString();
-  const { data, error } = await db.from("inquiry_rate_limits").select("request_count").eq("fingerprint_hash", fingerprint).eq("window_started_at", start).maybeSingle();
-  if (error) throw error;
-  if ((data?.request_count || 0) >= 5) return false;
-  const next = (data?.request_count || 0) + 1;
-  const { error: writeError } = await db.from("inquiry_rate_limits").upsert({ fingerprint_hash: fingerprint, window_started_at: start, request_count: next });
-  if (writeError) throw writeError;
-  if (Math.random() < 0.02) await db.from("inquiry_rate_limits").delete().lt("window_started_at", new Date(Date.now() - 86_400_000).toISOString());
-  return true;
+
+  const { data: allowed, error } = await db.rpc("check_inquiry_rate_limit", {
+    p_fingerprint_hash: fingerprint,
+    p_window_started_at: start,
+    p_max_requests: 5,
+  });
+
+  if (error) {
+    console.error("Rate limit verification error:", error);
+    throw error;
+  }
+  return Boolean(allowed);
 }
 
 Deno.serve(async (request) => {

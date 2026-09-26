@@ -169,13 +169,13 @@ class WeChatSnifferAddon:
             if car.get("year"):
                 raw_specs["year"] = car["year"]
 
-            # 执行清洗、打水印、转WebP、翻译并发布到网站
+            # 合规与安全：禁止直接对外发布，仅作为本地待审草稿保存 (publish_now=False)
             process_and_publish_car(
                 raw_title=car["title"],
                 price_rmb=car["price_rmb"],
                 raw_specs=raw_specs,
                 image_urls=car["images"],
-                publish_now=True,
+                publish_now=False,
                 dry_run=False,
             )
 

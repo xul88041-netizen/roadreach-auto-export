@@ -7,4 +7,8 @@ coverage/
 .supabase/
 supabase/.temp/
 *.zip
-__pycache__/
+**/__pycache__/
+*.py[cod]
+*$py.class
+scripts/crawler/test_output/
+drafts/

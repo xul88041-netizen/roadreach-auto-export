@@ -331,6 +331,36 @@ create table public.inquiry_rate_limits (
   primary key (fingerprint_hash, window_started_at)
 );
 
+create or replace function public.check_inquiry_rate_limit(
+  p_fingerprint_hash text,
+  p_window_started_at timestamptz,
+  p_max_requests integer default 5
+)
+returns boolean
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  v_count integer;
+begin
+  insert into public.inquiry_rate_limits (fingerprint_hash, window_started_at, request_count)
+  values (p_fingerprint_hash, p_window_started_at, 1)
+  on conflict (fingerprint_hash, window_started_at)
+  do update set request_count = public.inquiry_rate_limits.request_count + 1
+  returning request_count into v_count;
+
+  if random() < 0.02 then
+    delete from public.inquiry_rate_limits where window_started_at < now() - interval '1 day';
+  end if;
+
+  return v_count <= p_max_requests;
+end;
+$$;
+
+revoke all on function public.check_inquiry_rate_limit(text, timestamptz, integer) from public, anon, authenticated;
+grant execute on function public.check_inquiry_rate_limit(text, timestamptz, integer) to service_role;
+
 create or replace function public.touch_updated_at()
 returns trigger language plpgsql set search_path = public as $$
 begin new.updated_at := now(); return new; end;

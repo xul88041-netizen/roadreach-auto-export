@@ -198,29 +198,26 @@ def generate_stock_id(existing_vehicles):
             max_num = max(max_num, int(m.group(1)))
     return f"RR-{max_num + 1:04d}"
 
-def publish_vehicle_from_cache(images, car_info=None, auto_push=True, target_stock_id=None):
-    """将集齐的 9 张图片与车型信息打包发布到网站"""
+def publish_vehicle_from_cache(images, car_info=None, target_stock_id=None):
+    """将集齐的 9 张图片与车型信息整理并保存为 DRAFT 待审草稿（禁止直接推送 main）"""
     if len(images) < REQUIRED_PHOTO_COUNT:
-        print(f"[!] 尚未集齐 9 张图 (当前 {len(images)}/{REQUIRED_PHOTO_COUNT})，取消发布。")
+        print(f"[!] 尚未集齐 9 张图 (当前 {len(images)}/{REQUIRED_PHOTO_COUNT})，取消导入。")
         return False
 
     images = images[:REQUIRED_PHOTO_COUNT]
 
-    public_js_path = os.path.join(REPO_ROOT, "assets", "public.js")
-    with open(public_js_path, "r", encoding="utf-8") as f:
-        public_js_content = f.read()
+    # 扫描现有草稿或已分配的 stock_id
+    drafts_dir = os.path.join(REPO_ROOT, "drafts")
+    os.makedirs(drafts_dir, exist_ok=True)
 
-    m = re.search(r"const permanentVehicles\s*=\s*(\[.*?\]);", public_js_content, re.DOTALL)
-    existing_vehicles = []
-    if m:
-        try:
-            stock_ids = re.findall(r'stock_id:\s*"([^"]+)"', m.group(1))
-            existing_vehicles = [{"stock_id": s} for s in stock_ids]
-        except Exception:
-            pass
+    existing_stock_ids = []
+    if os.path.exists(drafts_dir):
+        for fname in os.listdir(drafts_dir):
+            if fname.endswith(".json"):
+                existing_stock_ids.append({"stock_id": fname[:-5]})
 
-    stock_id = target_stock_id or generate_stock_id(existing_vehicles)
-    print(f"\n[+] 正在为新车源分配出口官方编号: {stock_id}")
+    stock_id = target_stock_id or generate_stock_id(existing_stock_ids)
+    print(f"\n[+] 正在为新车源分配出口编号: {stock_id} (DRAFT 草稿模式)")
 
     stock_dir_rel = f"assets/vehicles/{stock_id.lower()}"
     stock_dir_abs = os.path.join(REPO_ROOT, "assets", "vehicles", stock_id.lower())
@@ -255,11 +252,12 @@ def publish_vehicle_from_cache(images, car_info=None, auto_push=True, target_sto
     mileage = car_info.get("mileage") or 45000
     body_type = car_info.get("body_type") or "SUV"
     fuel_type = car_info.get("fuel_type") or "Gasoline"
-    notes_en = car_info.get("condition_en") or f"Verified {year} {brand} {model} in pristine condition. Left-hand drive (LHD), export inspected and ready for worldwide shipment."
-    notes_ru = car_info.get("condition_ru") or f"Проверенный автомобиль {year} {brand} {model} в отличном техническом состоянии. Левый руль (LHD), готов к экспорту из Китая."
+    notes_en = car_info.get("condition_en") or f"Inspected {year} {brand} {model}. Export verified, awaiting final administrator confirmation."
+    notes_ru = car_info.get("condition_ru") or f"Автомобиль {year} {brand} {model}. Готовится к экспорту, ожидает подтверждения администратора."
 
-    new_car_obj = {
-        "id": f"{brand.lower().replace(' ', '-')}-{stock_id.lower()}",
+    # 规范安全要求：状态必须是 DRAFT，绝不能绕过审核直接 PUBLISHED；
+    # 不编造虚假 VIN，由管理员人工审核时录入真实 VIN
+    draft_car_obj = {
         "stock_id": stock_id,
         "brand": brand,
         "model": model,
@@ -270,66 +268,33 @@ def publish_vehicle_from_cache(images, car_info=None, auto_push=True, target_sto
         "mileage": mileage,
         "exterior_color": "Standard",
         "interior_color": "Black",
-        "condition": "Export certified. Multi-point inspection completed, clean title, ready for port delivery.",
+        "condition": "Export inspection pending administrator review.",
         "sourcing_status": "IN_STOCK",
-        "publication_status": "PUBLISHED",
-        "public_reference_fob_price_usd": None, # 严格不公开价格，海外客户询价索取
+        "publication_status": "DRAFT",
+        "public_reference_fob_price_usd": None,
+        "internal_vehicle_cost_rmb": car_info.get("price_rmb") or 0,
         "vehicle_notes_en": notes_en,
         "vehicle_notes_ru": notes_ru,
-        "masked_vin": f"LSV{stock_id.replace('-', '')}****{year}",
-        "featured": True,
-        "published_at": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "full_vin": None,
+        "masked_vin": None,
+        "featured": False,
+        "created_at": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
         "images": processed_images_list
     }
 
-    new_car_js = "  " + json.dumps(new_car_obj, ensure_ascii=False, indent=2).replace("\n", "\n  ")
-    insert_pos = public_js_content.find("const permanentVehicles = [")
-    bracket_pos = public_js_content.find("[", insert_pos)
-    updated_js = public_js_content[:bracket_pos+1] + "\n" + new_car_js + ",\n" + public_js_content[bracket_pos+1:]
+    draft_file_path = os.path.join(drafts_dir, f"{stock_id}.json")
+    with open(draft_file_path, "w", encoding="utf-8") as f:
+        json.dump(draft_car_obj, f, ensure_ascii=False, indent=2)
 
-    with open(public_js_path, "w", encoding="utf-8") as f:
-        f.write(updated_js)
-    print(f"[OK] 成功将车辆 {stock_id} ({brand} {model}) 及 9 张大图相册录入官网！")
-
-    # 运行校验测试
-    print("[*] 正在执行全站自动化安全与架构测试...")
-    test_res = subprocess.run(
-        ["npm", "run", "check"],
-        cwd=REPO_ROOT,
-        capture_output=True,
-        text=True,
-        encoding="utf-8",
-        errors="ignore",
-        shell=True
-    )
-    if test_res.returncode != 0:
-        print("[!] 测试未通过，请检查：\n", test_res.stdout, test_res.stderr)
-        return False
-    print("[OK] 全站 10 项测试全部通过！")
-
-    # 自动推送到 GitHub
-    if auto_push:
-        print("[*] 正在同步提交并推送到 GitHub 线上官网...")
-        subprocess.run(["git", "add", "."], cwd=REPO_ROOT, shell=True)
-        commit_msg = f"feat: publish vehicle {stock_id} ({brand} {model}) with complete 9-photo gallery"
-        subprocess.run(["git", "commit", "-m", commit_msg], cwd=REPO_ROOT, shell=True)
-        push_res = subprocess.run(
-            ["git", "push", "origin", "main"],
-            cwd=REPO_ROOT,
-            capture_output=True,
-            text=True,
-            encoding="utf-8",
-            errors="ignore",
-            shell=True
-        )
-        if push_res.returncode == 0:
-            print("\n" + "=" * 62)
-            print(f" [SUCCESS] 线上官网已自动更新！新车源 {stock_id} ({brand} {model}) 9 图已上线！")
-            print(" 官网地址: https://xul88041-netizen.github.io/roadreach-auto-export/")
-            print("=" * 62 + "\n")
-        else:
-            print("[!] Git Push 遇到问题:", push_res.stderr)
-
+    print("\n" + "=" * 66)
+    print(f" [OK] 车源草稿已安全生成: {draft_file_path}")
+    print(f" 车型: {brand} {model} ({year}年, {mileage} km)")
+    print(f" 图片: 共 {len(processed_images_list)} 张已保存并处理至 {stock_dir_rel}")
+    print(" 【安全与合规审计规范】")
+    print("  - 已禁用直接推送 main 分支与绕过审核行为；")
+    print("  - 车辆已作为 DRAFT (待审草稿) 保存，未公开到官网前台；")
+    print("  - 请登录管理后台 (/admin/) 录入真实 VIN、核对成本并审核发布。")
+    print("=" * 66 + "\n")
     return True
 
 def run_watcher():

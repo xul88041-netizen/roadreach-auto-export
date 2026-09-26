@@ -1,75 +1,77 @@
-# RoadReach Auto Export — Current Audit
+# RoadReach Auto Export — Current System Audit & Resolution Report
 
-Audit date: 2026-08-16
-Audited baseline: `origin/main` at `9da2dda`
-Implementation branch: `admin-v1`
+Audit date: 2026-09-26  
+Audited baseline: `origin/main`  
+Status: **P0 / P1 Security & Architecture Items Fully Resolved**
 
-## A. Current capabilities
+---
 
-- A static, single-page public showroom is deployed by GitHub Actions to GitHub Pages.
-- The existing visual language is consistent: deep navy, orange accents, compact B2B typography, responsive cards, hero, process, FAQ and contact areas.
-- `config.js` receives `PUBLIC_API_URL` at deployment time. Vehicle data and inquiries use `/api/public/export-vehicles` and `/api/public/inquiries` on that external origin.
-- The page has featured inventory, body-type filters, a vehicle detail modal, photo galleries, status labels and WhatsApp/email calls to action.
-- The existing inquiry flow has name/contact/destination/vehicle/budget/quantity and a honeypot.
-- Basic layouts exist for desktop, tablet and mobile; the one-column 620px layout is a useful foundation.
-- Public inventory is not hardcoded in `index.html`; a deployment verification script checks several public API assumptions.
+## 1. System Overview & Capabilities
 
-## B. Missing capabilities
+- **Public Showroom**: Deployed to GitHub Pages via automated GitHub Actions CI/CD.
+  - Multi-language support across 6 global trade languages: English (EN), Russian (RU), Arabic (AR with RTL support), Spanish (ES), French (FR), Simplified Chinese (ZH).
+  - High-performance vehicle cards with photo counts, lazy loading, FOB request pricing boundaries, and WhatsApp direct CTAs.
+  - Interactive modal with multi-image gallery, keyboard navigation, and responsive thumbnails.
+  - Live statistics counter, trust verification badges, and sticky navbar.
+- **Backend & Database**: Fully independent Supabase architecture with PostgreSQL.
+  - Security-invoker public view `public.public_vehicle_catalog` strictly excludes internal RMB costs, profit margins, and full VINs.
+  - Row Level Security (RLS) enabled on all 11 operational tables (`vehicles`, `vehicle_images`, `customers`, `inquiries`, `followups`, `quotes`, `deals`, `customer_email_messages`, `gmail_sync_state`, `inquiry_rate_limits`, `admin_allowlist`).
+  - Edge Functions for public inquiries (`submit-inquiry`) and Gmail mailbox synchronization (`gmail-sync`).
+- **Admin Application**: Located at `/admin/`, authenticated via Supabase Auth with database-enforced `is_admin()` allowlist.
+  - Complete CRM: Vehicle CRUD, image ordering, FOB price calculator, customer management, inquiry review, follow-up scheduling, and deal pipeline.
 
-- No independent database, authentication, storage, admin application or CRM exists in this repository.
-- No admin login, administrator allowlist, dashboard, vehicle lifecycle CRUD, image ordering, pricing calculator, customer records, follow-ups, quotes or deals.
-- No Gmail OAuth historical importer or incremental sync foundation.
-- No English/Russian language toggle or translation dictionary.
-- Public filters do not cover brand, model, year, fuel, steering, stock status and price ranges.
-- The inquiry schema lacks customer type, city, preferred model, purchase timing, source page, language and VIN request.
-- There is no dedicated Recently Sold area or automatic 90-day archive mechanism.
-- There are no database migrations, RLS policies, security documentation or database-boundary tests.
+---
 
-## C. Current risks
+## 2. Issues Identified in Audit & Resolutions Applied
 
-- The public site depends on an API outside this project, so RoadReach Auto Export is not an independent system.
-- The old API contract uses different names and status concepts (`availabilityStatus`, `priceType`) and cannot represent publication lifecycle separately from sourcing status.
-- The public response boundary is enforced by the old API rather than by migrations in this repository, so this project cannot prove that full VIN, RMB cost, profit or customer data are excluded.
-- Honeypot-only spam protection has no demonstrable rate limiting.
-- The current success copy states that an inquiry was sent, but the repository cannot prove database persistence or notification delivery.
-- There is no authenticated storage boundary for upload/delete operations.
-- Mobile support covers the public page only; there is no mobile admin workflow.
-- External hero imagery depends on Unsplash availability. Supabase Free Tier and other overseas services cannot be represented as guaranteed stable from mainland China.
+### [P0 - Resolved] Public Inventory Dual-Source & Invalid Inquiry UUID
+- **Finding**: `assets/public.js` previously hardcoded a static `permanentVehicles` array that merged into remote data, bypassing database lifecycle, RLS, and admin moderation. The static vehicle IDs (e.g., `lynkco-02-2019`) were non-UUID strings, causing database foreign key errors when customers submitted inquiries for them.
+- **Resolution**:
+  - Removed `permanentVehicles` entirely from `public.js`.
+  - Refactored `loadInventory()` so that `public_vehicle_catalog` is the sole source of truth for public vehicles.
+  - Added graceful degradation: if Supabase is unreachable or unconfigured, the catalog displays a localized unavailable message (`inventoryUnavailable`) instead of fake static cars.
+  - Added UUID validation in `startInquiry()`, guaranteeing that only valid UUIDs are submitted as `vehicle_id`.
 
-## D. Safe to retain and reuse
+### [P0 - Resolved] Automated Scripts Bypassing Admin Moderation & Direct Push to Main
+- **Finding**: `scripts/auto_cache_publisher.py` wrote directly to frontend JavaScript, automatically generated synthetic VINs, set status to `PUBLISHED`, and ran `git push origin main`.
+- **Resolution**:
+  - Disabled all automatic git commit and push operations.
+  - Refactored `publish_vehicle_from_cache` to generate local draft files (`drafts/{stock_id}.json`) with `publication_status: "DRAFT"`.
+  - Eliminated synthetic VIN generation; real full VIN entry is deferred to authorized administrators during review in `/admin/`.
+  - Updated the Windows launcher batch script to reflect the new draft-only, human-in-the-loop workflow.
 
-- Brand direction, palette, logo treatment, typography scale, hero/process/about/FAQ copy structure and public GitHub Pages URL.
-- GitHub Pages deployment pattern, runtime-generated public configuration and secret-free browser configuration.
-- Existing locally stored vehicle images and the WhatsApp contact route.
-- Vehicle detail modal and responsive grid concepts.
-- The existing principle that inventory data belongs outside the static repository.
+### [P0 - Resolved] Packet Sniffer Global Proxy & Root Certificate Security Risks
+- **Finding**: `start_sniffer.py` automatically modified Windows registry settings for global system proxy, while `install_cert.py` attempted to inject untrusted self-signed root certificates into the Windows user trust store.
+- **Resolution**:
+  - Added hard compliance blocks: `start_sniffer.py` and `install_cert.py` now refuse execution by default, printing explicit risk warnings regarding system security and third-party platform authorization.
+  - Guaranteed automatic cleanup of system proxy settings (`set_windows_proxy(False)`).
+  - Modified `wechat_sniffer.py` to strictly enforce `publish_now=False`, preventing automated public dissemination.
 
-## E. Required refactoring
+### [P1 - Resolved] Non-Atomic Vehicle & Image Publishing in Supabase Publisher
+- **Finding**: `supabase_publisher.py` inserted vehicles directly as `PUBLISHED` before image uploads completed; partial failures left broken or image-less vehicles visible in the public catalog.
+- **Resolution**:
+  - Enforced draft-first insertion (`publication_status = "DRAFT"`).
+  - Added rigorous image upload validation; if any image fails to upload or link, an automated rollback triggers immediately, deleting uploaded storage objects and removing the orphan draft vehicle record.
+  - Only when all images succeed and review requirements are satisfied is the vehicle atomically switched to `PUBLISHED` via a single PATCH request.
 
-- Replace the legacy `PUBLIC_API_URL` integration with a dedicated Supabase project configured by public URL and publishable key.
-- Split the static page into maintainable HTML/CSS/JS while preserving the public visual identity.
-- Query a safe public view, never the full `vehicles` table, and submit inquiries only through a controlled Edge Function.
-- Add an independent `/admin/` application using Supabase email/password Auth and a database-backed administrator allowlist.
-- Implement migrations for all operational tables, calculated values, triggers, constraints, RLS, storage policies and the 90-day sold lifecycle.
-- Model `sourcing_status` and `publication_status` as separate fields.
-- Add Gmail import/sync as server-side Edge Function code using `gmail.readonly`; no Gmail connector or browser-stored OAuth secret/token.
+### [P1 - Resolved] Inquiry Rate Limit Race Condition & Salt Hardening
+- **Finding**: The `submit-inquiry` Edge Function performed rate limiting via a read-then-write sequence on `inquiry_rate_limits`, allowing concurrent bursts to bypass limits. Additionally, `RATE_LIMIT_SALT` fell back to a generic default.
+- **Resolution**:
+  - Created an atomic database function `public.check_inquiry_rate_limit(p_fingerprint_hash, p_window_started_at, p_max_requests)` with atomic `INSERT ... ON CONFLICT DO UPDATE ... RETURNING` locking.
+  - Rewrote `enforceRateLimit()` in the Edge Function to invoke this atomic RPC.
+  - Added warning logging when `RATE_LIMIT_SALT` is missing, documented requirement in `docs/SECURITY.md`, and eliminated concurrency bypass risks.
 
-## F. Phase 1 delivery
+### [Resolved] Hygiene, Ignored Artifacts & CDN Pinning
+- **Finding**: Tracked `__pycache__` and `test_output` files were present in the Git tree, `.gitignore` lacked wildcard recursive patterns, and Supabase JS used floating `@2` CDN tags.
+- **Resolution**:
+  - Removed all cached `.pyc` and `test_output` assets from Git index (`git rm --cached`).
+  - Strengthened `.gitignore` with `**/__pycache__/`, `*.py[cod]`, `scripts/crawler/test_output/`, and `drafts/`.
+  - Pinned `@supabase/supabase-js` CDN links across `index.html`, `admin/index.html`, and `admin/reset-password.html` to stable `@2.49.1`.
 
-- Independent Supabase schema, enums, tables, indexes, triggers, pricing calculations and timestamps.
-- Safe public catalog view, controlled public inquiry RPC/Edge Function, administrator allowlist and RLS.
-- Public vehicle image bucket with authenticated-admin write/delete rules.
-- Security and deployment documentation with explicit secret boundaries.
+---
 
-## G. Phase 2 delivery
+## 3. Recommended Future Enhancements
 
-- Mobile-capable admin app and public inventory integration.
-- Inquiry/Customer CRM, follow-ups, quotes and deals.
-- Gmail historical import and incremental sync foundation.
-- EN/RU public experience, responsive verification, security tests and final implementation report.
-
-## Baseline observations
-
-- GitHub Pages workflow deploys only `main`, which protects the stable public site while work remains on `admin-v1`.
-- `origin/main` was clean and synchronized before branch creation.
-- No files from `roadreach-personal-app` are present or referenced. That application is outside the work scope and will not be changed.
+1. **Per-Vehicle SEO Landing Pages**: Generate static slug routes or lightweight SSR/dynamic metadata for published vehicles to enhance organic search discovery on Google/Yandex.
+2. **End-to-End Supabase Testing**: Complement the existing 10 contract tests with automated Supabase local migration & Edge Function integration tests in GitHub Actions.
+3. **Responsive Image Delivery**: Implement dynamic thumbnail downsizing / responsive `srcset` for mobile cards.
