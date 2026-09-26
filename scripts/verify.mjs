@@ -10,7 +10,7 @@ const [publicHtml, publicJs, adminHtml, adminJs, resetHtml, resetJs, workflow, c
 ]);
 
 assert.match(publicHtml, /assets\/styles\.css/u);
-assert.match(publicHtml, /EN \/ <b>RU<\/b>/u);
+assert.match(publicHtml, /id="languageSelect"/u);
 assert.match(publicHtml, /request_full_vin/u);
 assert.match(publicHtml, /Recently Sold/u);
 assert.match(publicJs, /public_vehicle_catalog/u);

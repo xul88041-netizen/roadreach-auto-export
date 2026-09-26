@@ -7,3 +7,4 @@ coverage/
 .supabase/
 supabase/.temp/
 *.zip
+__pycache__/
