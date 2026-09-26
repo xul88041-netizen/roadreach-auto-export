@@ -6,12 +6,10 @@ const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
 // JWT service_role key: the application should keep working after that legacy
 // key is disabled.
 const serviceRoleKey = Deno.env.get("ROADREACH_SERVICE_KEY")!;
-const configuredSalt = Deno.env.get("RATE_LIMIT_SALT");
-if (!configuredSalt) {
-  console.warn("[SECURITY NOTICE] RATE_LIMIT_SALT environment variable is not configured. Please set a unique secret in Supabase Function Secrets.");
-}
-const rateLimitSalt = configuredSalt || "roadreach-default-production-salt-replace-with-secret";
+const rateLimitSalt = Deno.env.get("RATE_LIMIT_SALT");
 const db = createClient(supabaseUrl, serviceRoleKey, { auth: { persistSession: false } });
+
+const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 const allowedFields = [
   "name", "company", "country", "city", "customer_type", "email", "whatsapp_or_phone",
@@ -53,6 +51,9 @@ async function sha256(value: string) {
 }
 
 async function enforceRateLimit(request: Request) {
+  if (!rateLimitSalt) {
+    throw new Error("RATE_LIMIT_SALT_NOT_CONFIGURED");
+  }
   const ip = request.headers.get("cf-connecting-ip") || request.headers.get("x-forwarded-for")?.split(",")[0] || "unknown";
   const agent = request.headers.get("user-agent") || "unknown";
   const fingerprint = await sha256(`${rateLimitSalt}:${ip}:${agent}`);
@@ -79,11 +80,28 @@ Deno.serve(async (request) => {
     const raw = await request.json();
     if (!raw || typeof raw !== "object" || Array.isArray(raw)) return json(request, { error: "Invalid request" }, 400);
     if (cleanText((raw as Record<string, unknown>).website, 200)) return json(request, { accepted: true }, 202);
-    if (!(await enforceRateLimit(request))) return json(request, { error: "Too many requests. Please try again later." }, 429);
+
+    // Fail-closed rate limit check: refuses traffic if salt is unconfigured
+    try {
+      if (!(await enforceRateLimit(request))) return json(request, { error: "Too many requests. Please try again later." }, 429);
+    } catch (rlError) {
+      if ((rlError as Error)?.message === "RATE_LIMIT_SALT_NOT_CONFIGURED") {
+        console.error("[CRITICAL SECURITY] RATE_LIMIT_SALT secret is not configured in environment. Rejecting request (fail closed).");
+        return json(request, { error: "Service temporarily unavailable due to security configuration. Please contact RoadReach via WhatsApp." }, 503);
+      }
+      throw rlError;
+    }
+
     const payload = normalizePayload(raw as Record<string, unknown>);
     if (String(payload.name).length < 2 || String(payload.country).length < 2) return json(request, { error: "Name and country are required." }, 400);
     if (!payload.email && !payload.whatsapp_or_phone) return json(request, { error: "Email or WhatsApp/phone is required." }, 400);
     if (payload.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/u.test(String(payload.email))) return json(request, { error: "Please enter a valid email address." }, 400);
+
+    // Strict backend UUID constraint for vehicle_id
+    if (payload.vehicle_id !== null && !UUID_REGEX.test(String(payload.vehicle_id))) {
+      return json(request, { error: "Invalid vehicle ID format." }, 400);
+    }
+
     const { data, error } = await db.rpc("submit_public_inquiry", { payload });
     if (error) throw error;
     return json(request, { accepted: true, inquiry_id: data }, 201);

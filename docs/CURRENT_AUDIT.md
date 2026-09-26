@@ -47,19 +47,20 @@ Status: **P0 / P1 Security & Architecture Items Fully Resolved**
   - Guaranteed automatic cleanup of system proxy settings (`set_windows_proxy(False)`).
   - Modified `wechat_sniffer.py` to strictly enforce `publish_now=False`, preventing automated public dissemination.
 
-### [P1 - Resolved] Non-Atomic Vehicle & Image Publishing in Supabase Publisher
-- **Finding**: `supabase_publisher.py` inserted vehicles directly as `PUBLISHED` before image uploads completed; partial failures left broken or image-less vehicles visible in the public catalog.
+### [P1 - Resolved] Automated Scripts Restricted to DRAFT-Only Storage
+- **Finding**: Automated tools (`auto_cache_publisher.py`, `supabase_publisher.py`) previously had paths that could set vehicles directly to `PUBLISHED` or bypass review.
 - **Resolution**:
-  - Enforced draft-first insertion (`publication_status = "DRAFT"`).
+  - Enforced permanent draft-only insertion (`publication_status = "DRAFT"`).
+  - All automated PATCH to `PUBLISHED` logic was permanently eliminated.
   - Added rigorous image upload validation; if any image fails to upload or link, an automated rollback triggers immediately, deleting uploaded storage objects and removing the orphan draft vehicle record.
-  - Only when all images succeed and review requirements are satisfied is the vehicle atomically switched to `PUBLISHED` via a single PATCH request.
+  - The ONLY permitted path to transition a vehicle from `DRAFT` to `PUBLISHED` is an explicit manual action by an authenticated administrator in `/admin/`.
 
-### [P1 - Resolved] Inquiry Rate Limit Race Condition & Salt Hardening
-- **Finding**: The `submit-inquiry` Edge Function performed rate limiting via a read-then-write sequence on `inquiry_rate_limits`, allowing concurrent bursts to bypass limits. Additionally, `RATE_LIMIT_SALT` fell back to a generic default.
+### [P1 - Resolved] Inquiry Rate Limit Race Condition, UUID Enforcement & Fail-Closed Salt
+- **Finding**: The `submit-inquiry` Edge Function performed rate limiting via a read-then-write sequence on `inquiry_rate_limits`, allowing concurrent bursts to bypass limits. Additionally, `RATE_LIMIT_SALT` fell back to a generic default, and malformed `vehicle_id` was not rejected at the Edge layer.
 - **Resolution**:
-  - Created an atomic database function `public.check_inquiry_rate_limit(p_fingerprint_hash, p_window_started_at, p_max_requests)` with atomic `INSERT ... ON CONFLICT DO UPDATE ... RETURNING` locking.
-  - Rewrote `enforceRateLimit()` in the Edge Function to invoke this atomic RPC.
-  - Added warning logging when `RATE_LIMIT_SALT` is missing, documented requirement in `docs/SECURITY.md`, and eliminated concurrency bypass risks.
+  - Created an atomic database function `public.check_inquiry_rate_limit(p_fingerprint_hash, p_window_started_at, p_max_requests)` with atomic `INSERT ... ON CONFLICT DO UPDATE ... RETURNING` locking, set `search_path = public, pg_temp`, revoked execution from public/anon/authenticated, and granted solely to `service_role`.
+  - Added strict backend UUID validation rejecting malformed or non-UUID `vehicle_id` with HTTP 400.
+  - Enforced fail-closed behavior: `submit-inquiry` immediately rejects requests with HTTP 503 if `RATE_LIMIT_SALT` is missing, eliminating fallback defaults.
 
 ### [Resolved] Hygiene, Ignored Artifacts & CDN Pinning
 - **Finding**: Tracked `__pycache__` and `test_output` files were present in the Git tree, `.gitignore` lacked wildcard recursive patterns, and Supabase JS used floating `@2` CDN tags.

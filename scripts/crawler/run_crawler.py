@@ -24,7 +24,6 @@ def process_and_publish_car(
     price_rmb: float,
     raw_specs: dict,
     image_urls: list[str],
-    publish_now: bool = True,
     dry_run: bool = False,
     output_dir: str = None
 ):
@@ -34,10 +33,10 @@ def process_and_publish_car(
     print(f"[收车底价] ¥{price_rmb:,.2f} RMB")
     print(f"[图片数量] {len(image_urls)} 张")
 
-    # 1. 国际化与数据标准化
+    # 1. 国际化与数据标准化 (严格强制 DRAFT 草稿状态，严禁自动发布)
     normalized = normalize_vehicle_info(raw_title, raw_specs)
     normalized["internal_vehicle_cost_rmb"] = price_rmb
-    normalized["publication_status"] = "PUBLISHED" if publish_now else "DRAFT"
+    normalized["publication_status"] = "DRAFT"
 
     print("\n[标准化完成] 多语言翻译完成:")
     print(f"   - 品牌车型: {normalized['brand']} {normalized['model']}")
@@ -112,7 +111,6 @@ def run_test_demo():
         price_rmb=sample_price,
         raw_specs=sample_specs,
         image_urls=sample_images,
-        publish_now=False,
         dry_run=True,
         output_dir=str(test_dir),
     )
@@ -163,13 +161,12 @@ def main():
             "condition": "原版 一个面补漆 0出险 查博士S认证",
         }
         
-        # 将本地图片路径直接传入处理流
+        # 将本地图片路径直接传入处理流 (永远导入为 DRAFT 草稿)
         process_and_publish_car(
             raw_title=title,
             price_rmb=price_rmb,
             raw_specs=raw_specs,
             image_urls=[str(f) for f in image_files[:15]],
-            publish_now=not args.draft,
             dry_run=False,
         )
         return
@@ -190,7 +187,6 @@ def main():
         price_rmb=data["price_rmb"],
         raw_specs=data["raw_specs"],
         image_urls=data["image_urls"],
-        publish_now=not args.draft,
         dry_run=False,
     )
 

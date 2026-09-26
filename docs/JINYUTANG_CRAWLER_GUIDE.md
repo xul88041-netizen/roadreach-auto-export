@@ -21,9 +21,9 @@
    - 自动将国内车商标价转换为人民币收车成本 `internal_vehicle_cost_rmb`。
    - 结合运费、手续费与目标利润，根据汇率自动计算国际 **FOB 美元指导价**（`suggested_fob_price_usd`）。
    - 自动生成规范的**英文与俄文版出口车辆介绍**。
-4. **一键发布**：
+4. **草稿箱入库**：
    - 车辆信息写入 Supabase 数据库，关联处理后的图片。
-   - 支持直接在前台展厅公开（`PUBLISHED`）或存入后台草稿箱（`DRAFT`）由人工复核。
+   - 架构安全强制存入后台草稿箱（`DRAFT`），严禁自动公开；必须由管理员在后台人工核验后发布。
 
 ---
 
@@ -73,7 +73,7 @@ python scripts/crawler/run_crawler.py --text "【金鱼塘车源】2021款哈弗
 | `TARGET_PROFIT_RMB` | `6000.0` | 每台车的期望出口毛利 (元) |
 | `WATERMARK_TEXT` | `ROADREACH AUTO EXPORT` | 图片水印品牌主标题 |
 | `WATERMARK_SUBTEXT` | `VERIFIED SOURCING` | 图片水印副标题 |
-| `DEFAULT_PUBLICATION_STATUS` | `PUBLISHED` | 默认状态 (`PUBLISHED` 或 `DRAFT`) |
+| `DEFAULT_PUBLICATION_STATUS` | `DRAFT` | 架构安全强制固定为 DRAFT 草稿，严禁自动 PUBLISHED |
 
 ---
 

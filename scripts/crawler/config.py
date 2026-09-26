@@ -24,8 +24,9 @@ PORT_LOADING_COST_RMB = float(os.getenv("PORT_LOADING_COST_RMB", 800.0))        
 REFURBISHMENT_COST_RMB = float(os.getenv("REFURBISHMENT_COST_RMB", 500.0))           # 基础精洗与整备
 TARGET_PROFIT_RMB = float(os.getenv("TARGET_PROFIT_RMB", 6000.0))                    # 期望出口单车利润
 
-# 默认发布状态: PUBLISHED (直接前台展示) 或 DRAFT (草稿箱，等待后台审核)
-DEFAULT_PUBLICATION_STATUS = os.getenv("DEFAULT_PUBLICATION_STATUS", "PUBLISHED")
+# 状态安全边界：所有外部导入、爬虫及脚本处理的车辆必须强制停留在 DRAFT 草稿状态，
+# 严禁任何自动发布逻辑！唯一允许将车辆变更为 PUBLISHED 的入口是管理员登录后台人工审核后操作。
+DEFAULT_PUBLICATION_STATUS = "DRAFT"
 DEFAULT_SOURCING_STATUS = "AVAILABLE_TO_SOURCE" # 或 "IN_STOCK"
 
 # 图像处理与水印设置

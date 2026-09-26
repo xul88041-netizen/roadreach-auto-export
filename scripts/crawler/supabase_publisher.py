@@ -79,29 +79,29 @@ class SupabasePublisher:
         except Exception as e:
             print(f"[SupabasePublisher] 清理 Storage 对象失败: {e}")
 
-    def publish_vehicle(self, vehicle_data: dict, processed_images: list[bytes], require_review: bool = True) -> dict:
+    def import_draft_vehicle(self, vehicle_data: dict, processed_images: list[bytes]) -> dict:
         """
-        具备原子性和草稿回滚保护的车辆录入流程：
-        1. 必须提供有效图片，初始 publication_status 强制设为 DRAFT
-        2. 写入 public.vehicles 表（状态为 DRAFT）
+        具备原子性和回滚保护的车辆草稿导入流程：
+        【架构安全规范】本脚本作为外部导入工具，必须且只能将车辆保存为 DRAFT 状态！
+        禁止任何自动直接发布（PUBLISHED）逻辑。
+        唯一允许将 DRAFT 切换为 PUBLISHED 的操作必须由管理员在后台人工核验后完成。
+
+        1. 必须提供有效图片，强制 publication_status = 'DRAFT'
+        2. 写入 public.vehicles 表（DRAFT 状态）
         3. 上传图片至 Storage，若任何一张上传失败立即触发回滚
         4. 写入 public.vehicle_images 表
-        5. 仅当全部图片上传与关联成功、且显式指定无需人工审核（require_review=False）时，
-           才单次 PATCH 将状态切换为 PUBLISHED；默认保持 DRAFT 待后台人工复核。
+        5. 完成后严格保持 DRAFT 状态，等待管理后台人工审核。
         """
         if not self.key:
             raise ValueError("未配置 SUPABASE_SERVICE_ROLE_KEY，无法执行数据库写入与存储上传！")
 
         if not processed_images:
-            raise ValueError("发布车辆必须包含至少一张已处理的高清图片！")
+            raise ValueError("导入车辆必须包含至少一张已处理的高清图片！")
 
         stock_id = vehicle_data.get("stock_id") or self.generate_next_stock_id()
         cost_rmb = float(vehicle_data.get("internal_vehicle_cost_rmb", 50000.0))
 
-        # 强制初始状态为 DRAFT，避免上传过程半途暴露不完整车辆
-        initial_status = "DRAFT"
-        target_status = vehicle_data.get("publication_status", "PUBLISHED") if not require_review else "DRAFT"
-
+        # 严格限制：只能导入为 DRAFT 草稿，严禁自动 PUBLISHED！
         vehicle_payload = {
             "stock_id": stock_id,
             "brand": vehicle_data["brand"],
@@ -115,7 +115,7 @@ class SupabasePublisher:
             "interior_color": vehicle_data.get("interior_color", "Black"),
             "condition": vehicle_data.get("condition", "Verified clean condition"),
             "sourcing_status": vehicle_data.get("sourcing_status", DEFAULT_SOURCING_STATUS),
-            "publication_status": initial_status,
+            "publication_status": "DRAFT",
             "internal_vehicle_cost_rmb": cost_rmb,
             "exchange_rate": DEFAULT_EXCHANGE_RATE,
             "domestic_transport_cost_rmb": DOMESTIC_TRANSPORT_COST_RMB,
@@ -125,7 +125,7 @@ class SupabasePublisher:
             "target_profit_rmb": TARGET_PROFIT_RMB,
             "vehicle_notes_en": vehicle_data.get("vehicle_notes_en", ""),
             "vehicle_notes_ru": vehicle_data.get("vehicle_notes_ru", ""),
-            "featured": vehicle_data.get("featured", False),
+            "featured": False,
         }
 
         # 1. 插入 vehicles 表 (DRAFT 状态)
@@ -164,18 +164,7 @@ class SupabasePublisher:
                 raise RuntimeError(f"图片关联记录写入失败: {img_resp.text}")
 
             print(f"[SupabasePublisher] 成功上传并关联全部 {len(image_records)} 张图片！")
-
-            # 3. 如果明确允许发布，单次原子更新状态为 PUBLISHED
-            if target_status == "PUBLISHED":
-                patch_url = f"{vehicles_api_url}?id=eq.{vehicle_id}"
-                patch_resp = requests.patch(patch_url, json={"publication_status": "PUBLISHED"}, headers=self.headers, timeout=15)
-                if patch_resp.status_code not in (200, 204):
-                    raise RuntimeError(f"切换发布状态失败: {patch_resp.text}")
-                inserted_vehicle["publication_status"] = "PUBLISHED"
-                print(f"[SupabasePublisher] 车辆 {stock_id} 图片核验完毕，已原子切换为 PUBLISHED 上线状态！")
-            else:
-                print(f"[SupabasePublisher] 车辆 {stock_id} 保持 DRAFT 待审状态，等待管理后台人工复核。")
-
+            print(f"[SupabasePublisher] 车辆 {stock_id} 保持 DRAFT 待审状态，已安全存入草稿箱。")
             return inserted_vehicle
 
         except Exception as err:
@@ -189,3 +178,7 @@ class SupabasePublisher:
             except Exception as del_err:
                 print(f"[SupabasePublisher] 回滚删除记录失败: {del_err}")
             raise
+
+    def publish_vehicle(self, vehicle_data: dict, processed_images: list[bytes]) -> dict:
+        """保持旧调用兼容性，底层强制使用 import_draft_vehicle 仅存为 DRAFT"""
+        return self.import_draft_vehicle(vehicle_data, processed_images)
