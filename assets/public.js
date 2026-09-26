@@ -9,6 +9,11 @@ let language = localStorage.getItem("roadreach-language") || "en";
 // 多语言国际化完整字典库 (支持 6 种主流外贸语言: 英文/俄文/阿拉伯文/西班牙文/法文/中文)
 const i18nDict = {
   en: {
+    photosLabel: "Photos", instantQuote: "WhatsApp Quote", instantWhatsApp: "⚡ Instant Quote on WhatsApp",
+    trustInspectionTitle: "100% Inspected", trustInspectionDesc: "Certified 150+ point condition & chassis verification",
+    trustLicenseTitle: "Export License Ready", trustLicenseDesc: "Clean legal title & official China customs de-registration",
+    trustShippingTitle: "Global Port Delivery", trustShippingDesc: "Ro-Ro & 40HQ container routes worldwide",
+    trustVideoTitle: "Pre-Shipment Video", trustVideoDesc: "Live engine sound, interior 360° and cold-start walkaround",
     topbar: "China used vehicle export sourcing", navVehicles: "Vehicles", navProcess: "How it works", navAbout: "Why us", getQuote: "Get a quote",
     heroEyebrow: "VERIFIED SOURCING · GLOBAL SHIPPING", heroTitle: "Reliable used cars.<br><em>Ready for export.</em>",
     heroLead: "Get inspected vehicles, clear export documents and a shipping quote to your destination port — from one responsive team in China.",
@@ -40,6 +45,11 @@ const i18nDict = {
     mileageLabel: "Mileage", colorLabel: "Exterior", conditionLabel: "Condition statement"
   },
   ru: {
+    photosLabel: "фото", instantQuote: "Расчёт в WhatsApp", instantWhatsApp: "⚡ Быстрый расчёт в WhatsApp",
+    trustInspectionTitle: "100% Проверено", trustInspectionDesc: "150+ точек проверки кузова, мотора и шасси",
+    trustLicenseTitle: "Экспортные документы", trustLicenseDesc: "Официальное снятие с учёта и таможенная очистка",
+    trustShippingTitle: "Доставка в любой порт", trustShippingDesc: "Ро-Ро и 40HQ контейнеры по всему миру",
+    trustVideoTitle: "Видео перед отправкой", trustVideoDesc: "Видео запуска двигателя, 360° салон и кузов",
     topbar: "Экспорт подержанных автомобилей из Китая", navVehicles: "Автомобили", navProcess: "Как это работает", navAbout: "Почему мы", getQuote: "Запросить цену",
     heroEyebrow: "ПРОВЕРЕННЫЙ ПОИСК · ДОСТАВКА ПО МИРУ", heroTitle: "Надёжные автомобили.<br><em>Готовы к экспорту.</em>",
     heroLead: "Проверенные автомобили, прозрачные экспортные документы и расчёт доставки в ваш порт — от одной команды в Китае.",
@@ -71,6 +81,11 @@ const i18nDict = {
     mileageLabel: "Пробег", colorLabel: "Цвет", conditionLabel: "Состояние"
   },
   ar: {
+    photosLabel: "صور", instantQuote: "تسعير عبر واتساب", instantWhatsApp: "⚡ عرض سعر فوري عبر واتساب",
+    trustInspectionTitle: "فحص شامل 100%", trustInspectionDesc: "فحص أكثر من 150 نقطة للشاسيه والمحرك",
+    trustLicenseTitle: "تراخيص التصدير جاهزة", trustLicenseDesc: "شطب رسمي وإجراءات جمركية مكتملة",
+    trustShippingTitle: "شحن لكافة الموانئ", trustShippingDesc: "شحن بالرورو أو الحاويات لكافة الوجهات",
+    trustVideoTitle: "فيديو فحص قبل الشحن", trustVideoDesc: "تشغيل المحرك وجولة تفصيلية بالفيديو",
     topbar: "تصدير السيارات المستعملة من الصين مباشرة", navVehicles: "السيارات", navProcess: "كيف نعمل", navAbout: "لماذا نحن", getQuote: "طلب عرض سعر",
     heroEyebrow: "فحص معتمد · شحن لجميع الموانئ", heroTitle: "سيارات مضمونة.<br><em>جاهزة للتصدير فوراً.</em>",
     heroLead: "فحص دقيق، أوراق تصدير نظامية، وأسعار شحن واضحة إلى مينائك مباشرة من فريقنا في الصين.",
@@ -102,6 +117,11 @@ const i18nDict = {
     mileageLabel: "الممشى", colorLabel: "اللون الخارجي", conditionLabel: "حالة الفحص"
   },
   es: {
+    photosLabel: "Fotos", instantQuote: "Cotización WhatsApp", instantWhatsApp: "⚡ Cotización rápida por WhatsApp",
+    trustInspectionTitle: "100% Inspeccionado", trustInspectionDesc: "Verificación de más de 150 puntos de chasis",
+    trustLicenseTitle: "Licencia de exportación", trustLicenseDesc: "Baja vehicular y aduanas chinas listas",
+    trustShippingTitle: "Envío a puertos globales", trustShippingDesc: "Rutas marítimas Ro-Ro y contenedores 40HQ",
+    trustVideoTitle: "Video previo al envío", trustVideoDesc: "Video de arranque en frío y recorrido 360°",
     topbar: "Exportación de autos usados verificados desde China", navVehicles: "Vehículos", navProcess: "Cómo funciona", navAbout: "Nosotros", getQuote: "Cotizar",
     heroEyebrow: "PROVEEDOR VERIFICADO · ENVÍO GLOBAL", heroTitle: "Autos confiables.<br><em>Listos para exportación.</em>",
     heroLead: "Vehículos inspeccionados, documentos de exportación claros y cotización de flete hasta su puerto de destino.",
@@ -133,6 +153,11 @@ const i18nDict = {
     mileageLabel: "Kilometraje", colorLabel: "Color", conditionLabel: "Estado verificado"
   },
   fr: {
+    photosLabel: "Photos", instantQuote: "Devis WhatsApp", instantWhatsApp: "⚡ Devis rapide sur WhatsApp",
+    trustInspectionTitle: "100% Inspecté", trustInspectionDesc: "Vérification de plus de 150 points du châssis",
+    trustLicenseTitle: "Licence d'exportation", trustLicenseDesc: "Radiation officielle et douanes prêtes",
+    trustShippingTitle: "Livraison portuaire mondiale", trustShippingDesc: "Liaisons maritimes Ro-Ro et conteneurs 40HQ",
+    trustVideoTitle: "Vidéo avant expédition", trustVideoDesc: "Démarrage à froid et visite complète 360°",
     topbar: "Exportation de véhicules d'occasion certifiés depuis la Chine", navVehicles: "Véhicules", navProcess: "Processus", navAbout: "À propos", getQuote: "Devis",
     heroEyebrow: "APPROVISIONNEMENT VÉRIFIÉ · EXPÉDITION MONDIALE", heroTitle: "Véhicules fiables.<br><em>Prêts pour l'exportation.</em>",
     heroLead: "Véhicules inspectés, documents d'exportation conformes et devis maritime vers votre port de destination.",
@@ -164,6 +189,11 @@ const i18nDict = {
     mileageLabel: "Kilométrage", colorLabel: "Couleur", conditionLabel: "Rapport d'état"
   },
   zh: {
+    photosLabel: "张实拍", instantQuote: "WhatsApp 询价", instantWhatsApp: "⚡ WhatsApp 闪电询价",
+    trustInspectionTitle: "100% 独立实车质检", trustInspectionDesc: "150+ 项底盘与原版车况独立检测认证",
+    trustLicenseTitle: "出口牌证注销齐全", trustLicenseDesc: "车管所正规出口注销、报关完税一手凭证",
+    trustShippingTitle: "全球港口直发", trustShippingDesc: "滚装船与集装箱海运直航各大陆核心口岸",
+    trustVideoTitle: "发运前视频核验", trustVideoDesc: "冷启动、发动机怠速运转及底盘全景实录",
     topbar: "中国二手车出口专业车源供应链", navVehicles: "车源展厅", navProcess: "出口流程", navAbout: "为什么选我们", getQuote: "获取报价",
     heroEyebrow: "实车查验 · 全球口岸直发", heroTitle: "精选可靠二手车<br><em>支持全球出口</em>",
     heroLead: "提供第三方权威查验报告、正规出口许可证与通关报关单证，一站式核算至目的港 CIF/FOB 价格。",
@@ -256,12 +286,13 @@ function card(vehicle) {
   const statusClass = vehicle.publication_status === "SOLD" ? "sold" : vehicle.sourcing_status === "AVAILABLE_TO_SOURCE" ? "source" : "";
   const vin = vehicle.sourcing_status === "IN_STOCK" && vehicle.masked_vin ? `<p class="vin-line">VIN: ${escapeHtml(vehicle.masked_vin)}</p>` : "";
   const cta = vehicle.publication_status === "SOLD" ? t("findSimilar", "Find Similar Vehicle →") : t("askForQuote", "Ask for Quote →");
+  const photoBadge = images.length > 1 ? `<span class="photo-count-badge">📷 ${images.length} ${t("photosLabel", "Photos")}</span>` : "";
   
   // WhatsApp 一键直连带车源
   const waCarMsg = `Hello RoadReach Auto, I am interested in Stock ${vehicle.stock_id} (${vehicle.brand} ${vehicle.model} ${vehicle.year}). Please share the full details.`;
   const waCarUrl = `https://wa.me/${whatsAppNumber}?text=${encodeURIComponent(waCarMsg)}`;
 
-  return `<article class="vehicle-card"><div class="vehicle-image"><img src="${escapeHtml(image)}" alt="${escapeHtml(`${vehicle.brand} ${vehicle.model}`)}"><span class="year-badge">${escapeHtml(vehicle.year)}</span><span class="vehicle-status ${statusClass}">${escapeHtml(statusLabel(vehicle))}</span></div><div class="vehicle-body"><p class="vehicle-type">${escapeHtml(vehicle.body_type)}<span class="stock-id">${escapeHtml(vehicle.stock_id)}</span>${vehicle.featured ? '<span class="featured-flag">FEATURED</span>' : ""}</p><h3>${escapeHtml(`${vehicle.brand} ${vehicle.model}`)}</h3><div class="specs"><span>${escapeHtml(vehicle.fuel_type)}</span><span>${escapeHtml(vehicle.steering)}</span>${vehicle.mileage == null ? "" : `<span>${Number(vehicle.mileage).toLocaleString("en-US")} km</span>`}</div>${vin}<div class="price-row"><b>${escapeHtml(formatPrice(vehicle))}</b><div class="card-actions"><button class="detail-link" data-vehicle-id="${escapeHtml(vehicle.id)}">${cta}</button><a class="card-wa-btn" href="${waCarUrl}" target="_blank" rel="noopener noreferrer" title="Inquire on WhatsApp">💬</a></div></div><small class="price-note">${escapeHtml(t("priceDisclaimer", "Final quotation may vary depending on vehicle condition/configuration, quantity, purchase timing and destination requirements."))}</small></div></article>`;
+  return `<article class="vehicle-card"><div class="vehicle-image"><img src="${escapeHtml(image)}" alt="${escapeHtml(`${vehicle.brand} ${vehicle.model}`)}"><span class="year-badge">${escapeHtml(vehicle.year)}</span><span class="vehicle-status ${statusClass}">${escapeHtml(statusLabel(vehicle))}</span>${photoBadge}</div><div class="vehicle-body"><p class="vehicle-type">${escapeHtml(vehicle.body_type)}<span class="stock-id">${escapeHtml(vehicle.stock_id)}</span>${vehicle.featured ? '<span class="featured-flag">FEATURED</span>' : ""}</p><h3>${escapeHtml(`${vehicle.brand} ${vehicle.model}`)}</h3><div class="specs"><span>${escapeHtml(vehicle.fuel_type)}</span><span>${escapeHtml(vehicle.steering)}</span>${vehicle.mileage == null ? "" : `<span>${Number(vehicle.mileage).toLocaleString("en-US")} km</span>`}</div>${vin}<div class="price-row"><b>${escapeHtml(formatPrice(vehicle))}</b><div class="card-actions"><button class="detail-link" data-vehicle-id="${escapeHtml(vehicle.id)}">${cta}</button><a class="card-wa-btn" href="${waCarUrl}" target="_blank" rel="noopener noreferrer" title="Inquire on WhatsApp">💬</a></div></div><small class="price-note">${escapeHtml(t("priceDisclaimer", "Final quotation may vary depending on vehicle condition/configuration, quantity, purchase timing and destination requirements."))}</small></div></article>`;
 }
 
 function bindVehicleButtons() {
@@ -342,11 +373,31 @@ function openVehicle(id) {
     ["VIN", vehicle.sourcing_status === "IN_STOCK" ? vehicle.masked_vin : null]
   ].filter(([,value]) => value);
 
-  const waCarMsg = `Hello RoadReach Auto, I am interested in Stock ${vehicle.stock_id} (${vehicle.brand} ${vehicle.model} ${vehicle.year}). Please send CIF quotation.`;
+  const waCarMsg = `Hello RoadReach Auto, I am interested in Stock ${vehicle.stock_id} (${vehicle.brand} ${vehicle.model} ${vehicle.year}). Please send the full FOB/CIF quotation.`;
   const waCarUrl = `https://wa.me/${whatsAppNumber}?text=${encodeURIComponent(waCarMsg)}`;
 
+  const galleryHtml = `
+    <div class="modal-gallery">
+      <div class="gallery-hero-wrap">
+        ${images.length > 1 ? '<button type="button" class="gallery-nav prev" id="galleryPrev" aria-label="Previous image">‹</button>' : ''}
+        <img id="modalMainImage" src="${escapeHtml(safeUrl(images[0].url))}" alt="${escapeHtml(`${vehicle.brand} ${vehicle.model} photo 1`)}">
+        ${images.length > 1 ? `<span class="gallery-counter" id="galleryCounter">1 / ${images.length}</span>` : ''}
+        ${images.length > 1 ? '<button type="button" class="gallery-nav next" id="galleryNext" aria-label="Next image">›</button>' : ''}
+      </div>
+      ${images.length > 1 ? `
+        <div class="modal-thumbnails" id="modalThumbnails">
+          ${images.map((img, idx) => `
+            <button type="button" class="thumb-btn ${idx === 0 ? 'active' : ''}" data-index="${idx}" aria-label="Photo ${idx + 1}">
+              <img src="${escapeHtml(safeUrl(img.url))}" alt="${escapeHtml(`${vehicle.brand} ${vehicle.model} thumbnail ${idx + 1}`)}">
+            </button>
+          `).join("")}
+        </div>
+      ` : ''}
+    </div>
+  `;
+
   document.querySelector("#modalContent").innerHTML = `
-    <div class="modal-gallery">${images.map((image, index) => `<img src="${escapeHtml(safeUrl(image.url))}" alt="${escapeHtml(`${vehicle.brand} ${vehicle.model} photo ${index + 1}`)}">`).join("")}</div>
+    ${galleryHtml}
     <div class="modal-info">
       <p class="vehicle-type">${escapeHtml(vehicle.body_type)}<span class="stock-id">${escapeHtml(vehicle.stock_id)}</span><span class="featured-flag">${escapeHtml(statusLabel(vehicle))}</span></p>
       <h2>${escapeHtml(`${vehicle.brand} ${vehicle.model}`)}</h2>
@@ -358,13 +409,61 @@ function openVehicle(id) {
         <strong>${escapeHtml(formatPrice(vehicle))}</strong>
         <div class="modal-buttons">
           <button class="button" type="button" id="modalInquiryButton">${vehicle.publication_status === "SOLD" ? t("findSimilar", "Find Similar Vehicle →") : t("askForQuote", "Ask for Quote →")}</button>
-          <a class="button button-whatsapp" href="${waCarUrl}" target="_blank" rel="noopener noreferrer">💬 WhatsApp</a>
+          <a class="button button-whatsapp" href="${waCarUrl}" target="_blank" rel="noopener noreferrer">${t("instantQuote", "⚡ WhatsApp Quote")}</a>
         </div>
       </div>
     </div>`;
 
   bindVehicleImageFallbacks(document.querySelector("#modalContent"));
   document.querySelector("#modalInquiryButton").addEventListener("click", () => startInquiry(vehicle));
+
+  // Interactive gallery handlers
+  if (images.length > 1) {
+    let currentIdx = 0;
+    const mainImg = document.querySelector("#modalMainImage");
+    const counter = document.querySelector("#galleryCounter");
+    const thumbBtns = document.querySelectorAll(".thumb-btn");
+
+    function goToImage(idx) {
+      if (idx < 0) idx = images.length - 1;
+      if (idx >= images.length) idx = 0;
+      currentIdx = idx;
+      mainImg.style.opacity = "0.35";
+      setTimeout(() => {
+        mainImg.src = safeUrl(images[currentIdx].url);
+        mainImg.alt = `${vehicle.brand} ${vehicle.model} photo ${currentIdx + 1}`;
+        mainImg.style.opacity = "1";
+      }, 90);
+      if (counter) counter.textContent = `${currentIdx + 1} / ${images.length}`;
+      thumbBtns.forEach((b, i) => b.classList.toggle("active", i === currentIdx));
+      const activeBtn = thumbBtns[currentIdx];
+      if (activeBtn) activeBtn.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+    }
+
+    const prevBtn = document.querySelector("#galleryPrev");
+    const nextBtn = document.querySelector("#galleryNext");
+    if (prevBtn) prevBtn.addEventListener("click", (e) => { e.stopPropagation(); goToImage(currentIdx - 1); });
+    if (nextBtn) nextBtn.addEventListener("click", (e) => { e.stopPropagation(); goToImage(currentIdx + 1); });
+
+    thumbBtns.forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const idx = Number(btn.dataset.index || 0);
+        goToImage(idx);
+      });
+    });
+
+    const keyHandler = (e) => {
+      if (!document.querySelector("#vehicleModal").classList.contains("open")) {
+        window.removeEventListener("keydown", keyHandler);
+        return;
+      }
+      if (e.key === "ArrowLeft") goToImage(currentIdx - 1);
+      if (e.key === "ArrowRight") goToImage(currentIdx + 1);
+    };
+    window.addEventListener("keydown", keyHandler);
+  }
+
   document.querySelector("#vehicleModal").classList.add("open");
   document.body.style.overflow = "hidden";
 }
@@ -377,6 +476,13 @@ function startInquiry(vehicle) {
   form.elements.stock_id.value = vehicle.stock_id;
   form.elements.preferred_model.value = `${vehicle.brand} ${vehicle.model}`;
   form.elements.message.value = vehicle.publication_status === "SOLD" ? `Please find a similar vehicle to sold stock ${vehicle.stock_id}.` : `Please send the FOB/CIF quotation and full details for stock ${vehicle.stock_id}.`;
+  
+  const waBtn = document.querySelector("#inquiryWaBtn");
+  if (waBtn) {
+    const waText = `Hello RoadReach Auto! I am interested in Stock ${vehicle.stock_id} (${vehicle.brand} ${vehicle.model} ${vehicle.year}). Please share the full CIF quotation.`;
+    waBtn.href = `https://wa.me/${whatsAppNumber}?text=${encodeURIComponent(waText)}`;
+  }
+
   document.querySelector("#inquiry").scrollIntoView({ behavior: "smooth" });
 }
 
