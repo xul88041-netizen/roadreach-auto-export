@@ -42,7 +42,9 @@ const i18nDict = {
     requestVin: "Request Full VIN (reviewed privately; never sent automatically)", sendInquiry: "Send inquiry", contact: "Contact", chatNow: "Chat now",
     priceDisclaimer: "Final quotation may vary depending on vehicle condition/configuration, quantity, purchase timing and destination requirements.",
     fobOnRequest: "Reference FOB Price on request", askForQuote: "Ask for Quote →", findSimilar: "Find Similar Vehicle →",
-    mileageLabel: "Mileage", colorLabel: "Exterior", conditionLabel: "Condition statement"
+    mileageLabel: "Mileage", colorLabel: "Exterior", conditionLabel: "Condition statement",
+    statVehiclesLabel: "Vehicles Listed", statMarketsLabel: "Export Markets", statReplyLabel: "Reply Time", statPhotosLabel: "Photos per Car",
+    footerNavHeading: "Navigation", footerPortsHeading: "Key Destination Ports", footerBody: "Practical vehicle sourcing and export support from China to international buyers."
   },
   ru: {
     photosLabel: "фото", instantQuote: "Расчёт в WhatsApp", instantWhatsApp: "⚡ Быстрый расчёт в WhatsApp",
@@ -78,7 +80,9 @@ const i18nDict = {
     requestVin: "Запросить полный VIN (только после частной проверки; не отправляется автоматически)", sendInquiry: "Отправить запрос", contact: "Контакты", chatNow: "Написать",
     priceDisclaimer: "Итоговая котировка может меняться в зависимости от состояния/комплектации, количества, времени покупки и требований страны назначения.",
     fobOnRequest: "Цена FOB по запросу", askForQuote: "Запросить цену →", findSimilar: "Найти похожий →",
-    mileageLabel: "Пробег", colorLabel: "Цвет", conditionLabel: "Состояние"
+    mileageLabel: "Пробег", colorLabel: "Цвет", conditionLabel: "Состояние",
+    statVehiclesLabel: "Автомобилей в каталоге", statMarketsLabel: "Рынков экспорта", statReplyLabel: "Время ответа", statPhotosLabel: "Фото на авто",
+    footerNavHeading: "Навигация", footerPortsHeading: "Основные порты назначения", footerBody: "Практичный поиск и экспорт подержанных автомобилей из Китая."
   },
   ar: {
     photosLabel: "صور", instantQuote: "تسعير عبر واتساب", instantWhatsApp: "⚡ عرض سعر فوري عبر واتساب",
@@ -114,7 +118,9 @@ const i18nDict = {
     requestVin: "طلب رقم الهيكل كاملاً (VIN)", sendInquiry: "إرسال الاستفسار", contact: "اتصل بنا", chatNow: "محادثة واتساب",
     priceDisclaimer: "الأسعار النهائية قد تختلف بناءً على الفئة وحالة السيارة وميناء الوصول.",
     fobOnRequest: "السعر عند الطلب (FOB on request)", askForQuote: "طلب السعر والمواصفات →", findSimilar: "طلب سيارة مماثلة →",
-    mileageLabel: "الممشى", colorLabel: "اللون الخارجي", conditionLabel: "حالة الفحص"
+    mileageLabel: "الممشى", colorLabel: "اللون الخارجي", conditionLabel: "حالة الفحص",
+    statVehiclesLabel: "سيارات معروضة", statMarketsLabel: "أسواق التصدير", statReplyLabel: "وقت الرد", statPhotosLabel: "صورة لكل سيارة",
+    footerNavHeading: "روابط سريعة", footerPortsHeading: "الموانئ الرئيسية", footerBody: "مصدر موثوق للسيارات المستعملة من الصين مع دعم تصدير كامل."
   },
   es: {
     photosLabel: "Fotos", instantQuote: "Cotización WhatsApp", instantWhatsApp: "⚡ Cotización rápida por WhatsApp",
@@ -150,7 +156,9 @@ const i18nDict = {
     requestVin: "Solicitar VIN completo", sendInquiry: "Enviar consulta", contact: "Contacto", chatNow: "WhatsApp",
     priceDisclaimer: "Cotización final sujeta a configuración, condición y requerimientos de destino.",
     fobOnRequest: "Precio FOB a consultar", askForQuote: "Solicitar cotización →", findSimilar: "Buscar similar →",
-    mileageLabel: "Kilometraje", colorLabel: "Color", conditionLabel: "Estado verificado"
+    mileageLabel: "Kilometraje", colorLabel: "Color", conditionLabel: "Estado verificado",
+    statVehiclesLabel: "Vehículos Listados", statMarketsLabel: "Mercados de Exportación", statReplyLabel: "Tiempo de Respuesta", statPhotosLabel: "Fotos por Vehículo",
+    footerNavHeading: "Navegación", footerPortsHeading: "Puertos de Destino", footerBody: "Aprovisionamiento práctico de vehículos desde China para compradores internacionales."
   },
   fr: {
     photosLabel: "Photos", instantQuote: "Devis WhatsApp", instantWhatsApp: "⚡ Devis rapide sur WhatsApp",
@@ -186,7 +194,9 @@ const i18nDict = {
     requestVin: "Demander le VIN complet", sendInquiry: "Envoyer la demande", contact: "Contact", chatNow: "WhatsApp",
     priceDisclaimer: "La cotation finale dépend de l'état, de la configuration et de la destination.",
     fobOnRequest: "Prix FOB sur demande", askForQuote: "Demander un devis →", findSimilar: "Trouver similaire →",
-    mileageLabel: "Kilométrage", colorLabel: "Couleur", conditionLabel: "Rapport d'état"
+    mileageLabel: "Kilométrage", colorLabel: "Couleur", conditionLabel: "Rapport d'état",
+    statVehiclesLabel: "Véhicules Listés", statMarketsLabel: "Marchés d'Exportation", statReplyLabel: "Délai de Réponse", statPhotosLabel: "Photos par Véhicule",
+    footerNavHeading: "Navigation", footerPortsHeading: "Ports de Destination Clés", footerBody: "Approvisionnement pratique en véhicules depuis la Chine pour acheteurs internationaux."
   },
   zh: {
     photosLabel: "张实拍", instantQuote: "WhatsApp 询价", instantWhatsApp: "⚡ WhatsApp 闪电询价",
@@ -222,7 +232,9 @@ const i18nDict = {
     requestVin: "申请查验完整车架号 (VIN)", sendInquiry: "提交询盘", contact: "联系方式", chatNow: "在线咨询",
     priceDisclaimer: "最终报价视具体车况成色、配置版本、采购数量及发运目的港要求而定。",
     fobOnRequest: "价格按需索取 (FOB on request)", askForQuote: "咨询底价与配置 →", findSimilar: "寻找同款车源 →",
-    mileageLabel: "表显里程", colorLabel: "外观颜色", conditionLabel: "检测车况评级"
+    mileageLabel: "表显里程", colorLabel: "外观颜色", conditionLabel: "检测车况评级",
+    statVehiclesLabel: "在售车源数量", statMarketsLabel: "出口目的市场", statReplyLabel: "响应时效", statPhotosLabel: "每车实拍张数",
+    footerNavHeading: "导航菜单", footerPortsHeading: "主要目的港口", footerBody: "专业中国二手车出口供应链服务，覆盖全球主要口岸。"
   }
 };
 
@@ -292,7 +304,7 @@ function card(vehicle) {
   const waCarMsg = `Hello RoadReach Auto, I am interested in Stock ${vehicle.stock_id} (${vehicle.brand} ${vehicle.model} ${vehicle.year}). Please share the full details.`;
   const waCarUrl = `https://wa.me/${whatsAppNumber}?text=${encodeURIComponent(waCarMsg)}`;
 
-  return `<article class="vehicle-card"><div class="vehicle-image"><img src="${escapeHtml(image)}" alt="${escapeHtml(`${vehicle.brand} ${vehicle.model}`)}"><span class="year-badge">${escapeHtml(vehicle.year)}</span><span class="vehicle-status ${statusClass}">${escapeHtml(statusLabel(vehicle))}</span>${photoBadge}</div><div class="vehicle-body"><p class="vehicle-type">${escapeHtml(vehicle.body_type)}<span class="stock-id">${escapeHtml(vehicle.stock_id)}</span>${vehicle.featured ? '<span class="featured-flag">FEATURED</span>' : ""}</p><h3>${escapeHtml(`${vehicle.brand} ${vehicle.model}`)}</h3><div class="specs"><span>${escapeHtml(vehicle.fuel_type)}</span><span>${escapeHtml(vehicle.steering)}</span>${vehicle.mileage == null ? "" : `<span>${Number(vehicle.mileage).toLocaleString("en-US")} km</span>`}</div>${vin}<div class="price-row"><b>${escapeHtml(formatPrice(vehicle))}</b><div class="card-actions"><button class="detail-link" data-vehicle-id="${escapeHtml(vehicle.id)}">${cta}</button><a class="card-wa-btn" href="${waCarUrl}" target="_blank" rel="noopener noreferrer" title="Inquire on WhatsApp">💬</a></div></div><small class="price-note">${escapeHtml(t("priceDisclaimer", "Final quotation may vary depending on vehicle condition/configuration, quantity, purchase timing and destination requirements."))}</small></div></article>`;
+  return `<article class="vehicle-card"><div class="vehicle-image"><img src="${escapeHtml(image)}" alt="${escapeHtml(`${vehicle.brand} ${vehicle.model}`)}" loading="lazy"><span class="year-badge">${escapeHtml(vehicle.year)}</span><span class="vehicle-status ${statusClass}">${escapeHtml(statusLabel(vehicle))}</span>${photoBadge}</div><div class="vehicle-body"><p class="vehicle-type">${escapeHtml(vehicle.body_type)}<span class="stock-id">${escapeHtml(vehicle.stock_id)}</span>${vehicle.featured ? '<span class="featured-flag">FEATURED</span>' : ""}</p><h3>${escapeHtml(`${vehicle.brand} ${vehicle.model}`)}</h3><div class="specs"><span>${escapeHtml(vehicle.fuel_type)}</span><span>${escapeHtml(vehicle.steering)}</span>${vehicle.mileage == null ? "" : `<span>${Number(vehicle.mileage).toLocaleString("en-US")} km</span>`}</div>${vin}<div class="price-row"><b>${escapeHtml(formatPrice(vehicle))}</b><div class="card-actions"><button class="detail-link" data-vehicle-id="${escapeHtml(vehicle.id)}">${cta}</button><a class="card-wa-btn" href="${waCarUrl}" target="_blank" rel="noopener noreferrer" title="Inquire on WhatsApp">💬</a></div></div><small class="price-note">${escapeHtml(t("priceDisclaimer", "Final quotation may vary depending on vehicle condition/configuration, quantity, purchase timing and destination requirements."))}</small></div></article>`;
 }
 
 function bindVehicleButtons() {
@@ -355,6 +367,12 @@ function renderInventory() {
   }
   bindVehicleButtons();
   bindVehicleImageFallbacks();
+  // Update stats bar vehicle count
+  const statEl = document.querySelector("#statVehicles");
+  if (statEl) {
+    const totalAvail = vehicles.filter((v) => v.publication_status !== "SOLD").length;
+    statEl.textContent = totalAvail;
+  }
 }
 
 function openVehicle(id) {

@@ -66,3 +66,36 @@
 .language-dropdown{border-radius:20px;padding:7px 15px;box-shadow:0 2px 8px rgba(7,24,38,.08);background:#fff}
 @media(max-width:900px){.trust-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:620px){.trust-grid{grid-template-columns:1fr}.gallery-hero-wrap{height:260px}.gallery-nav{width:34px;height:34px;font-size:18px}.thumb-btn{flex:0 0 60px;height:44px}}
+
+/* Sticky Navbar */
+.nav{position:sticky;top:0;z-index:50;background:#fff;box-shadow:0 1px 0 var(--line);transition:background .3s,box-shadow .3s}
+.nav-sticky{box-shadow:0 2px 18px rgba(7,24,38,.13)}
+
+/* Scroll-Reveal Animations */
+.reveal-ready{opacity:0;transform:translateY(26px);transition:opacity .55s ease,transform .55s ease}
+.reveal-ready.revealed{opacity:1;transform:translateY(0)}
+
+/* Stats Bar */
+.stats-bar{background:var(--navy);padding:36px 0}
+.stats-inner{display:flex;align-items:center;justify-content:space-evenly;flex-wrap:wrap;gap:24px}
+.stat-item{display:flex;flex-direction:column;align-items:center;gap:6px;color:#fff}
+.stat-num{font-size:clamp(32px,5vw,52px);font-weight:900;letter-spacing:-.04em;color:var(--orange);line-height:1}
+.stat-label{font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#8ea5b4;text-align:center}
+.stat-divider{width:1px;height:50px;background:rgba(255,255,255,.1)}
+
+/* Enhanced Footer - 3 columns */
+.footer-main{display:grid;grid-template-columns:1.4fr 0.8fr 1fr;align-items:start;gap:50px;padding-block:50px}
+.footer-brand-col p{font-size:11px;line-height:1.7;color:#82919b;margin:12px 0}
+.footer-contact-links{display:flex;flex-direction:column;gap:6px;margin-top:4px}
+.footer-wa-link{color:#4ade80;font-size:11px;font-weight:700}
+.footer-wa-link:hover{color:#86efac}
+.footer-email-link{color:#93b4c6;font-size:11px}
+.footer-email-link:hover{color:#fff}
+.footer-nav-col,.footer-ports-col{display:flex;flex-direction:column;gap:8px}
+.footer-col-heading{font-size:9px;font-weight:900;letter-spacing:.2em;text-transform:uppercase;color:#5a7080;margin:0 0 8px}
+.footer-nav-col a{font-size:10px;text-transform:uppercase;font-weight:800;letter-spacing:.08em;color:#8fa5b5}
+.footer-nav-col a:hover{color:#fff}
+.footer-ports-col span{display:block;font-size:11px;color:#6d8494;line-height:1.9}
+
+@media(max-width:900px){.stats-inner{justify-content:center}.stat-divider{display:none}.footer-main{grid-template-columns:1fr 1fr}.footer-ports-col{display:none}}
+@media(max-width:620px){.footer-main{grid-template-columns:1fr;gap:28px}.stats-bar{padding:24px 0}.stat-num{font-size:36px}}

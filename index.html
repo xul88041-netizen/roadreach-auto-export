@@ -3,9 +3,26 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="RoadReach Auto Export — inspected used vehicles and export support from China for international buyers.">
+  <meta name="description" content="RoadReach Auto Export — inspected used vehicles and export support from China for international buyers. FOB quotes to Africa, Middle East, Russia, Central Asia and Latin America.">
+  <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#071826">
+  <link rel="canonical" href="https://xul88041-netizen.github.io/roadreach-auto-export/">
+  <!-- Open Graph / Social sharing -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://xul88041-netizen.github.io/roadreach-auto-export/">
+  <meta property="og:title" content="RoadReach Auto Export | Used Cars from China">
+  <meta property="og:description" content="Inspected used vehicles from China with full export support — FOB/CIF quotes, shipping docs and pre-shipment video to your port.">
+  <meta property="og:image" content="https://xul88041-netizen.github.io/roadreach-auto-export/assets/rr-0002-cover.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="RoadReach Auto Export | Used Cars from China">
+  <meta name="twitter:description" content="Inspected used vehicles from China with full export support.">
+  <meta name="twitter:image" content="https://xul88041-netizen.github.io/roadreach-auto-export/assets/rr-0002-cover.webp">
   <title>RoadReach Auto Export | Used Cars from China</title>
+  <!-- Preload hero background for faster LCP -->
+  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=2000&q=88" fetchpriority="high">
   <link rel="stylesheet" href="assets/styles.css">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"RoadReach Auto Export","url":"https://xul88041-netizen.github.io/roadreach-auto-export/","email":"mailto:xuli58836@gmail.com","telephone":"+447845251241","description":"Used vehicle sourcing and export support from China for international buyers."}</script>
 </head>
@@ -20,7 +37,7 @@
       </div>
     </div>
   </div>
-  <header class="nav shell">
+  <header class="nav shell" id="siteNav">
     <a class="brand" href="#top" aria-label="RoadReach Auto home"><span class="brand-mark">RR</span><span>ROADREACH <small>AUTO EXPORT</small></span></a>
     <nav aria-label="Main navigation">
       <a href="#inventory" data-i18n="navVehicles">Vehicles</a>
@@ -124,6 +141,30 @@
         <span data-i18n="cantFind">Can't find your model?</span> 
         <span data-i18n="sourceBrands">We source Lynk & Co, Haval, Toyota, Honda, BYD, Geely, Changan, Chery and more.</span> 
         <a href="#inquiry" data-i18n="sendRequirement">Send your requirement →</a>
+      </div>
+    </section>
+
+    <section class="stats-bar">
+      <div class="shell stats-inner">
+        <div class="stat-item">
+          <span class="stat-num" id="statVehicles">0</span>
+          <span class="stat-label" data-i18n="statVehiclesLabel">Vehicles Listed</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-num">5</span>
+          <span class="stat-label" data-i18n="statMarketsLabel">Export Markets</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-num">24h</span>
+          <span class="stat-label" data-i18n="statReplyLabel">Reply Time</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-num">9+</span>
+          <span class="stat-label" data-i18n="statPhotosLabel">Photos per Car</span>
+        </div>
       </div>
     </section>
 
@@ -256,13 +297,29 @@
 
   <footer>
     <div class="shell footer-main">
-      <a class="brand invert" href="#top"><span class="brand-mark">RR</span><span>ROADREACH <small>AUTO EXPORT</small></span></a>
-      <p data-i18n="footerBody">Practical vehicle sourcing and export support from China to international buyers.</p>
-      <div>
+      <div class="footer-brand-col">
+        <a class="brand invert" href="#top"><span class="brand-mark">RR</span><span>ROADREACH <small>AUTO EXPORT</small></span></a>
+        <p data-i18n="footerBody">Practical vehicle sourcing and export support from China to international buyers.</p>
+        <div class="footer-contact-links">
+          <a href="https://wa.me/447845251241" target="_blank" rel="noopener noreferrer" class="footer-wa-link">💬 WhatsApp: +44 7845 251241</a>
+          <a href="mailto:xuli58836@gmail.com" class="footer-email-link">✉ xuli58836@gmail.com</a>
+        </div>
+      </div>
+      <div class="footer-nav-col">
+        <p class="footer-col-heading" data-i18n="footerNavHeading">Navigation</p>
         <a href="#inventory" data-i18n="navVehicles">Vehicles</a>
         <a href="#process" data-i18n="navProcess">Process</a>
         <a href="#about" data-i18n="navAbout">Why us</a>
         <a href="#inquiry" data-i18n="contact">Contact</a>
+      </div>
+      <div class="footer-ports-col">
+        <p class="footer-col-heading" data-i18n="footerPortsHeading">Key Destination Ports</p>
+        <span>🇺🇦 Odessa</span>
+        <span>🇦🇪 Jebel Ali (Dubai)</span>
+        <span>🇳🇬 Apapa (Lagos)</span>
+        <span>🇧🇩 Chittagong</span>
+        <span>🇰🇿 Almaty (by rail)</span>
+        <span>🇨🇱 Valparaíso</span>
       </div>
     </div>
     <div class="shell footer-bottom">
@@ -271,10 +328,44 @@
     </div>
   </footer>
 
-  <a class="whatsapp-float wa" data-message="Hello RoadReach Auto, I would like an export quotation." href="#" aria-label="Chat on WhatsApp">WA <span data-i18n="chatNow">Chat now</span></a>
+  <a class="whatsapp-float wa" data-message="Hello RoadReach Auto, I would like an export quotation." href="#" aria-label="Chat on WhatsApp">💬 <span data-i18n="chatNow">Chat now</span></a>
 
   <script src="config.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script type="module" src="assets/public.js"></script>
+  <script>
+    // Sticky navbar: becomes solid on scroll
+    (function() {
+      const nav = document.getElementById('siteNav');
+      if (!nav) return;
+      function onScroll() {
+        if (window.scrollY > 60) {
+          nav.classList.add('nav-sticky');
+        } else {
+          nav.classList.remove('nav-sticky');
+        }
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+
+    // Scroll-reveal: fade sections into view
+    (function() {
+      const revealEls = document.querySelectorAll('.section, .trust-badges-section, .stats-bar, .process, .sold-section, .about, .inquiry');
+      if (!window.IntersectionObserver) return;
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.08 });
+      revealEls.forEach(el => {
+        el.classList.add('reveal-ready');
+        io.observe(el);
+      });
+    })();
+  </script>
 </body>
 </html>
