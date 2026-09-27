@@ -45,7 +45,11 @@ const i18nDict = {
     mileageLabel: "Mileage", colorLabel: "Exterior", conditionLabel: "Condition statement",
     statVehiclesLabel: "Vehicles Listed", statMarketsLabel: "Export Markets", statReplyLabel: "Reply Time", statPhotosLabel: "Photos per Car",
     footerNavHeading: "Navigation", footerPortsHeading: "Key Destination Ports", footerBody: "Practical vehicle sourcing and export support from China to international buyers.",
-    inventoryUnavailable: "Current inventory is temporarily unavailable. Please contact us on WhatsApp for matching vehicles."
+    inventoryUnavailable: "Current inventory is temporarily unavailable. Please contact us on WhatsApp for matching vehicles.",
+    viewDetails: "View Details →", vehicleUnavailable: "Vehicle unavailable",
+    vehicleUnavailableDesc: "This vehicle is either unavailable, has been sold, or is no longer listed in our public showroom.",
+    backToInventory: "← Back to Inventory", requestQuote: "Request a Quote", contactUs: "Contact Us",
+    transmissionLabel: "Transmission", intColorLabel: "Interior", stockIdLabel: "Stock ID"
   },
   ru: {
     photosLabel: "фото", instantQuote: "Расчёт в WhatsApp", instantWhatsApp: "⚡ Быстрый расчёт в WhatsApp",
@@ -84,7 +88,11 @@ const i18nDict = {
     mileageLabel: "Пробег", colorLabel: "Цвет", conditionLabel: "Состояние",
     statVehiclesLabel: "Автомобилей в каталоге", statMarketsLabel: "Рынков экспорта", statReplyLabel: "Время ответа", statPhotosLabel: "Фото на авто",
     footerNavHeading: "Навигация", footerPortsHeading: "Основные порты назначения", footerBody: "Практичный поиск и экспорт подержанных автомобилей из Китая.",
-    inventoryUnavailable: "Каталог временно недоступен. Пожалуйста, напишите нам в WhatsApp для подбора автомобилей."
+    inventoryUnavailable: "Каталог временно недоступен. Пожалуйста, напишите нам в WhatsApp для подбора автомобилей.",
+    viewDetails: "Подробнее →", vehicleUnavailable: "Автомобиль недоступен",
+    vehicleUnavailableDesc: "Этот автомобиль недоступен, продан или больше не представлен в нашем каталоге.",
+    backToInventory: "← Назад к каталогу", requestQuote: "Запросить цену", contactUs: "Связаться с нами",
+    transmissionLabel: "Коробка передач", intColorLabel: "Салон", stockIdLabel: "Номер лота"
   },
   ar: {
     photosLabel: "صور", instantQuote: "تسعير عبر واتساب", instantWhatsApp: "⚡ عرض سعر فوري عبر واتساب",
@@ -123,7 +131,11 @@ const i18nDict = {
     mileageLabel: "الممشى", colorLabel: "اللون الخارجي", conditionLabel: "حالة الفحص",
     statVehiclesLabel: "سيارات معروضة", statMarketsLabel: "أسواق التصدير", statReplyLabel: "وقت الرد", statPhotosLabel: "صورة لكل سيارة",
     footerNavHeading: "روابط سريعة", footerPortsHeading: "الموانئ الرئيسية", footerBody: "مصدر موثوق للسيارات المستعملة من الصين مع دعم تصدير كامل.",
-    inventoryUnavailable: "قائمة السيارات غير متاحة مؤقتاً. يرجى التواصل معنا عبر واتساب لمعرفة الخيارات المتاحة."
+    inventoryUnavailable: "قائمة السيارات غير متاحة مؤقتاً. يرجى التواصل معنا عبر واتساب لمعرفة الخيارات المتاحة.",
+    viewDetails: "عرض التفاصيل ←", vehicleUnavailable: "السيارة غير متوفرة",
+    vehicleUnavailableDesc: "هذه السيارة إما غير متوفرة أو تم بيعها أو لم تعد معروضة في صالة العرض الخاصة بنا.",
+    backToInventory: "← العودة إلى المعرض", requestQuote: "طلب عرض سعر", contactUs: "اتصل بنا",
+    transmissionLabel: "ناقل الحركة", intColorLabel: "اللون الداخلي", stockIdLabel: "رقم المخزون"
   },
   es: {
     photosLabel: "Fotos", instantQuote: "Cotización WhatsApp", instantWhatsApp: "⚡ Cotización rápida por WhatsApp",
@@ -162,7 +174,11 @@ const i18nDict = {
     mileageLabel: "Kilometraje", colorLabel: "Color", conditionLabel: "Estado verificado",
     statVehiclesLabel: "Vehículos Listados", statMarketsLabel: "Mercados de Exportación", statReplyLabel: "Tiempo de Respuesta", statPhotosLabel: "Fotos por Vehículo",
     footerNavHeading: "Navegación", footerPortsHeading: "Puertos de Destino", footerBody: "Aprovisionamiento práctico de vehículos desde China para compradores internacionales.",
-    inventoryUnavailable: "El catálogo de vehículos no está disponible temporalmente. Contáctenos por WhatsApp para conocer las opciones disponibles."
+    inventoryUnavailable: "El catálogo de vehículos no está disponible temporalmente. Contáctenos por WhatsApp para conocer las opciones disponibles.",
+    viewDetails: "Ver detalles →", vehicleUnavailable: "Vehículo no disponible",
+    vehicleUnavailableDesc: "Este vehículo no está disponible, ha sido vendido o ya no figura en nuestro catálogo público.",
+    backToInventory: "← Volver al catálogo", requestQuote: "Solicitar cotización", contactUs: "Contáctenos",
+    transmissionLabel: "Transmisión", intColorLabel: "Interior", stockIdLabel: "ID de lote"
   },
   fr: {
     photosLabel: "Photos", instantQuote: "Devis WhatsApp", instantWhatsApp: "⚡ Devis rapide sur WhatsApp",
@@ -201,7 +217,11 @@ const i18nDict = {
     mileageLabel: "Kilométrage", colorLabel: "Couleur", conditionLabel: "Rapport d'état",
     statVehiclesLabel: "Véhicules Listés", statMarketsLabel: "Marchés d'Exportation", statReplyLabel: "Délai de Réponse", statPhotosLabel: "Photos par Véhicule",
     footerNavHeading: "Navigation", footerPortsHeading: "Ports de Destination Clés", footerBody: "Approvisionnement pratique en véhicules depuis la Chine pour acheteurs internationaux.",
-    inventoryUnavailable: "L'inventaire est temporairement indisponible. Veuillez nous contacter sur WhatsApp pour connaître les véhicules disponibles."
+    inventoryUnavailable: "L'inventaire est temporairement indisponible. Veuillez nous contacter sur WhatsApp pour connaître les véhicules disponibles.",
+    viewDetails: "Voir les détails →", vehicleUnavailable: "Véhicule indisponible",
+    vehicleUnavailableDesc: "Ce véhicule est indisponible, a été vendu ou ne figure plus dans notre catalogue public.",
+    backToInventory: "← Retour à l'inventaire", requestQuote: "Demander un devis", contactUs: "Contactez-nous",
+    transmissionLabel: "Transmission", intColorLabel: "Intérieur", stockIdLabel: "ID de stock"
   },
   zh: {
     photosLabel: "张实拍", instantQuote: "WhatsApp 询价", instantWhatsApp: "⚡ WhatsApp 闪电询价",
@@ -240,7 +260,11 @@ const i18nDict = {
     mileageLabel: "表显里程", colorLabel: "外观颜色", conditionLabel: "检测车况评级",
     statVehiclesLabel: "在售车源数量", statMarketsLabel: "出口目的市场", statReplyLabel: "响应时效", statPhotosLabel: "每车实拍张数",
     footerNavHeading: "导航菜单", footerPortsHeading: "主要目的港口", footerBody: "专业中国二手车出口供应链服务，覆盖全球主要口岸。",
-    inventoryUnavailable: "当前在售车源加载暂不可用。请直接通过 WhatsApp 联系我们获取最新匹配车源。"
+    inventoryUnavailable: "当前在售车源加载暂不可用。请直接通过 WhatsApp 联系我们获取最新匹配车源。",
+    viewDetails: "查看详情 →", vehicleUnavailable: "车辆暂不可用",
+    vehicleUnavailableDesc: "此车辆暂不可用、已售出或已不在公开展厅中。",
+    backToInventory: "← 返回车辆目录", requestQuote: "申请报价", contactUs: "联系我们",
+    transmissionLabel: "变速箱", intColorLabel: "内饰颜色", stockIdLabel: "车辆编号"
   }
 };
 
@@ -305,12 +329,13 @@ function card(vehicle) {
   const vin = vehicle.sourcing_status === "IN_STOCK" && vehicle.masked_vin ? `<p class="vin-line">VIN: ${escapeHtml(vehicle.masked_vin)}</p>` : "";
   const cta = vehicle.publication_status === "SOLD" ? t("findSimilar", "Find Similar Vehicle →") : t("askForQuote", "Ask for Quote →");
   const photoBadge = images.length > 1 ? `<span class="photo-count-badge">📷 ${images.length} ${t("photosLabel", "Photos")}</span>` : "";
+  const detailUrl = `vehicle.html?id=${encodeURIComponent(vehicle.id)}`;
   
   // WhatsApp 一键直连带车源
   const waCarMsg = `Hello RoadReach Auto, I am interested in Stock ${vehicle.stock_id} (${vehicle.brand} ${vehicle.model} ${vehicle.year}). Please share the full details.`;
   const waCarUrl = `https://wa.me/${whatsAppNumber}?text=${encodeURIComponent(waCarMsg)}`;
 
-  return `<article class="vehicle-card"><div class="vehicle-image"><img src="${escapeHtml(image)}" alt="${escapeHtml(`${vehicle.brand} ${vehicle.model}`)}" loading="lazy"><span class="year-badge">${escapeHtml(vehicle.year)}</span><span class="vehicle-status ${statusClass}">${escapeHtml(statusLabel(vehicle))}</span>${photoBadge}</div><div class="vehicle-body"><p class="vehicle-type">${escapeHtml(vehicle.body_type)}<span class="stock-id">${escapeHtml(vehicle.stock_id)}</span>${vehicle.featured ? '<span class="featured-flag">FEATURED</span>' : ""}</p><h3>${escapeHtml(`${vehicle.brand} ${vehicle.model}`)}</h3><div class="specs"><span>${escapeHtml(vehicle.fuel_type)}</span><span>${escapeHtml(vehicle.steering)}</span>${vehicle.mileage == null ? "" : `<span>${Number(vehicle.mileage).toLocaleString("en-US")} km</span>`}</div>${vin}<div class="price-row"><b>${escapeHtml(formatPrice(vehicle))}</b><div class="card-actions"><button class="detail-link" data-vehicle-id="${escapeHtml(vehicle.id)}">${cta}</button><a class="card-wa-btn" href="${waCarUrl}" target="_blank" rel="noopener noreferrer" title="Inquire on WhatsApp">💬</a></div></div><small class="price-note">${escapeHtml(t("priceDisclaimer", "Final quotation may vary depending on vehicle condition/configuration, quantity, purchase timing and destination requirements."))}</small></div></article>`;
+  return `<article class="vehicle-card"><div class="vehicle-image"><a href="${detailUrl}" aria-label="${escapeHtml(`${vehicle.brand} ${vehicle.model}`)}"><img src="${escapeHtml(image)}" alt="${escapeHtml(`${vehicle.brand} ${vehicle.model}`)}" loading="lazy"></a><span class="year-badge">${escapeHtml(vehicle.year)}</span><span class="vehicle-status ${statusClass}">${escapeHtml(statusLabel(vehicle))}</span>${photoBadge}</div><div class="vehicle-body"><p class="vehicle-type">${escapeHtml(vehicle.body_type)}<span class="stock-id">${escapeHtml(vehicle.stock_id)}</span>${vehicle.featured ? '<span class="featured-flag">FEATURED</span>' : ""}</p><h3><a href="${detailUrl}">${escapeHtml(`${vehicle.brand} ${vehicle.model}`)}</a></h3><div class="specs"><span>${escapeHtml(vehicle.fuel_type)}</span><span>${escapeHtml(vehicle.steering)}</span>${vehicle.mileage == null ? "" : `<span>${Number(vehicle.mileage).toLocaleString("en-US")} km</span>`}</div>${vin}<div class="price-row"><b>${escapeHtml(formatPrice(vehicle))}</b><div class="card-actions"><a class="detail-link" href="${detailUrl}">${t("viewDetails", "View Details →")}</a><button class="quote-link-btn" data-vehicle-id="${escapeHtml(vehicle.id)}" title="${cta}">📋</button><a class="card-wa-btn" href="${waCarUrl}" target="_blank" rel="noopener noreferrer" title="Inquire on WhatsApp">💬</a></div></div><small class="price-note">${escapeHtml(t("priceDisclaimer", "Final quotation may vary depending on vehicle condition/configuration, quantity, purchase timing and destination requirements."))}</small></div></article>`;
 }
 
 function bindVehicleButtons() {

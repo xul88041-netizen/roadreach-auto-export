@@ -37,7 +37,7 @@ jobs:
       - name: Stage public website only
         run: |
           mkdir -p _site
-          cp index.html config.js robots.txt sitemap.xml google*.html _site/
+          cp index.html vehicle.html config.js robots.txt sitemap.xml google*.html _site/
           cp -r admin assets images _site/
       - name: Upload website
         uses: actions/upload-pages-artifact@v3

@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" id="metaDescription" content="Inspected used vehicles and export support from China for international buyers. FOB and CIF quotes to worldwide ports.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#071826">
+  <link rel="canonical" id="metaCanonical" href="https://xul88041-netizen.github.io/roadreach-auto-export/vehicle.html">
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" id="ogUrl" content="https://xul88041-netizen.github.io/roadreach-auto-export/vehicle.html">
+  <meta property="og:title" id="ogTitle" content="Vehicle Details | RoadReach Auto Export">
+  <meta property="og:description" id="ogDescription" content="Inspected used vehicle available for international export from China.">
+  <meta property="og:image" id="ogImage" content="https://xul88041-netizen.github.io/roadreach-auto-export/assets/rr-0002-cover.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" id="twitterTitle" content="Vehicle Details | RoadReach Auto Export">
+  <meta name="twitter:description" id="twitterDescription" content="Inspected used vehicle available for international export from China.">
+  <meta name="twitter:image" id="twitterImage" content="https://xul88041-netizen.github.io/roadreach-auto-export/assets/rr-0002-cover.webp">
+  <title id="pageTitle">Vehicle Details | RoadReach Auto Export</title>
+  <link rel="stylesheet" href="assets/styles.css">
+  <!-- Schema.org Dynamic Vehicle Structured Data -->
+  <script type="application/ld+json" id="vehicleJsonLd"></script>
+</head>
+<body>
+  <div class="topbar">
+    <div class="shell topbar-inner">
+      <span data-i18n="topbar">China used vehicle export sourcing</span>
+      <div class="topbar-right">
+        <a href="mailto:xuli58836@gmail.com">xuli58836@gmail.com</a>
+        <span class="sep">|</span>
+        <a href="https://wa.me/447845251241" target="_blank" rel="noopener noreferrer">WhatsApp: +44 7845 251241</a>
+      </div>
+    </div>
+  </div>
+
+  <header class="nav shell" id="siteNav">
+    <a class="brand" href="index.html" aria-label="RoadReach Auto home"><span class="brand-mark">RR</span><span>ROADREACH <small>AUTO EXPORT</small></span></a>
+    <nav aria-label="Main navigation">
+      <a href="index.html#inventory" data-i18n="navVehicles">Vehicles</a>
+      <a href="index.html#process" data-i18n="navProcess">How it works</a>
+      <a href="index.html#about" data-i18n="navAbout">Why us</a>
+      <a href="#inquirySection" data-i18n="contact">Contact</a>
+    </nav>
+    <div class="nav-actions">
+      <div class="lang-selector-wrap">
+        <label for="languageSelect" class="sr-only">Language</label>
+        <select class="language-dropdown" id="languageSelect" aria-label="Select Language">
+          <option value="en">🇬🇧 English</option>
+          <option value="ru">🇷🇺 Русский</option>
+          <option value="ar">🇸🇦 العربية</option>
+          <option value="es">🇪🇸 Español</option>
+          <option value="fr">🇫🇷 Français</option>
+          <option value="zh">🇨🇳 简体中文</option>
+        </select>
+      </div>
+      <a class="button button-small" href="#inquirySection" data-i18n="getQuote">Get a quote</a>
+    </div>
+  </header>
+
+  <!-- Breadcrumb -->
+  <div class="breadcrumb shell">
+    <a href="index.html">Home</a>
+    <span>/</span>
+    <a href="index.html#inventory" data-i18n="navVehicles">Vehicles</a>
+    <span>/</span>
+    <span id="breadcrumbCurrent">Vehicle</span>
+  </div>
+
+  <main class="shell section-detail">
+    <!-- Loading state -->
+    <div id="detailLoading" class="stock-message" data-i18n="loading">Loading vehicle details…</div>
+
+    <!-- Unavailable / 404 state -->
+    <div id="detailUnavailable" class="vehicle-unavailable-card" hidden>
+      <div class="unavailable-icon">🚗</div>
+      <h2 data-i18n="vehicleUnavailable">Vehicle unavailable</h2>
+      <p data-i18n="vehicleUnavailableDesc">This vehicle is either unavailable, has been sold, or is no longer listed in our public showroom.</p>
+      <a class="button" href="index.html#inventory" data-i18n="backToInventory">← Back to Inventory</a>
+    </div>
+
+    <!-- Main Detail Content (populated dynamically) -->
+    <div id="detailContent" hidden>
+      <div class="detail-layout">
+        <!-- Left: Image Gallery & Description -->
+        <div>
+          <div class="detail-gallery-card">
+            <div class="detail-gallery-main" id="galleryHeroWrap">
+              <button type="button" class="gallery-nav prev" id="detailGalleryPrev" aria-label="Previous photo">‹</button>
+              <img id="detailMainImage" src="assets/rr-0001-cover.svg" alt="Vehicle photo">
+              <span class="gallery-counter" id="detailGalleryCounter">1 / 1</span>
+              <button type="button" class="gallery-nav next" id="detailGalleryNext" aria-label="Next photo">›</button>
+            </div>
+            <div class="detail-thumbs-strip" id="detailThumbsStrip"></div>
+          </div>
+
+          <div class="detail-desc-card" id="detailDescBox">
+            <h3>Vehicle Overview</h3>
+            <p id="detailNotesText"></p>
+          </div>
+
+          <div class="detail-condition-box" id="detailConditionBox" hidden>
+            <b data-i18n="conditionLabel">Condition statement</b>
+            <p id="detailConditionText"></p>
+          </div>
+        </div>
+
+        <!-- Right: Pricing, Specs, CTAs -->
+        <div class="detail-info-card">
+          <div class="detail-badges">
+            <span class="stock-id" id="detailStockId"></span>
+            <span class="vehicle-status" id="detailStatusBadge"></span>
+            <span class="vin-badge" id="detailVinBadge" hidden></span>
+          </div>
+
+          <h1 class="detail-title" id="detailTitleText"></h1>
+
+          <div class="detail-price-panel">
+            <small data-i18n="fobOnRequest">Reference FOB Price</small>
+            <span class="detail-price-val" id="detailPriceVal"></span>
+            <span class="detail-price-note" data-i18n="priceDisclaimer">Final quotation may vary depending on vehicle condition/configuration, quantity, purchase timing and destination requirements.</span>
+          </div>
+
+          <div class="detail-cta-row">
+            <a class="button full" href="#inquirySection" id="quoteCtaBtn" data-i18n="requestQuote">Request a Quote →</a>
+            <a class="button button-wa-instant" id="detailWaBtn" href="#" target="_blank" rel="noopener noreferrer">
+              <span>💬</span> <span data-i18n="instantQuote">Instant Quote on WhatsApp</span>
+            </a>
+          </div>
+
+          <div class="specs-grid" id="detailSpecsGrid"></div>
+        </div>
+      </div>
+
+      <!-- Dedicated Vehicle Inquiry Section -->
+      <section class="detail-inquiry-box" id="inquirySection">
+        <h2 id="inquiryHeading">Request an Export Quotation</h2>
+        <p data-i18n="inquiryBody">Tell us your destination port and requirements. We'll reply with FOB/CIF pricing, inspection reports and shipping schedules.</p>
+
+        <form class="detail-inquiry-form" id="vehicleInquiryForm">
+          <input type="hidden" name="vehicle_id" id="formVehicleId">
+          <input type="hidden" name="stock_id" id="formStockId">
+          <input type="hidden" name="preferred_model" id="formPreferredModel">
+
+          <div class="form-split">
+            <label><span data-i18n="name">Your name</span><input name="name" required minlength="2"></label>
+            <label><span data-i18n="country">Country</span><input name="country" required minlength="2"></label>
+          </div>
+          <div class="form-split">
+            <label><span data-i18n="city">City</span><input name="city"></label>
+            <label><span data-i18n="phone">WhatsApp or Phone</span><input name="whatsapp_or_phone"></label>
+          </div>
+          <div class="form-split">
+            <label><span>Email</span><input name="email" type="email"></label>
+            <label><span data-i18n="destination">Destination port</span><input name="destination_port" placeholder="e.g. Dubai, Mombasa, Bishkek"></label>
+          </div>
+          <div class="form-split">
+            <label><span data-i18n="quantity">Quantity</span><input name="quantity" type="number" min="1" value="1"></label>
+            <label><span data-i18n="budget">Target Budget (USD)</span><input name="target_budget" type="number" min="0" placeholder="Optional"></label>
+          </div>
+          <label><span data-i18n="timing">Purchase timing</span>
+            <select name="purchase_timing">
+              <option value="IMMEDIATE">Immediate (within 2 weeks)</option>
+              <option value="THIS_MONTH">This month</option>
+              <option value="WITHIN_3_MONTHS">Within 3 months</option>
+              <option value="MARKET_RESEARCH">Market research</option>
+            </select>
+          </label>
+          <label><span data-i18n="requirements">Message / Requirements</span><textarea name="message" rows="3"></textarea></label>
+          <label class="check-label">
+            <input type="checkbox" name="request_full_vin">
+            <span data-i18n="requestVin">Request Full VIN (reviewed privately; never sent automatically)</span>
+          </label>
+          <label class="honeypot" aria-hidden="true">Website<input tabindex="-1" autocomplete="off" name="website"></label>
+
+          <button class="button full" type="submit">
+            <span data-i18n="sendInquiry">Send inquiry</span>
+            <span>→</span>
+          </button>
+          <span class="form-status" role="status"></span>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="shell footer-main">
+      <div class="footer-brand-col">
+        <a class="brand invert" href="index.html" aria-label="RoadReach Auto home">
+          <span class="brand-mark">RR</span>
+          <span>ROADREACH <small>AUTO EXPORT</small></span>
+        </a>
+        <p data-i18n="footerBody">Practical vehicle sourcing and export support from China to international buyers.</p>
+        <div class="footer-contact-links">
+          <a class="footer-wa-link" href="https://wa.me/447845251241" target="_blank" rel="noopener noreferrer">WhatsApp: +44 7845 251241</a>
+          <a class="footer-email-link" href="mailto:xuli58836@gmail.com">xuli58836@gmail.com</a>
+        </div>
+      </div>
+      <div class="footer-nav-col">
+        <span class="footer-col-heading" data-i18n="footerNavHeading">Navigation</span>
+        <a href="index.html#inventory" data-i18n="navVehicles">Vehicles</a>
+        <a href="index.html#process" data-i18n="navProcess">How it works</a>
+        <a href="index.html#about" data-i18n="navAbout">Why us</a>
+        <a href="#inquirySection" data-i18n="contact">Contact</a>
+      </div>
+      <div class="footer-ports-col">
+        <span class="footer-col-heading" data-i18n="footerPortsHeading">Key Destination Ports</span>
+        <span>Jebel Ali (Dubai) · Mombasa (Kenya)</span>
+        <span>Dar es Salaam · Djibouti · Poti (Georgia)</span>
+        <span>Khorgos (Central Asia) · Vladivostok</span>
+      </div>
+    </div>
+    <div class="shell footer-bottom">
+      <span>© 2026 RoadReach Auto Export.</span>
+      <span data-i18n="priceDisclaimer">Final quotation may vary depending on vehicle condition/configuration, quantity, purchase timing and destination requirements.</span>
+    </div>
+  </footer>
+
+  <a class="whatsapp-float wa" data-message="Hello RoadReach Auto, I would like an export quotation." href="#" aria-label="Chat on WhatsApp">
+    WA <span data-i18n="chatNow">Chat now</span>
+  </a>
+
+  <script src="config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1"></script>
+  <script type="module" src="assets/vehicle.js"></script>
+</body>
+</html>
