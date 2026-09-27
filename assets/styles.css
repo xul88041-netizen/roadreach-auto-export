@@ -156,3 +156,11 @@
   .specs-grid{grid-template-columns:1fr 1fr}
   .detail-inquiry-form{padding:18px}
 }
+
+/* --- Phase 2 Image Performance & CLS Prevention --- */
+.vehicle-image{aspect-ratio:3 / 2}
+.vehicle-image img{aspect-ratio:3 / 2}
+.detail-gallery-main{aspect-ratio:3 / 2}
+.detail-gallery-main img{aspect-ratio:3 / 2}
+.thumb-btn{aspect-ratio:74 / 52}
+.thumb-btn img{aspect-ratio:74 / 52}

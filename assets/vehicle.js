@@ -6,7 +6,7 @@ const config = window.ROADREACH_CONFIG || {};
 const client = config.supabaseUrl && config.supabasePublishableKey && window.supabase
   ? window.supabase.createClient(config.supabaseUrl, config.supabasePublishableKey, { auth: { persistSession: false } }) : null;
 
-const fallbackImage = "assets/rr-0001-cover.svg";
+const fallbackImage = "assets/vehicle-fallback.webp";
 const whatsAppNumber = "447845251241";
 let currentVehicle = null;
 let currentImageIndex = 0;
@@ -234,7 +234,9 @@ function updateSeoMetadata(vehicle) {
   setMetaAttr('meta[property="og:type"]', "content", "website");
 
   const images = Array.isArray(vehicle.images) && vehicle.images.length ? vehicle.images : [];
-  const primaryImg = images[0]?.url ? safeUrl(images[0].url) : `${window.location.origin}/assets/rr-0002-cover.webp`;
+  const primaryImg = images[0]?.card_url
+    ? safeUrl(images[0].card_url)
+    : (images[0]?.url ? safeUrl(images[0].url) : `${window.location.origin}/assets/vehicle-fallback.webp`);
   setMetaAttr('meta[property="og:image"]', "content", primaryImg);
 
   setMetaAttr('meta[name="twitter:card"]', "content", "summary_large_image");
@@ -403,13 +405,36 @@ function setupGallery(vehicle) {
   const thumbsWrap = document.querySelector("#detailThumbsStrip");
   const heroWrap = document.querySelector("#galleryHeroWrap");
 
+  function setMainImageSource(imgObj) {
+    if (!mainImg) return;
+    const targetUrl = imgObj.detail_url || imgObj.url || fallbackImage;
+    mainImg.src = safeUrl(targetUrl);
+    if (imgObj.card_url && imgObj.detail_url) {
+      mainImg.srcset = `${safeUrl(imgObj.card_url)} 640w, ${safeUrl(imgObj.detail_url)} 1200w`;
+      mainImg.sizes = "(min-width: 900px) 60vw, 100vw";
+    } else {
+      mainImg.removeAttribute("srcset");
+      mainImg.removeAttribute("sizes");
+    }
+    mainImg.setAttribute("width", "1200");
+    mainImg.setAttribute("height", "800");
+    mainImg.setAttribute("decoding", "async");
+  }
+
+  // Initial setup for the first LCP image
+  setMainImageSource(images[0]);
+  if (mainImg) {
+    mainImg.setAttribute("loading", "eager");
+    mainImg.setAttribute("fetchpriority", "high");
+  }
+
   function goToImage(idx) {
     if (idx < 0) idx = images.length - 1;
     if (idx >= images.length) idx = 0;
     currentImageIndex = idx;
     mainImg.style.opacity = "0.35";
     setTimeout(() => {
-      mainImg.src = safeUrl(images[currentImageIndex].url);
+      setMainImageSource(images[currentImageIndex]);
       mainImg.alt = `${vehicle.brand} ${vehicle.model} photo ${currentImageIndex + 1}`;
       mainImg.style.opacity = "1";
     }, 90);
@@ -426,6 +451,8 @@ function setupGallery(vehicle) {
   mainImg.addEventListener("error", () => {
     mainImg.alt = "";
     mainImg.src = fallbackImage;
+    mainImg.removeAttribute("srcset");
+    mainImg.removeAttribute("sizes");
   });
 
   if (images.length > 1) {
@@ -435,17 +462,22 @@ function setupGallery(vehicle) {
     prevBtn.onclick = (e) => { e.stopPropagation(); goToImage(currentImageIndex - 1); };
     nextBtn.onclick = (e) => { e.stopPropagation(); goToImage(currentImageIndex + 1); };
 
-    thumbsWrap.innerHTML = images.map((img, idx) => `
-      <button type="button" class="thumb-btn ${idx === 0 ? 'active' : ''}" data-idx="${idx}" aria-label="Photo ${idx + 1}">
-        <img src="${escapeHtml(safeUrl(img.url))}" alt="${escapeHtml(`${vehicle.brand} ${vehicle.model} thumbnail ${idx + 1}`)}">
-      </button>
-    `).join("");
+    thumbsWrap.innerHTML = images.map((img, idx) => {
+      const thumbUrl = img.thumb_url || img.url || fallbackImage;
+      return `
+        <button type="button" class="thumb-btn ${idx === 0 ? 'active' : ''}" data-idx="${idx}" aria-label="Photo ${idx + 1}">
+          <img src="${escapeHtml(safeUrl(thumbUrl))}" alt="${escapeHtml(`${vehicle.brand} ${vehicle.model} thumbnail ${idx + 1}`)}" width="74" height="52" loading="lazy" decoding="async">
+        </button>
+      `;
+    }).join("");
 
     thumbsWrap.querySelectorAll(".thumb-btn").forEach((btn) => {
       btn.addEventListener("click", () => goToImage(Number(btn.dataset.idx || 0)));
       btn.querySelector("img")?.addEventListener("error", (e) => {
         e.target.alt = "";
         e.target.src = fallbackImage;
+        e.target.removeAttribute("srcset");
+        e.target.removeAttribute("sizes");
       });
     });
 

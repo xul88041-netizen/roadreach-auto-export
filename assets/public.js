@@ -1,7 +1,7 @@
 const config = window.ROADREACH_CONFIG || {};
 const client = config.supabaseUrl && config.supabasePublishableKey && window.supabase
   ? window.supabase.createClient(config.supabaseUrl, config.supabasePublishableKey, { auth: { persistSession: false } }) : null;
-const fallbackImage = "assets/rr-0001-cover.svg";
+const fallbackImage = "assets/vehicle-fallback.webp";
 const whatsAppNumber = "447845251241";
 let vehicles = [];
 let language = localStorage.getItem("roadreach-language") || "en";
@@ -324,7 +324,14 @@ function applyTranslations() {
 
 function card(vehicle) {
   const images = Array.isArray(vehicle.images) ? vehicle.images : [];
-  const image = safeUrl(images[0]?.url || fallbackImage);
+  const primaryImage = images[0];
+  const image = safeUrl(primaryImage?.card_url || primaryImage?.url || fallbackImage);
+  let srcsetAttr = "";
+  let sizesAttr = "";
+  if (primaryImage?.card_url && primaryImage?.detail_url) {
+    srcsetAttr = ` srcset="${escapeHtml(safeUrl(primaryImage.card_url))} 640w, ${escapeHtml(safeUrl(primaryImage.detail_url))} 1200w"`;
+    sizesAttr = ` sizes="(min-width: 1200px) 360px, (min-width: 768px) 33vw, 100vw"`;
+  }
   const statusClass = vehicle.publication_status === "SOLD" ? "sold" : vehicle.sourcing_status === "AVAILABLE_TO_SOURCE" ? "source" : "";
   const vin = vehicle.sourcing_status === "IN_STOCK" && vehicle.masked_vin ? `<p class="vin-line">VIN: ${escapeHtml(vehicle.masked_vin)}</p>` : "";
   const cta = vehicle.publication_status === "SOLD" ? t("findSimilar", "Find Similar Vehicle →") : t("askForQuote", "Ask for Quote →");
@@ -335,7 +342,7 @@ function card(vehicle) {
   const waCarMsg = `Hello RoadReach Auto, I am interested in Stock ${vehicle.stock_id} (${vehicle.brand} ${vehicle.model} ${vehicle.year}). Please share the full details.`;
   const waCarUrl = `https://wa.me/${whatsAppNumber}?text=${encodeURIComponent(waCarMsg)}`;
 
-  return `<article class="vehicle-card"><div class="vehicle-image"><a href="${detailUrl}" aria-label="${escapeHtml(`${vehicle.brand} ${vehicle.model}`)}"><img src="${escapeHtml(image)}" alt="${escapeHtml(`${vehicle.brand} ${vehicle.model}`)}" loading="lazy"></a><span class="year-badge">${escapeHtml(vehicle.year)}</span><span class="vehicle-status ${statusClass}">${escapeHtml(statusLabel(vehicle))}</span>${photoBadge}</div><div class="vehicle-body"><p class="vehicle-type">${escapeHtml(vehicle.body_type)}<span class="stock-id">${escapeHtml(vehicle.stock_id)}</span>${vehicle.featured ? '<span class="featured-flag">FEATURED</span>' : ""}</p><h3><a href="${detailUrl}">${escapeHtml(`${vehicle.brand} ${vehicle.model}`)}</a></h3><div class="specs"><span>${escapeHtml(vehicle.fuel_type)}</span><span>${escapeHtml(vehicle.steering)}</span>${vehicle.mileage == null ? "" : `<span>${Number(vehicle.mileage).toLocaleString("en-US")} km</span>`}</div>${vin}<div class="price-row"><b>${escapeHtml(formatPrice(vehicle))}</b><div class="card-actions"><a class="detail-link" href="${detailUrl}">${t("viewDetails", "View Details →")}</a><button class="quote-link-btn" data-vehicle-id="${escapeHtml(vehicle.id)}" title="${cta}">📋</button><a class="card-wa-btn" href="${waCarUrl}" target="_blank" rel="noopener noreferrer" title="Inquire on WhatsApp">💬</a></div></div><small class="price-note">${escapeHtml(t("priceDisclaimer", "Final quotation may vary depending on vehicle condition/configuration, quantity, purchase timing and destination requirements."))}</small></div></article>`;
+  return `<article class="vehicle-card"><div class="vehicle-image"><a href="${detailUrl}" aria-label="${escapeHtml(`${vehicle.brand} ${vehicle.model}`)}"><img src="${escapeHtml(image)}"${srcsetAttr}${sizesAttr} alt="${escapeHtml(`${vehicle.brand} ${vehicle.model}`)}" width="360" height="240" loading="lazy" decoding="async"></a><span class="year-badge">${escapeHtml(vehicle.year)}</span><span class="vehicle-status ${statusClass}">${escapeHtml(statusLabel(vehicle))}</span>${photoBadge}</div><div class="vehicle-body"><p class="vehicle-type">${escapeHtml(vehicle.body_type)}<span class="stock-id">${escapeHtml(vehicle.stock_id)}</span>${vehicle.featured ? '<span class="featured-flag">FEATURED</span>' : ""}</p><h3><a href="${detailUrl}">${escapeHtml(`${vehicle.brand} ${vehicle.model}`)}</a></h3><div class="specs"><span>${escapeHtml(vehicle.fuel_type)}</span><span>${escapeHtml(vehicle.steering)}</span>${vehicle.mileage == null ? "" : `<span>${Number(vehicle.mileage).toLocaleString("en-US")} km</span>`}</div>${vin}<div class="price-row"><b>${escapeHtml(formatPrice(vehicle))}</b><div class="card-actions"><a class="detail-link" href="${detailUrl}">${t("viewDetails", "View Details →")}</a><button class="quote-link-btn" data-vehicle-id="${escapeHtml(vehicle.id)}" title="${cta}">📋</button><a class="card-wa-btn" href="${waCarUrl}" target="_blank" rel="noopener noreferrer" title="Inquire on WhatsApp">💬</a></div></div><small class="price-note">${escapeHtml(t("priceDisclaimer", "Final quotation may vary depending on vehicle condition/configuration, quantity, purchase timing and destination requirements."))}</small></div></article>`;
 }
 
 function bindVehicleButtons() {
@@ -348,6 +355,8 @@ function bindVehicleImageFallbacks(scope = document) {
     image.dataset.fallbackApplied = "true";
     image.alt = "";
     image.src = fallbackImage;
+    image.removeAttribute("srcset");
+    image.removeAttribute("sizes");
   }, { once: true }));
 }
 
@@ -429,7 +438,7 @@ function openVehicle(id) {
     <div class="modal-gallery">
       <div class="gallery-hero-wrap">
         ${images.length > 1 ? '<button type="button" class="gallery-nav prev" id="galleryPrev" aria-label="Previous image">‹</button>' : ''}
-        <img id="modalMainImage" src="${escapeHtml(safeUrl(images[0].url))}" alt="${escapeHtml(`${vehicle.brand} ${vehicle.model} photo 1`)}">
+        <img id="modalMainImage" src="${escapeHtml(safeUrl(images[0]?.detail_url || images[0]?.url || fallbackImage))}" alt="${escapeHtml(`${vehicle.brand} ${vehicle.model} photo 1`)}" width="800" height="500" loading="eager" fetchpriority="high" decoding="async">
         ${images.length > 1 ? `<span class="gallery-counter" id="galleryCounter">1 / ${images.length}</span>` : ''}
         ${images.length > 1 ? '<button type="button" class="gallery-nav next" id="galleryNext" aria-label="Next image">›</button>' : ''}
       </div>
@@ -437,7 +446,7 @@ function openVehicle(id) {
         <div class="modal-thumbnails" id="modalThumbnails">
           ${images.map((img, idx) => `
             <button type="button" class="thumb-btn ${idx === 0 ? 'active' : ''}" data-index="${idx}" aria-label="Photo ${idx + 1}">
-              <img src="${escapeHtml(safeUrl(img.url))}" alt="${escapeHtml(`${vehicle.brand} ${vehicle.model} thumbnail ${idx + 1}`)}">
+              <img src="${escapeHtml(safeUrl(img.thumb_url || img.url || fallbackImage))}" alt="${escapeHtml(`${vehicle.brand} ${vehicle.model} thumbnail ${idx + 1}`)}" width="74" height="52" loading="lazy" decoding="async">
             </button>
           `).join("")}
         </div>
@@ -479,7 +488,7 @@ function openVehicle(id) {
       currentIdx = idx;
       mainImg.style.opacity = "0.35";
       setTimeout(() => {
-        mainImg.src = safeUrl(images[currentIdx].url);
+        mainImg.src = safeUrl(images[currentIdx]?.detail_url || images[currentIdx]?.url || fallbackImage);
         mainImg.alt = `${vehicle.brand} ${vehicle.model} photo ${currentIdx + 1}`;
         mainImg.style.opacity = "1";
       }, 90);

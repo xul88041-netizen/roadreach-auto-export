@@ -1,0 +1,142 @@
+[
+  {
+    "vehicle_id": "543ad5aa-0e69-4752-bdce-d4f10b080fb1",
+    "vehicle_image_id": "e13e1717-d721-49b7-9f95-074242f4b90f",
+    "stock_id": "RR-TY-WL-001",
+    "sort_order": 0,
+    "original_url": "https://smjbzjzsmmisdrmdfjby.supabase.co/storage/v1/object/public/vehicle-images/543ad5aa-0e69-4752-bdce-d4f10b080fb1/48ec47b9-2de9-4127-b76f-1749b2c0f687-67d2c5d51579e0f0a77e86922dfeba86.jpg",
+    "thumb_object_path": "543ad5aa-0e69-4752-bdce-d4f10b080fb1/derived/thumb/e13e1717-d721-49b7-9f95-074242f4b90f.webp",
+    "card_object_path": "543ad5aa-0e69-4752-bdce-d4f10b080fb1/derived/card/e13e1717-d721-49b7-9f95-074242f4b90f.webp",
+    "detail_object_path": "543ad5aa-0e69-4752-bdce-d4f10b080fb1/derived/detail/e13e1717-d721-49b7-9f95-074242f4b90f.webp"
+  },
+  {
+    "vehicle_id": "543ad5aa-0e69-4752-bdce-d4f10b080fb1",
+    "vehicle_image_id": "ee940471-04db-45e6-83b5-54a2212df048",
+    "stock_id": "RR-TY-WL-001",
+    "sort_order": 1,
+    "original_url": "https://smjbzjzsmmisdrmdfjby.supabase.co/storage/v1/object/public/vehicle-images/543ad5aa-0e69-4752-bdce-d4f10b080fb1/96254cfa-4722-44a1-96d4-a77468e43a33-59c6048f9e861fe10cb04f6b56916014.jpg",
+    "thumb_object_path": "543ad5aa-0e69-4752-bdce-d4f10b080fb1/derived/thumb/ee940471-04db-45e6-83b5-54a2212df048.webp",
+    "card_object_path": "543ad5aa-0e69-4752-bdce-d4f10b080fb1/derived/card/ee940471-04db-45e6-83b5-54a2212df048.webp",
+    "detail_object_path": "543ad5aa-0e69-4752-bdce-d4f10b080fb1/derived/detail/ee940471-04db-45e6-83b5-54a2212df048.webp"
+  },
+  {
+    "vehicle_id": "543ad5aa-0e69-4752-bdce-d4f10b080fb1",
+    "vehicle_image_id": "2b2885b7-f50e-4541-8e63-063e2dc1cf89",
+    "stock_id": "RR-TY-WL-001",
+    "sort_order": 2,
+    "original_url": "https://smjbzjzsmmisdrmdfjby.supabase.co/storage/v1/object/public/vehicle-images/543ad5aa-0e69-4752-bdce-d4f10b080fb1/6ecda766-a90e-4302-a77e-7df394f0d894-4a1367ef0593a4e61f1c1fb4b157175f.jpg",
+    "thumb_object_path": "543ad5aa-0e69-4752-bdce-d4f10b080fb1/derived/thumb/2b2885b7-f50e-4541-8e63-063e2dc1cf89.webp",
+    "card_object_path": "543ad5aa-0e69-4752-bdce-d4f10b080fb1/derived/card/2b2885b7-f50e-4541-8e63-063e2dc1cf89.webp",
+    "detail_object_path": "543ad5aa-0e69-4752-bdce-d4f10b080fb1/derived/detail/2b2885b7-f50e-4541-8e63-063e2dc1cf89.webp"
+  },
+  {
+    "vehicle_id": "543ad5aa-0e69-4752-bdce-d4f10b080fb1",
+    "vehicle_image_id": "0c6967a8-f504-4a09-92dd-ae8d7e0e6261",
+    "stock_id": "RR-TY-WL-001",
+    "sort_order": 3,
+    "original_url": "https://smjbzjzsmmisdrmdfjby.supabase.co/storage/v1/object/public/vehicle-images/543ad5aa-0e69-4752-bdce-d4f10b080fb1/eb7908fa-2d64-4c77-bbc6-c89dcbdf4a6e-06ba028864c240ba09bf1200ad68a32e.jpg",
+    "thumb_object_path": "543ad5aa-0e69-4752-bdce-d4f10b080fb1/derived/thumb/0c6967a8-f504-4a09-92dd-ae8d7e0e6261.webp",
+    "card_object_path": "543ad5aa-0e69-4752-bdce-d4f10b080fb1/derived/card/0c6967a8-f504-4a09-92dd-ae8d7e0e6261.webp",
+    "detail_object_path": "543ad5aa-0e69-4752-bdce-d4f10b080fb1/derived/detail/0c6967a8-f504-4a09-92dd-ae8d7e0e6261.webp"
+  },
+  {
+    "vehicle_id": "543ad5aa-0e69-4752-bdce-d4f10b080fb1",
+    "vehicle_image_id": "caa816c6-ed62-44a8-83f7-950b8e9e03e7",
+    "stock_id": "RR-TY-WL-001",
+    "sort_order": 4,
+    "original_url": "https://smjbzjzsmmisdrmdfjby.supabase.co/storage/v1/object/public/vehicle-images/543ad5aa-0e69-4752-bdce-d4f10b080fb1/6018114a-c2b4-4731-a759-19f5bff7a45b-19e9a785227582b8409dbbffccf1c61f.jpg",
+    "thumb_object_path": "543ad5aa-0e69-4752-bdce-d4f10b080fb1/derived/thumb/caa816c6-ed62-44a8-83f7-950b8e9e03e7.webp",
+    "card_object_path": "543ad5aa-0e69-4752-bdce-d4f10b080fb1/derived/card/caa816c6-ed62-44a8-83f7-950b8e9e03e7.webp",
+    "detail_object_path": "543ad5aa-0e69-4752-bdce-d4f10b080fb1/derived/detail/caa816c6-ed62-44a8-83f7-950b8e9e03e7.webp"
+  },
+  {
+    "vehicle_id": "543ad5aa-0e69-4752-bdce-d4f10b080fb1",
+    "vehicle_image_id": "41ee2fb6-9e67-46a9-ae13-0c1a6ea216fe",
+    "stock_id": "RR-TY-WL-001",
+    "sort_order": 5,
+    "original_url": "https://smjbzjzsmmisdrmdfjby.supabase.co/storage/v1/object/public/vehicle-images/543ad5aa-0e69-4752-bdce-d4f10b080fb1/f36399d2-22a6-4160-b615-5f07d0b6e99c-ddb1062bc377938ac794b78090f2200d.jpg",
+    "thumb_object_path": "543ad5aa-0e69-4752-bdce-d4f10b080fb1/derived/thumb/41ee2fb6-9e67-46a9-ae13-0c1a6ea216fe.webp",
+    "card_object_path": "543ad5aa-0e69-4752-bdce-d4f10b080fb1/derived/card/41ee2fb6-9e67-46a9-ae13-0c1a6ea216fe.webp",
+    "detail_object_path": "543ad5aa-0e69-4752-bdce-d4f10b080fb1/derived/detail/41ee2fb6-9e67-46a9-ae13-0c1a6ea216fe.webp"
+  },
+  {
+    "vehicle_id": "543ad5aa-0e69-4752-bdce-d4f10b080fb1",
+    "vehicle_image_id": "4e5e48ec-e051-4c78-995e-55a330e30eb7",
+    "stock_id": "RR-TY-WL-001",
+    "sort_order": 6,
+    "original_url": "https://smjbzjzsmmisdrmdfjby.supabase.co/storage/v1/object/public/vehicle-images/543ad5aa-0e69-4752-bdce-d4f10b080fb1/7fe55938-2873-467e-98cb-2c11e80e9a79-f9d53727c42a9e42abe32ced27e5a944.jpg",
+    "thumb_object_path": "543ad5aa-0e69-4752-bdce-d4f10b080fb1/derived/thumb/4e5e48ec-e051-4c78-995e-55a330e30eb7.webp",
+    "card_object_path": "543ad5aa-0e69-4752-bdce-d4f10b080fb1/derived/card/4e5e48ec-e051-4c78-995e-55a330e30eb7.webp",
+    "detail_object_path": "543ad5aa-0e69-4752-bdce-d4f10b080fb1/derived/detail/4e5e48ec-e051-4c78-995e-55a330e30eb7.webp"
+  },
+  {
+    "vehicle_id": "543ad5aa-0e69-4752-bdce-d4f10b080fb1",
+    "vehicle_image_id": "91d9f427-984e-4fe0-b2fe-4e245cf1a72d",
+    "stock_id": "RR-TY-WL-001",
+    "sort_order": 7,
+    "original_url": "https://smjbzjzsmmisdrmdfjby.supabase.co/storage/v1/object/public/vehicle-images/543ad5aa-0e69-4752-bdce-d4f10b080fb1/6258d2a9-761e-4522-819e-4c54daad2c32-c05d24b59d9140b511d1ac5ced3acf4c.jpg",
+    "thumb_object_path": "543ad5aa-0e69-4752-bdce-d4f10b080fb1/derived/thumb/91d9f427-984e-4fe0-b2fe-4e245cf1a72d.webp",
+    "card_object_path": "543ad5aa-0e69-4752-bdce-d4f10b080fb1/derived/card/91d9f427-984e-4fe0-b2fe-4e245cf1a72d.webp",
+    "detail_object_path": "543ad5aa-0e69-4752-bdce-d4f10b080fb1/derived/detail/91d9f427-984e-4fe0-b2fe-4e245cf1a72d.webp"
+  },
+  {
+    "vehicle_id": "543ad5aa-0e69-4752-bdce-d4f10b080fb1",
+    "vehicle_image_id": "fe866615-6f40-49ad-8283-0b9a57ff6160",
+    "stock_id": "RR-TY-WL-001",
+    "sort_order": 8,
+    "original_url": "https://smjbzjzsmmisdrmdfjby.supabase.co/storage/v1/object/public/vehicle-images/543ad5aa-0e69-4752-bdce-d4f10b080fb1/b902f432-7a72-4dd2-8433-d1d753884f21-385e09b8ec1486181f7a1073398deb78.jpg",
+    "thumb_object_path": "543ad5aa-0e69-4752-bdce-d4f10b080fb1/derived/thumb/fe866615-6f40-49ad-8283-0b9a57ff6160.webp",
+    "card_object_path": "543ad5aa-0e69-4752-bdce-d4f10b080fb1/derived/card/fe866615-6f40-49ad-8283-0b9a57ff6160.webp",
+    "detail_object_path": "543ad5aa-0e69-4752-bdce-d4f10b080fb1/derived/detail/fe866615-6f40-49ad-8283-0b9a57ff6160.webp"
+  },
+  {
+    "vehicle_id": "bcb58532-223b-4c77-9b26-70cb28a07083",
+    "vehicle_image_id": "e0e0e29a-5f04-47c5-b8a5-a58465dae05d",
+    "stock_id": "RR-ACCORD-2016-0901",
+    "sort_order": 0,
+    "original_url": "https://smjbzjzsmmisdrmdfjby.supabase.co/storage/v1/object/public/vehicle-images/bcb58532-223b-4c77-9b26-70cb28a07083/ea7dce60-cc36-4ee1-8302-910b3f76478a-accord-exterior-side.webp",
+    "thumb_object_path": "bcb58532-223b-4c77-9b26-70cb28a07083/derived/thumb/e0e0e29a-5f04-47c5-b8a5-a58465dae05d.webp",
+    "card_object_path": "bcb58532-223b-4c77-9b26-70cb28a07083/derived/card/e0e0e29a-5f04-47c5-b8a5-a58465dae05d.webp",
+    "detail_object_path": "bcb58532-223b-4c77-9b26-70cb28a07083/derived/detail/e0e0e29a-5f04-47c5-b8a5-a58465dae05d.webp"
+  },
+  {
+    "vehicle_id": "bcb58532-223b-4c77-9b26-70cb28a07083",
+    "vehicle_image_id": "e673d8de-33df-4be4-9ace-baf5db2a0739",
+    "stock_id": "RR-ACCORD-2016-0901",
+    "sort_order": 1,
+    "original_url": "https://smjbzjzsmmisdrmdfjby.supabase.co/storage/v1/object/public/vehicle-images/bcb58532-223b-4c77-9b26-70cb28a07083/7437e23e-a670-4221-902a-0934d553cc5c-accord-exterior-front-three-quarter.jpg",
+    "thumb_object_path": "bcb58532-223b-4c77-9b26-70cb28a07083/derived/thumb/e673d8de-33df-4be4-9ace-baf5db2a0739.webp",
+    "card_object_path": "bcb58532-223b-4c77-9b26-70cb28a07083/derived/card/e673d8de-33df-4be4-9ace-baf5db2a0739.webp",
+    "detail_object_path": "bcb58532-223b-4c77-9b26-70cb28a07083/derived/detail/e673d8de-33df-4be4-9ace-baf5db2a0739.webp"
+  },
+  {
+    "vehicle_id": "bcb58532-223b-4c77-9b26-70cb28a07083",
+    "vehicle_image_id": "2e1fe986-e5e5-4725-be67-a443f30fe779",
+    "stock_id": "RR-ACCORD-2016-0901",
+    "sort_order": 2,
+    "original_url": "https://smjbzjzsmmisdrmdfjby.supabase.co/storage/v1/object/public/vehicle-images/bcb58532-223b-4c77-9b26-70cb28a07083/a8fd0a98-e22a-4329-a277-1745426bd432-accord-exterior-front.jpg",
+    "thumb_object_path": "bcb58532-223b-4c77-9b26-70cb28a07083/derived/thumb/2e1fe986-e5e5-4725-be67-a443f30fe779.webp",
+    "card_object_path": "bcb58532-223b-4c77-9b26-70cb28a07083/derived/card/2e1fe986-e5e5-4725-be67-a443f30fe779.webp",
+    "detail_object_path": "bcb58532-223b-4c77-9b26-70cb28a07083/derived/detail/2e1fe986-e5e5-4725-be67-a443f30fe779.webp"
+  },
+  {
+    "vehicle_id": "bcb58532-223b-4c77-9b26-70cb28a07083",
+    "vehicle_image_id": "a5ac3053-2d7c-448e-ab38-b88e6d183ad6",
+    "stock_id": "RR-ACCORD-2016-0901",
+    "sort_order": 3,
+    "original_url": "https://smjbzjzsmmisdrmdfjby.supabase.co/storage/v1/object/public/vehicle-images/bcb58532-223b-4c77-9b26-70cb28a07083/fa7f23b8-9dff-473b-9006-5814c378d8ef-accord-interior-front.jpg",
+    "thumb_object_path": "bcb58532-223b-4c77-9b26-70cb28a07083/derived/thumb/a5ac3053-2d7c-448e-ab38-b88e6d183ad6.webp",
+    "card_object_path": "bcb58532-223b-4c77-9b26-70cb28a07083/derived/card/a5ac3053-2d7c-448e-ab38-b88e6d183ad6.webp",
+    "detail_object_path": "bcb58532-223b-4c77-9b26-70cb28a07083/derived/detail/a5ac3053-2d7c-448e-ab38-b88e6d183ad6.webp"
+  },
+  {
+    "vehicle_id": "bcb58532-223b-4c77-9b26-70cb28a07083",
+    "vehicle_image_id": "c100be97-4718-4ba4-83d9-3198a02b9832",
+    "stock_id": "RR-ACCORD-2016-0901",
+    "sort_order": 4,
+    "original_url": "https://smjbzjzsmmisdrmdfjby.supabase.co/storage/v1/object/public/vehicle-images/bcb58532-223b-4c77-9b26-70cb28a07083/bb89c191-69d6-448c-8f92-ebfc86e74aba-accord-interior-rear.jpg",
+    "thumb_object_path": "bcb58532-223b-4c77-9b26-70cb28a07083/derived/thumb/c100be97-4718-4ba4-83d9-3198a02b9832.webp",
+    "card_object_path": "bcb58532-223b-4c77-9b26-70cb28a07083/derived/card/c100be97-4718-4ba4-83d9-3198a02b9832.webp",
+    "detail_object_path": "bcb58532-223b-4c77-9b26-70cb28a07083/derived/detail/c100be97-4718-4ba4-83d9-3198a02b9832.webp"
+  }
+]
