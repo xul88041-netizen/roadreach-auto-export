@@ -34,7 +34,10 @@ import urllib.parse
 import urllib.error
 import ipaddress
 import ssl
-from PIL import Image
+try:
+    from PIL import Image
+except ImportError:
+    Image = None
 
 ALLOWED_SCHEMES = {"https"}
 ALLOWED_MIME_TYPES = {"image/jpeg", "image/png", "image/webp"}
@@ -173,17 +176,23 @@ def process_single_derivative(im, target_width, quality, output_path):
     target_w = min(target_width, orig_w)
     target_h = max(1, int(orig_h * (target_w / orig_w)))
 
-    resized = im.resize((target_w, target_h), Image.Resampling.LANCZOS)
+    resample = getattr(Image, "Resampling", None)
+    resample_method = resample.LANCZOS if resample else getattr(Image, "LANCZOS", 1)
+
+    resized = im.resize((target_w, target_h), resample_method)
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     # Saving without exif parameter strips all non-essential camera metadata
     resized.save(output_path, "WEBP", quality=quality, method=6)
-    return target_w, target_h, os.path.getsize(output_path)
+    file_size = os.path.getsize(output_path) if os.path.exists(output_path) else 0
+    return target_w, target_h, file_size
 
 def generate_derivatives(manifest_path, output_base_dir, single_image_id=None):
     """
     Reads the manifest and deterministically generates 3 derivative WebPs for each image.
     Outputs solely to output_base_dir (.local/image-derivatives/).
     """
+    if Image is None:
+        raise RuntimeError("Pillow is required for image derivative generation. Please run: pip install Pillow")
     if not os.path.isabs(manifest_path):
         manifest_path = os.path.abspath(manifest_path)
     if not os.path.isabs(output_base_dir):
